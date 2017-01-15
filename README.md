@@ -269,7 +269,7 @@ Test yourself by answering these trivial questions:
 
 **1.3.2** Modify the source code `openmp.c` by inserting a parallel for
 loop that prints out the current thread number and the number of
-iteration. Use the directive `#pragma omp for` (hint: `#pragma omp parallel` spawns a group of threads, while `#pragma omp for` divides
+iteration. Use the directive `#pragma omp for` (**hint:** `#pragma omp parallel` spawns a group of threads, while `#pragma omp for` divides
 loop iterations between the spawned threads; you can do both things at
 once with the fused `#pragma omp parallel for` directive). Save the
 modified source as `openmp_v1.c`, compile and execute the binary on the
