@@ -1,26 +1,19 @@
-**Multi-/Many-Core Programming with Intel^®^ Xeon Phi^™^ Coprocessors**
+# 4rd International Summer School on INtelligent Signal Processing for FrontIEr Research and Industry
 
-**Fundamentals of Parallel Programming using Intel´s Many Integrated
-Core (MIC) Architecture**
+## Lab Workbook - Session 2 (CL6)
 
-**3^rd^ International Summer School on**
+**January 2017**
 
-**INtelligent Signal Processing for FrontIEr Research and Industry**
+UNESP Center for Scientific Computing (an Intel Modern Code Partner)
+São Paulo State University (Universidade Estadual Paulista - UNESP)
 
-**Lab Workbook - Session 2 (CL7)**
+São Paulo, Brazil 
 
-**September 2015**
+**Organized by: Rogério Iope, Silvio Stanzani, Raphael Cóbe**
 
-**UNESP Center for Scientific Computing (an Intel Modern Code Partner)**
+______
 
-**São Paulo State University (*Universidade Estadual Paulista* -
-UNESP)**
-
-**São Paulo, Brazil**
-
-**Organized by:** Rogério Iope, Silvio Stanzani, Raphael Cóbe
-
-**Overview**
+## Overview ##
 
 The Intel Xeon Phi Coprocessor, the first product of Intel’s Many
 Integrated Core (MIC) Architecture, is a new accelerator technology
@@ -43,7 +36,7 @@ activities have been planned to provide easy to follow instructions in
 order to allow the participants to have a real - though very
 introductory - experience on using a powerful manycore system.
 
-**Learning Goals**
+## Learning Goals ##
 
 Attendants of these hands-on labs will start issuing simple command-line
 tools to get basic information about the Intel Xeon Phi coprocessors,
@@ -63,49 +56,38 @@ simultaneously on the Xeon processors and the Xeon Phi coprocessors,
 explore the use of Intel Math Kernel Library (MKL), and develop insights
 on tuning parallel applications.
 
-**Useful References**
+## Useful References ##
 
--   Intel Xeon Phi Coprocessor High-Performance Programming, by Jim
-    Jeffers and James Reinders (Elsevier, 2013)
+- _Intel Xeon Phi Coprocessor High-Performance Programming, by Jim Jeffers and James Reinders (Elsevier, 2013)_  
+<http://www.lotsofcores.com/>
 
-    <http://www.lotsofcores.com/>
+- _Intel Xeon Phi Coprocessor Architecture and Tools, by Rezaur Rahman (Apress, 2013)_  
+<http://www.apress.com/9781430259268>
 
--   Intel Xeon Phi Coprocessor Architecture and Tools, by Rezaur Rahman
-    (Apress, 2013)
+- _Parallel Programming and Optimization with Intel Xeon Phi
+    Coprocessors, 2nd Edition (Colfax, 2015)_
+<http://www.colfax-intl.com/nd/xeonphi/book.aspx>
 
-    http://www.apress.com/9781430259268
+- _An Overview of Programming for Intel Xeon processors and Intel Xeon Phi coprocessors_  
+<http://software.intel.com/sites/default/files/article/330164/an-overview-of-programming-for-intel-xeon-processors-and-intel-xeon-phi-coprocessors.pdf>
 
--   Parallel Programming and Optimization with Intel Xeon Phi
-    Coprocessors, 2^nd^ Edition (Colfax, 2015)
+- _Intel Xeon Phi Coprocessor Developer´s Quick Start Guide_  
+<http://software.intel.com/sites/default/files/article/335818/intel-xeon-phi-coprocessor-quick-start-developers-guide.pdf>
 
-    <http://www.colfax-intl.com/nd/xeonphi/book.aspx>
+- _Intel Xeon Phi Coprocessor: System Software Developers Guide_  
+<http://www.intel.com/content/www/us/en/processors/xeon/xeon-phi-coprocessor-system-software-developers-guide.html>
 
--   An Overview of Programming for Intel Xeon processors and Intel Xeon
-    Phi coprocessors
+- _Intel C++ Compiler XE 13.1 User and Reference Guide (Linux OS)_  
+<http://software.intel.com/sites/products/documentation/doclib/stdxe/2013/composerxe/compiler/cpp-lin/>
 
-    <http://software.intel.com/sites/default/files/article/330164/an-overview-of-programming-for-intel-xeon-processors-and-intel-xeon-phi-coprocessors.pdf>
+- _Tutorial on OpenMP - Lawrence Livermore National Laboratory_  
+<https://computing.llnl.gov/tutorials/openMP/>
 
--   Intel Xeon Phi Coprocessor Developer´s Quick Start Guide
+- _Tutorial on MPI - Lawrence Livermore National Laboratory_  
+<https://computing.llnl.gov/tutorials/mpi/>
 
-    <http://software.intel.com/sites/default/files/article/335818/intel-xeon-phi-coprocessor-quick-start-developers-guide.pdf>
 
--   Intel Xeon Phi Coprocessor: System Software Developers Guide
-
-    <http://www.intel.com/content/www/us/en/processors/xeon/xeon-phi-coprocessor-system-software-developers-guide.html>
-
--   Intel C++ Compiler XE 13.1 User and Reference Guide (Linux OS)
-
-    <http://software.intel.com/sites/products/documentation/doclib/stdxe/2013/composerxe/compiler/cpp-lin/>
-
--   Tutorial on OpenMP - Lawrence Livermore National Laboratory
-
-    <https://computing.llnl.gov/tutorials/openMP/>
-
--   Tutorial on MPI - Lawrence Livermore National Laboratory
-
-    <https://computing.llnl.gov/tutorials/mpi/>
-
-**Remote access to the testing platform**
+## Remote access to the testing platform ##
 
 This document assumes that the testing platform has been setup and is
 ready to use. We will be using a state-of-the-art server - loaned by
