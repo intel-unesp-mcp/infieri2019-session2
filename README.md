@@ -1,19 +1,26 @@
-# 4rd International Summer School on INtelligent Signal Processing for FrontIEr Research and Industry
+**Multi-/Many-Core Programming with Intel^®^ Xeon Phi^™^ Coprocessors**
 
-## Lab Workbook - Session 1 (CL6)
+**Fundamentals of Parallel Programming using Intel´s Many Integrated
+Core (MIC) Architecture**
 
-**January 2017**
+**3^rd^ International Summer School on**
 
-UNESP Center for Scientific Computing (an Intel Modern Code Partner)
-São Paulo State University (Universidade Estadual Paulista - UNESP)
+**INtelligent Signal Processing for FrontIEr Research and Industry**
 
-São Paulo, Brazil 
+**Lab Workbook - Session 2 (CL7)**
 
-**Organized by: Rogério Iope, Silvio Stanzani, Raphael Cóbe**
+**September 2015**
 
-______
+**UNESP Center for Scientific Computing (an Intel Modern Code Partner)**
 
-## Overview ##
+**São Paulo State University (*Universidade Estadual Paulista* -
+UNESP)**
+
+**São Paulo, Brazil**
+
+**Organized by:** Rogério Iope, Silvio Stanzani, Raphael Cóbe
+
+**Overview**
 
 The Intel Xeon Phi Coprocessor, the first product of Intel’s Many
 Integrated Core (MIC) Architecture, is a new accelerator technology
@@ -36,7 +43,7 @@ activities have been planned to provide easy to follow instructions in
 order to allow the participants to have a real - though very
 introductory - experience on using a powerful manycore system.
 
-## Learning Goals ##
+**Learning Goals**
 
 Attendants of these hands-on labs will start issuing simple command-line
 tools to get basic information about the Intel Xeon Phi coprocessors,
@@ -56,111 +63,49 @@ simultaneously on the Xeon processors and the Xeon Phi coprocessors,
 explore the use of Intel Math Kernel Library (MKL), and develop insights
 on tuning parallel applications.
 
-## Before you start ##
-
-Please read through the following excerpt, extracted from the white
-paper referenced below, which will give you a short overview of the
-Intel Xeon Phi coprocessor.
-
-A. Vladimirov, V. Karpusenko, “*Test-driving Intel Xeon Phi coprocessors with a basic N-body simulation*”, Colfax International, January 2013, available at
-
-<http://research.colfaxinternational.com/post/2013/01/07/Nbody-Xeon-Phi.aspx>
-
-We will refer again to this white paper later on in this training.
-
-## What Intel Xeon Phi coprocessors bring to the table
-
-Intel Xeon Phi coprocessor is a symmetric multiprocessor in the form
-factor of a PCI express device. Intel’s James Reinders has deﬁned the
-purpose of Intel Xeon Phi coprocessors in the following way[^1]: “*Intel
-Xeon Phi coprocessors are designed to extend the reach of applications
-that have demonstrated the ability to fully utilize the scaling
-capabilities of Intel Xeon processor-based systems and fully exploit
-available processor vector capabilities or memory bandwidth.*” It cannot
-be used as a stand-alone processor. However, up to eight Intel Xeon Phi
-coprocessors can be used in a single chassis[^2]. Each coprocessor
-features more than 50 cores clocked at 1 GHz or more, supporting 64-bit
-x86 instructions. The exact number of cores depends on the model and the
-generation of the product. These in-order cores support four-way hyper-
-threading, resulting in more than 200 logical cores. Cores of Intel Xeon
-Phi coprocessors are interconnected by a high-speed bidirectional ring,
-which unites L2 caches of the cores into a large coherent aggregate
-cache over 25 MB in size. The coprocessor also has over 6 GB of onboard
-GDDR5 memory. The speed and energy efficiency of Intel Xeon Phi
-coprocessors comes from its vector units. Each core contains a vector
-arithmetics unit with 512-bit SIMD vectors supporting a new instruction
-set called Intel Initial Many-Core Instructions (Intel IMCI). The Intel
-IMCI includes, among other instructions, the fused multiply-add,
-reciprocal, square root, power and exponent operations, commonly used in
-physical modeling and statistical analysis. The theoretical peak
-performance of an Intel Xeon Phi coprocessor is 1 TFLOP/s in double
-precision. This performance is achieved at the same power consumption as
-in two Intel Xeon processors, which yield up to 300 GFLOP/s.
-
-In order to completely utilize the full power of Intel Xeon Phi
-coprocessors (as well as Intel Xeon-based systems), applications must
-utilize several levels of parallelism:
-
-1.  task parallelism in distributed memory to scale an application
-    across multiple coprocessors or multiple compute nodes,
-
-2.  task parallelism in shared memory to utilize more than 200 logical
-    cores,
-
-3.  and at last, but definitely not the least, - data parallelism to
-    employ the 512-bit vector units.
-
-The novelty of developer experience in Intel Xeon Phi coprocessor is the
-continuity of the programming model between Xeon processor and Xeon Phi
-coprocessor programming:
-
-1.  The same C, C++ or Fortran code can be compiled into applications
-    for Intel Xeon processors and Intel Xeon Phi coprocessors.
-    Cross-platform porting is possible with only code re-compilation.
-
-2.  The same parallel frameworks are supported by the Intel Xeon and
-    Intel Xeon Phi architectures. MPI can be used to scale in
-    distributed or shared memory with Intel Xeon Phi coprocessors acting
-    as individual cluster nodes. OpenMP, Intel Cilk Plus, Intel
-    Threading Building Blocks, and other shared memory frameworks can be
-    used to split the work homogeneously between the processor or
-    coprocessor cores. The Intel Math Kernel Library provides highly
-    optimized standard functions for both platforms.
-
-3.  The same software development tools can be used for both platforms:
-    Intel compilers, Intel VTune Parallel Amplifier XE to profile and
-    optimize the applications, Intel Debugger and Intel Inspector to
-    diagnose critical and logical issues.
-
-4.  Similar optimization methods benefit applications on both platforms.
-
 **Useful References**
 
--   _Intel Xeon Phi Coprocessor High-Performance Programming, by Jim Jeffers and James Reinders (Elsevier, 2013)_    
+-   Intel Xeon Phi Coprocessor High-Performance Programming, by Jim
+    Jeffers and James Reinders (Elsevier, 2013)
+
     <http://www.lotsofcores.com/>
 
--   _Intel Xeon Phi Coprocessor Architecture and Tools, by Rezaur Rahman (Apress, 2013)_
-    <http://www.apress.com/9781430259268>
+-   Intel Xeon Phi Coprocessor Architecture and Tools, by Rezaur Rahman
+    (Apress, 2013)
 
--   _Parallel Programming and Optimization with Intel Xeon Phi Coprocessors, 2nd Edition (Colfax, 2015)_
+    http://www.apress.com/9781430259268
+
+-   Parallel Programming and Optimization with Intel Xeon Phi
+    Coprocessors, 2^nd^ Edition (Colfax, 2015)
+
     <http://www.colfax-intl.com/nd/xeonphi/book.aspx>
 
--   _An Overview of Programming for Intel Xeon processors and Intel Xeon Phi coprocessors_
+-   An Overview of Programming for Intel Xeon processors and Intel Xeon
+    Phi coprocessors
+
     <http://software.intel.com/sites/default/files/article/330164/an-overview-of-programming-for-intel-xeon-processors-and-intel-xeon-phi-coprocessors.pdf>
 
--   _Intel Xeon Phi Coprocessor Developer´s Quick Start Guide_
+-   Intel Xeon Phi Coprocessor Developer´s Quick Start Guide
+
     <http://software.intel.com/sites/default/files/article/335818/intel-xeon-phi-coprocessor-quick-start-developers-guide.pdf>
 
--   _Intel C++ Compiler XE 13.1 User and Reference Guide (Linux OS)_
-    <http://software.intel.com/sites/products/documentation/doclib/stdxe/2013/composerxe/compiler/cpp-lin/>
+-   Intel Xeon Phi Coprocessor: System Software Developers Guide
 
--   _Intel Xeon Phi Coprocessor: System Software Developers Guide_
     <http://www.intel.com/content/www/us/en/processors/xeon/xeon-phi-coprocessor-system-software-developers-guide.html>
 
--   _Intel Xeon Phi Coprocessor 3120A (6GB, 1.100 GHz, 57 cores)_
-    <http://ark.intel.com/products/75797/Intel-Xeon-Phi-Coprocessor-3120A-6GB-1_100-GHz-57-core>
+-   Intel C++ Compiler XE 13.1 User and Reference Guide (Linux OS)
 
-## Remote access to the testing platform ##
+    <http://software.intel.com/sites/products/documentation/doclib/stdxe/2013/composerxe/compiler/cpp-lin/>
+
+-   Tutorial on OpenMP - Lawrence Livermore National Laboratory
+
+    <https://computing.llnl.gov/tutorials/openMP/>
+
+-   Tutorial on MPI - Lawrence Livermore National Laboratory
+
+    <https://computing.llnl.gov/tutorials/mpi/>
+
+**Remote access to the testing platform**
 
 This document assumes that the testing platform has been setup and is
 ready to use. We will be using a state-of-the-art server - loaned by
@@ -179,1106 +124,1186 @@ should be able to run X11.
 
 Use the syntax below to log in to the host system.
 
-```
-$ ssh –X phi01.ncc.unesp.br –l traineeN 
-```
-
-**(N is a number assigned to each participant)**
-
-
-Please refer to the teaching assistant(s) for more details.
-
-
-## Practical Exercises - Part 1 ##
-
-## Introduction to the Intel Xeon Phi coprocessor ##
-
-### 1.1 Goals ###
-
-Activities start with a brief overview of the Xeon Phi coprocessor
-hardware and software architecture, followed by a series of practical
-exercises. The exercises will show you some of the tools available for
-getting information about the Intel Xeon Phi coprocessors and monitor
-how their internal resources are being used. You will have an
-introductory contact with the essential tools and configuration options
-for managing the coprocessor operating environment.
-
-### 1.2 Overview of the Xeon Phi hardware architecture ###
-
-Intel Xeon Phi coprocessors have been designed as a supplement to the
-Intel Xeon processor family. These computing accelerators feature the
-MIC (Many Integrated Core) architecture, which enables fast and
-energy-efficient execution of High Performance Computing (HPC)
-applications utilizing massive thread parallelism, vector arithmetic and
-streamlined memory access. The term “Many Integrated Core” is used to
-distinguish the Intel Xeon Phi product family from the “Multi-Core”
-family of Intel Xeon processors.
-
-The Xeon Phi card can be thought of as a computer board containing the
-coprocessor silicon chip with up to 61 cores, their associated caches,
-and memory controllers, which is in turn surrounded by GDDR5 memory
-chips, a flash memory, a system management controller, sensors, and
-miscellaneous electronics and connectors to attach it into a host
-computer system. The whole coprocessor card is what is commonly just
-called the Xeon Phi coprocessor. A schematic view of the key components
-of the coprocessor card is shown in Figure 1. The flash memory is used
-to store the coprocessor bootstrap code, similar to the BIOS in an Intel
-Xeon processor platform. The System Management Controller (SMC) handles
-information coming from sensors that measure temperature, voltage, and
-current. The different Xeon Phi coprocessor models vary on such factors
-as number of cores, memory size and speed, thermal solutions and form
-factor.
-
-![](media/image1.tif){width="5.847222222222222in"
-height="4.519938757655293in"}
-
-**Figure 1: Intel Xeon Phi coprocessor card schematic**
-
-At a high level, the coprocessor silicon chip consists of up to 61
-processor cores based on the Intel Pentium architecture (P54C[3]) with
-several improvements - including Intel64 instruction set architecture,
-4-way symmetric multithreading, new vector instructions, and increased
-cache sizes -, interconnected by a high performance on-die bidirectional
-interconnect. Each core is a fully functional, in-order processing unit
-supporting fetch-decode-execute instruction cycles from four hardware
-thread execution contexts.
-
-Figure 2 shows a simple diagram of the logical layout of some of the
-critical chip components of the Intel Xeon Phi coprocessor architecture.
-As can be seen in Figure 2, each core includes:
-
--   a 512 bit wide vector processor unit (VPU), capable of performing
-    512-bit vector operations on 16 single-precision or 8
-    double-precision floating-point arithmetic operations as well as
-    integer operations;
-
--   the Core Ring Interface (CRI), which connects each core to
-    corresponding special controllers called Ring Stops that insert
-    requests and receive responses on/to the ring;
-
--   the L2 cache (including the tag, state, data and LRU arrays) and the
-    L2 pipeline and associated arbitration logic;
-
--   the Tag Directory (TD), which is a portion of the distributed tag
-    directory infrastructure for cross-snooping L2 caches in all cores;
-    the L2 caches are kept fully coherent with each other by the TDs,
-    which are referenced after an L2 cache miss.
-
-![](media/image2.png){width="6.291694006999125in"
-height="6.222222222222222in"}
-
-**Figure 2: Basic building blocks of the Intel Xeon Phi coprocessor
-chip**
-
-In addition to the IA (Intel Architecture) cores, the Xeon Phi
-coprocessor chip also includes:
-
--   Memory controllers (GBOX), which access external memory devices
-    (local physical memory on the coprocessor card) to read and write
-    data; each memory controller has 2 channel controllers, which
-    together can operate two 32-bit memory channels;
-
--   a Gen2 PCI Express client logic (SBOX), which is the system
-    interface to the host CPU or PCI Express switch, supporting x8 and
-    x16 configurations;
-
--   a debug display engine (DBOX) comprised by a set of registers that
-    can be accessed for debugging purposes;
-
--   the Ring Interconnect that connects all of the aforementioned
-    components together on the chip.
-
-Each memory controller is based on the GDDR5 specification, and supports
-two channels per memory controller. At up to 5.5 GT/s transfer speed,
-this provides a theoretical aggregate bandwidth of 352 GB/s (gigabytes
-per second) directly connected to the Intel Xeon Phi coprocessor.
-
-For more detailed information please refer to ”Intel Xeon Phi
-Coprocessor: System Software Developers Guide".
-
-### 1.3 Overview of the Xeon Phi system software and programming models ##
-
-The Intel Xeon Phi coprocessor needs support from system software
-components to operate properly and interoperate with other hardware
-components in a system. The system software component of the Xeon Phi
-coprocessor, known as the Intel Many Integrated Core (MIC) Platform
-Software Stack (MPSS), provides this functionality. When installing
-coprocessors for use in an Intel Xeon processor platform for the first
-time, an early step that needs to be done is to download, install, and
-launch the latest version of Intel MPSS.
-
-The MPSS provides tools and utilities that allow the platform user to
-query the coprocessors’ status. The utilities run on the host system at
-the user level and goes through the system drivers to communicate with
-the corresponding software piece on the coprocessor in order to retrieve
-system information such as core and memory utilization, core
-temperature, and power received from the system management component and
-controller (SMC) hardware on the coprocessor system.
-
-There are thus two major components that comprise the software structure
-used to build and run applications and system services that utilize the
-Xeon Phi coprocessor:
-
--   Development tools and runtime libraries: the development tools and
-    associated runtime services and libraries are provided by tool
-    packages such as the Intel Parallel Studio XE 2013 and the Intel
-    Cluster Studio 2013. The Intel C/C++ Intel Fortran compiler, and
-    Intel MPI library are some of the sub-components of these
-    development tools packages.
-
--   Intel Manycore Platform Software Stack (MPSS): the operational
-    software specific to the coprocessor including middleware interfaces
-    used by the development tools, device drivers for communication and
-    control, coprocessor management utilities, and the coprocessor’s
-    local Linux operating system.
-
-Unlike other device drivers implemented to support PCI Express based
-hardware, such as graphics cards, Intel Xeon Phi was designed to support
-the execution of computing applications in the familiar HPC environment
-through the OpenMP and MPI specifications, as well as other offload
-programming usage models. Because the coprocessor core is based on the
-traditional Intel P5 processor core, it can execute a complete operating
-system like any other computer. The disk drive is simulated by a RAM
-drive and supports an Internet protocol (IP)-based virtual socket to
-provide networking communication with the host. This design choice
-allows the coprocessor to appear as a node to the rest of the system and
-allows a usage model common in the HPC programming environment. The
-operating system resides on the coprocessor and implements complementary
-functionalities provided by the driver layer on the host side to achieve
-its system management goals.
-
-The software stack of the Xeon Phi is then highly layered, split up into
-a host side and a coprocessor side. Host system and Xeon Phi coprocessor
-are both (typically) running Linux operating systems and they are
-connected through the PCI Express bus. On both sides, various layers of
-kernel and user level drivers, libraries, and runtimes can be found. For
-ease of use, a virtual network interface is implemented on top of the
-PCI Express connection.
-
-Figure 3 shows a block diagram of the key components that comprise the
-coprocessor software architecture. As can be seen, the diagram shows
-well-defined left and right sides, and a solid line divides each of them
-in top and bottom halves. The left side corresponds to components on the
-host processor platform and the right side depicts software components
-on the Xeon Phi coprocessor. The top and bottom halves represent the
-standard operating system notion of hierarchical protection domains[4]:
-application code and system interface executes at the user-level, and
-more trusted, system level operating system and driver code runs at the
-kernel level. The application layer uses runtime libraries to provide
-the communication and control necessary to send the code and data to the
-coprocessor and get the results back. The application layer also
-contains utilities and libraries that can be used to query the system
-status and allow socket communications and other communication supports
-(such as InfiniBand protocols). The application layer is built on top of
-the system software running at the kernel level (the most protected mode
-of operation of the processor, where the OS kernel and drivers usually
-run) on both the host and the coprocessor card[5]. The network traffic
-is carried over the PCIe bus instead of network interconnects.
-
-![](media/image3.png){width="6.666666666666667in"
-height="4.455555555555556in"}
-
-**Figure 3: Simplified view of the Intel Xeon Phi software stack**
-
-The careful examination of the software stack represented in Figure 3
-reveals two principal ways of accessing the Xeon Phi™ coprocessor:
-
--   Offload (green line): applications are started and run on the
-    host processor. Selected compute-intensive and highly parallel parts
-    of the application are offloaded to the coprocessor, by using a
-    comprehensive set of programming language extensions and
-    library routines. The process of transferring data to and execution
-    code on the coprocessor is transparent to the users. Results are
-    obtained on the host side, as if the application was run on the
-    host only. With Compiler Assisted Offloading (CAO), the users
-    explicitly control data transfer and execution with the help
-    of directives.
-
--   Native (red line): applications can be run natively on the Xeon
-    Phi coprocessors. To the applications, the coprocessor looks like a
-    standalone multicore computer. Users can log in directly onto the
-    Xeon Phi via ssh and execute applications, just as they are used to
-    from the host system. Applications are compiled on the host for
-    native execution on the Xeon Phi and copied over (or made available
-    on a distributed filesystem exported from the host, e.g. via NFS -
-    the Linux Network File System). After the computation is finished,
-    the results can be retrieved from the coprocessor with the help of
-    the same mechanisms.
-
-Both models can be mixed, resulting in multiple execution scenarios:
-
--   Applications running on the host only;
-
--   Applications running mainly on the host, with critical parts of the
-    code being offloaded to the Xeon Phi;
-
--   Applications running on both the host and the Xeon Phi, interacting
-    trough standardized communication frameworks;
-
--   Highly parallel applications running on the Xeon Phi only.
-
-Figure 4 illustrates the compute spectrum enabled when coupling
-processors and coprocessors. Depending on the application’s compute
-needs, execution can be initiated on either a host processor or on one
-or more coprocessors. Depending on the application needs and system
-environment, any mix of computation between the processor and
-coprocessor can be chosen for optimal performance.
-
-![](media/image4.tif){width="6.326388888888889in"
-height="3.155187007874016in"}
-
-**Figure 4: Programming models for an Intel Xeon platform with Xeon Phi
-coprocessors**
-
-Included in Figure 4 is a conceptual view of how code might be launched
-and executed in the key enabled programming uses. From left to right
-those models are:
-
--   Processor-only model: the application is launched and executed only
-    on the host processors;
-
--   Offload model: the application is launched and primarily managed on
-    processors and selected portions of the code are offloaded to the
-    coprocessors;
-
--   Symmetric model: the application is launched on both processors and
-    coprocessors with cooperative communication (typically via MPI);
-
--   Coprocessor-only model: the application is launched and executed
-    only on the coprocessors.
-
-The Intel MPI library supports all these programming execution models.
-MPI is the de facto library-based communication environment used to
-enable parallel applications to run, communicate, and scale across
-multiple processing cores, either between the multiple cores in a single
-Intel Xeon processor platform or across a connected network of nodes in
-a cluster. During the hands-on activities of Part 2 you will have the
-opportunity to exercise some of these computing models.
-
-### 1.4 Hands-on Activities ###
-
-**1.4.1** On your desktop/workstation, open a terminal or command line
-console and use the command `ssh` to login to the host `phi01.ncc.unesp.br`
-as user traineeN (N = 1 … 16; please check with the teaching assistant
-which number has been assigned to you):
-
-```  
-$ ssh –X traineeN@phi01.ncc.unesp.br
-```
-
-**1.4.2** Intel’s tool for checking the status of Xeon Phi coprocessors
-is micinfo. Use this utility to obtain detailed information about the
-Intel Xeon Phi coprocessor(s) installed in the system and the
-corresponding driver version:
-
-```
-[phi01]$ micinfo
-```
-
-For each device listed, take note of the device model (SKU:
-*stock-keeping unit*), number of cores, memory size (GDDR5 –
-<http://en.wikipedia.org/wiki/GDDR5>) and thermal information (die
-temperature, actively- or passively-cooled). Check also the memory size
-of the system host.
-
-The `-listdevices` option provides a shorter output, with the list of the
-Intel Xeon Phi coprocessors available in the system:
-
-```
-[phi01]$ micinfo -listdevices
-``` 
-
-(**Extra exercise:** compare the result with the output of `$ lspci | grep processor`).
-
-To request detailed information about a specific device, the option
-`-deviceinfo <N>` can be used. The information displayed by the
-`micinfo` command can also be narrowed down by including the option `-group <group name>`, where group name can be: version, board, cores,
-GDDR, thermal. For example:
-
-```
-[phi01]$ micinfo -deviceInfo 0 -group cores
-[phi01]$ micinfo -deviceInfo 1 -group thermal
-```
-
-**1.4.3** The Xeon Phi coprocessor is packaged in a PCIe card which
-includes thermal and power sensors and a system management controller
-(SMC) that monitors the sensors and manages the coprocessor. The utility
-micsmc can be used to extract information from the coprocessor SMC,
-including core temperatures; core frequency and power usage. The utility
-operates in two modes: Graphical User Interface (GUI) mode and command
-line (CLI) mode. In order to invoke the GUI mode, micsmc should be
-executed without any additional parameters. In this mode, the tool
-provides continuously updated information on Intel Xeon Phi coprocessor
-core utilization, core temperature, memory usage, and power usage
-statistics. If your workstation has X11 capabilities (Linux or Mac),
-then issuing the micsmc command without any options will open a new
-window frame on your desktop, the *Coprocessor Platform Status Panel*:
-
-```
-[phi01]$ micsmc &
-```
-
-In the menu bar of this new window frame, select Cards, Show All and
-take a look at the default card view – the *Utilization View* - for each
-coprocessor. Find the view-selection buttons on the upper left corner,
-which enable you to switch from the current view to one of the two other
-available views: the *Core Histogram View* and the *Historical
-Utilization View*. In particular, the Core Histogram View displays the
-computational activity of all logical cores (*threads*), measured in
-percentage utilization, of the corresponding Xeon Phi coprocessor.
-
-To close the GUI application, type `fg` in the console and then hit ^C.
-For more information, please check the documentation available at
-/opt/intel/mic/sysmgmt/docs/en\_US/ (use scp to copy the pdf file to
-your local desktop).
-
-**Note:** If your workstation does not have X11, you will get the error
-message: “*micsmc-gui: cannot connect to X server*”. Alternatively, you
-can use the command below:
-
-```
-[phi01]$ watch -n 1 micsmc -t
-```
-
-The CLI mode is activated with command-line arguments and provides the
-same information as the graphical user interface, but in text form. It
-is thus suitable for direct execution or for scripting. For example:
-
-```
-[phi01]$ micsmc -c
-[phi01]$ micsmc -a
-```
-
-For a detailed view of all `micsmc` arguments, use option `–h` (for help).
-
-**1.4.4** The miccheck utility runs a set of diagnostic tests in order
-to verify the configuration of all the Intel Xeon Phi coprocessors
-installed in the system. By default, all available tests are run on all
-Intel Xeon Phi coprocessors, but a subset of tests and devices can be
-selected by using adequate arguments. Let us take a look on the outcomes
-of the command:
-
-```
-[phi01]$ miccheck
-```
-
-For a detailed view of all `miccheck` arguments, use option `–h` (for help).
-
-There are other administrative tools and utilities, but they are mostly
-used by system administration purposes (e.g. updating the firmware in
-the Xeon Phi coprocessor´s flash memory) and usually require
-administrative privileges to run.
-
-**1.4.5** The Intel Xeon Phi coprocessor is an IP-addressable PCIe
-device - managed by an independent environment provided by the MIC
-Platform Software Stack (MPSS) - that runs the Linux operating system.
-The Linux OS on the Intel Xeon Phi coprocessor supports SSH access for
-all users defined, including root, using public key authentication keys.
-In this activity we are going to interact with the Intel Xeon Phi
-coprocessors´ Linux OS via a terminal shell. From the host shell issue
-an ssh to the first coprocessor (mic0):
-
-```
-[phi01]$ ssh mic0
-```
-In the coprocessor command-line shell, issue the following commands and
-check the results:
-
-```
-[phi01-mic]$ uname –a
-[phi01-mic]$ cat /proc/cpuinfo | grep processor | wc –l
-[phi01-mic]$ cat /proc/meminfo | grep MemTotal
-[phi01-mic]$ ifconfig
-[phi01-mic]$ cat /etc/hosts
-[phi01-mic]$ exit
-```
-
-By default, the first Intel Xeon Phi coprocessor in the system is
-resolved to the hostname mic0, as specified in the file `/etc/hosts`.
-Notice that the SSH server that runs on the coprocessor allows us to
-transfer files from the host to the coprocessor using the secure copy
-tool (`scp`). We are going to use this mechanism in the following
-activities to transfer executables compiled in the host system to the
-coprocessors.
-
-Close the connection with mic0 using exit (or \^D), and repeat the
-previous command sequence on the second and third coprocessors (mic1 and
-mic2). Check the number of cores, the available memory, and the IP
-address of the second coprocessor.
-
-**1.4.6** Bonus: using the command `cat`, create a simple text file in the
-host system, and then transfer it to one of the coprocessor cards using
-`scp`. Then issue an `ssh` to the corresponding card and check the file.
-Verify also if you are able to transfer the same file directly from one
-coprocessor card to another one.
-
-**Practical Exercices - Part 2**
-
-**Compiling and running trivially simple applications**
+  **\$ ssh –X phi01.ncc.unesp.br –l traineeN** (N is a number assigned to each participant)
+  -------------------------------------------------------------------------------------------
+
+**Note:** Before starting the lab exercises make sure that the Xeon Phi
+coprocessors are up and running (status = ‘online’):
+
+  **\[phi01\]\$ micctrl --status** (show the status of all MIC cards installed on the host system)
+  --------------------------------------------------------------------------------------------------
+
+Please refer to the teaching assistant(s) if you have any question.
+
+**Practical Exercises - Part 1**
+
+**Task parallelism using OpenMP and Cilk Plus**
+
+**1.1 Goals**
+
+In the first part of Session 2 we set focus on multi-threaded
+programming, or task parallelism, using the Intel Open Multi-Processing
+(OpenMP) and Intel Cilk Plus parallel libraries. While POSIX threads[^1]
+- also known as Pthreads - can be used to implement parallelism in
+shared memory multiprocessor architectures, this programming interface
+does not contain HPC-specific features such as workload balancing,
+processor affinity, reducers, etc. Computationally intensive algorithms
+in general perform better when implemented using one of the specialized
+standards for building thread-parallel applications, such as OpenMP or
+Cilk Plus. Moreover, OpenMP and Cilk Plus are a good way of introducing
+parallelism in existing sequential programs, providing the programmer
+with a mostly declarative style of programming where all the
+parallelization is handled at the compiler level.
+
+**1.2 Overview of OpenMP**
+
+OpenMP is a traditional, well-established cross-platform standard with
+which many high performance application developers are familiar. It
+provides high-level abstraction for task parallelism, and eliminates the
+low-level details of iteration space partitioning, data sharing, and
+thread creation, scheduling, and synchronization. In order to
+parallelize an application with OpenMP, the programmer supplements the
+code with OpenMP pragma directives[^2]. These pragmas instruct
+OpenMP-aware compilers to produce parallel versions of the respective
+statements and to bind to the OpenMP implementation. It is possible to
+disable OpenMP support in the compiler, and the code with OpenMP pragmas
+will still compile. In this case the pragmas will be treated as simple
+comments, and parallelization will not occur - the program will still
+yield correct behavior, but without any parallelism.
+
+A program with OpenMP directives begins execution as a single thread,
+called the initial thread of execution. It is executed sequentially
+until the first parallel construct is encountered. After that the
+initial thread creates a team of threads to be executed in parallel, and
+becomes the master of this team. All program statements enclosed by the
+parallel construct are executed in parallel by each thread in the team,
+including all routines called from within the enclosed statements. At
+the end of the parallel construct each thread wait for others to arrive.
+When that happens the team is dissolved, and only the master thread
+continues execution of the code following the parallel construct. The
+other threads in the team enter a wait state until they are needed to
+form another team.
+
+In order to compile a C/C++ program with OpenMP pragmas using the Intel
+C++ Compiler the programmer must specify the compiler argument -openmp.
+Without this argument, the code will still compile, but all code will be
+executed with only one thread. In order to make certain functions and
+variables of the OpenMP library available, the directive ‘\#include
+&lt;omp.h&gt;’ must be used at the beginning of the code.
+
+**1.2 Overview of Cilk Plus**
+
+Cilk Plus is an extension to the C and C++ programming languages,
+designed for multithreaded parallel computing, making it easier to write
+parallel programs that exploit the multiple processors and vector
+instructions available on modern processors[^3]. It is an emerging
+standard currently supported by gcc 4.7 or above and the Intel C++
+Compiler. Its functionality and scope of application are similar to
+those of OpenMP; however, it is distinguished by its focus on minimal
+but sufficient support for parallelism in C and C++. The three main
+keywords in the Cilk Plus standard are \_Cilk\_for, \_Cilk\_spawn and
+\_Cilk\_sync. They allow for the implementation of a variety of parallel
+algorithms. Programming for Intel Xeon Phi coprocessors may also require
+the keywords \_Cilk\_shared and \_Cilk\_offload. Language extensions
+such as array notation, hyperobjects, elemental function and ‘\#pragma
+simd’ are also part of Intel Cilk Plus.
+
+Unlike OpenMP, the Cilk Plus standard guarantees that serialized code
+will produce the same results as parallel code, if the program has a
+deterministic behavior. It is designed to seamlessly integrate
+vectorization and thread-parallelism in applications using this
+framework. The nature of Intel Cilk Plus keywords and semantics
+preserves the serial nature of codes. With this framework, the
+programmer should focus on exposing the parallelism in the application
+rather than optimizing low-level aspects such as thread creation, work
+distribution and data sharing. Cilk Plus uses an efficient scheduling
+algorithm based on “work stealing”, which may be more efficient than
+OpenMP in complex multi-program applications.
+
+Cilk Plus also implements array notation, a method for specifying slices
+of arrays or whole arrays in a simple way, and applying element-wise
+operations to arrays of the same shape. The Intel C++ Compiler
+implements these operations using vector code, mapping data-parallel
+constructs to the SIMD hardware.
+
+OpenMP and Cilk Plus have the same scope of application to parallel
+algorithms and similar functionality. The choice between OpenMP and Cilk
+Plus as the parallelization method may be dictated either by
+convenience, or by performance considerations. It is often easy enough
+to implement the code with both frameworks and compare the performance.
+In general, trivial and highly parallel algorithms should run equally
+well in any of these two parallel frameworks. For complex algorithms
+with nested parallelism and heterogeneous tasks, Cilk Plus generally
+provides good performance, but offers little freedom for fine-tuning; in
+contrast, OpenMP may require more tuning to perform well; however, it
+allows more control over scheduling and work distribution. Additionally,
+Intel OpenMP and Intel Cilk Plus libraries can be used side by side in
+the same code without conflicts. In case of nested parallelism, it is
+preferable to use Cilk Plus parallel regions inside OpenMP parallel
+regions, and not the other way around.
+
+In order to make certain functions of Intel Cilk Plus available, the
+preprocessing directive ‘\#include &lt;cilk/cilk.h&gt;’ must be used at
+the beginning of the code.
+
+**1.3 Hands-on Activities**
+
+**Note:** The following set of activities is mainly based on exercises
+extracted from this excellent book: “*Parallel Programming and
+Optimization with Intel Xeon Phi Coprocessors*” (Colfax International,
+2013, pp. 285-290).
+
+**1.3.1** To help you recall how to compile and execute an OpenMP code,
+have a look at the source code ‘openmp.c’, located at
+/home/traineeN/source-files/session2, which prints out the total number
+of OpenMP threads and for each fork-join branch prints out “Hello world
+from thread %d". Compile the code using ‘icc’ for the Xeon processor and
+for the Xeon coprocessor, using the appropriate flag (-openmp) to enable
+OpenMP. Before running it, set the environment variable
+OMP\_NUM\_THREADS to a number N between 1 and the maximum number of
+threads available either on the host or on the coprocessor, using the
+command:
+
+  **\$ export OMP\_NUM\_THREADS=N** (you need to assign a value to N!)
+  ----------------------------------------------------------------------
+
+Execute the binary code and make sure that you understand how it works.
+Recompile the source using the -mmic flag, upload the binary to one of
+the coprocessors, connect to it using ssh and run the executable there
+(do not forget to define OMP\_NUM\_THREADS=N on the Xeon Phi command
+shell before launching the executable).
+
+Test yourself by answering these trivial questions:
+
+-   What OpenMP function returns the total number of available threads?
+
+-   What OpenMP function returns the current thread number?
+
+**1.3.2** Modify the source code ‘openmp.c’ by inserting a parallel for
+loop that prints out the current thread number and the number of
+iteration. Use the directive “\#pragma omp for” (hint: “\#pragma omp
+parallel” spawns a group of threads, while “\#pragma omp for” divides
+loop iterations between the spawned threads; you can do both things at
+once with the fused “\#pragma omp parallel for” directive). Save the
+modified source as ‘openmp\_v1.c’, compile and execute the binary on the
+host system, checking the result. Recompile the source using the -mmic
+flag, upload the corresponding binary to one of the coprocessors,
+connect to it using ssh and execute it there.
+
+**1.3.3** Have a look at source file ‘openmp\_v2.c’. In this slightly
+modified version, constant variable nthreads is initialized with the
+maximum value of OpenMP threads and is made available for all threads.
+Notice that a private integer has been defined, which should be
+independent for each parallel region. Any variable declared inside the
+parallel region is private to each thread, and any variable declared
+before the parallel region is available (shared) for every thread.
+Compile and execute the code on the host system, and check the result.
+Recompile the source using the ‘-mmic’ flag, upload the binary to one of
+the coprocessors, connect to it using ssh and execute there.
+
+**1.3.4** Control over the variables scope can also be done with OpenMP
+parallel clauses private, shared, and firstprivate. Have a look at the
+source file ‘openmp\_v3.c’, which uses these three variables. Check what
+values will be assigned to them within the parallel region and how they
+will react to the modifications of their values. Then compile the source
+and execute on the host system, and check if your assumptions were
+correct. Recompile using the -mmic flag, upload the object to one of the
+coprocessors, connect to it using ssh and execute there a few times.
+Notice that the value of varShared is different at each execution; in
+fact, its value is unpredictable. Why does this happen?
+
+**1.3.5** A common mistake when implementing parallel algorithms is
+creating racing conditions, which occur when shared variables are
+accessed for reading and writing by different threads at the same time.
+Have a look at the source file ‘openmp\_v4.c’, which uses a parallel for
+loop over the sequence of N = 10000 numbers added together in a shared
+variable sum. Correct value should be equal to (N−1)\*N/2 (note: lower
+and upper boundaries of the loop are, respectively, 0 and N–1). Compile
+the source code using the -mmic flag, upload the executable file to one
+of the coprocessors, connect to it using ssh and execute the binary
+several times, comparing the results. Why the result is different at
+each execution?
+
+**1.3.6** There are several ways to fix racing conditions in OpenMP
+parallel codes. One of them is applying ‘\#pragma omp critical’ to the
+region where the racing conditions occur. Take a look at file
+openmp\_v5.c, which is an example that uses this solution to fix the
+summation problem. It should be noted, however, that only one thread
+will execute the critical region marked with the critical pragma at a
+time. Therefore, the parallel code technically becomes serial, since
+only one thread will be executing it at a time. As always, compile the
+source for the MIC architecture, upload and execute it several times on
+one of the coprocessors, and check the results.
+
+**1.3.7** ‘Reduction’ is a clause of OpenMP for loop, which indicates
+what operation will be used on what reduction variable. OpenMP will
+automatically take care of avoiding racing conditions and receiving
+correct result. Have a look at example ‘openmp\_v6.c’, which implements
+the proposed solution. Compile it, execute and check the result.
+
+**1.3.8** In this exercise you will be introduced to a source code that
+uses Intel Cilk Plus parallelism model. Have a look at source file
+‘cilk\_v0.cpp’. It prints out the total number of Intel Cilk Plus
+workers available on the system. The keyword \_Cilk\_for is used to
+iterate through the number of available workers and to print out the
+current worker number. Since the workload is very light, all iteration
+should be done by only one worker (this ‘for loop’ gets serialized).
+Therefore, we need to add extra workload to the ‘for loop’ to see Intel
+Cilk Plus parallelism. For this reason, within the ‘for loop’ there is
+an additional ‘while loop’ that multiplies some numbers to the private
+variable. At the end the code prints out the current worker number
+responsible for the previous calculation. Compile ‘cilk\_v0.cpp’ using
+either icc or icpc generating binaries for the host and the
+coprocessors, execute them on the host and analyze the output. Recompile
+the source using the -mmic flag, upload the binary to one of the
+coprocessors, connect to it using ssh and run the executable there.
+
+**1.3.9** In the previous exercise we used the \_Cilk\_for loop to to
+iterate through the number of available workers and to print out the
+current worker number. If the workload was significant for each worker,
+than each of them should have been involved in the calculations only
+once. The number of iterations distributed among the workers can be
+controlled by the clause ‘\#pragma cilk grainsize’. In this exercise the
+original code has been modified to grant 4 iteration steps for each
+worker. Have a look at source file ‘cilk\_v1.cpp’, compile it for host
+and coprocessors and execute the binaries on the host and on one of the
+coprocessors, and analyze the outputs.
+
+**1.3.10** Using the keyword \_Cilk\_spawn for asynchronous parallelism
+we can run recursive tasks in parallel. Have a look at source
+‘cilk\_v2.cpp’, which recursively calls function Recurse(const int task)
+and prints out the number of current worker, doing some calculations
+within the function. Like in the previous exercises, compile (host and
+coprocessor) and execute the binaries on the host and on one of the
+coprocessors, and analyze the outputs.
+
+**1.3.11** Quite often we need synchronization between the parallel
+tasks. Intel Cilk Plus has \_Cilk\_sync keyword for this. In source code
+‘cilk\_v3.cpp’, a thousand dynamically allocated consecutive integer
+elements of an array are summed up by two parallel (\_Cilk\_spawn)
+function calls named Sum(), each operating over one half of the array. A
+synchronization keyword is then used to wait for sums to complete, and
+the final result is printed out. Compile (host and coprocessor) and
+execute the binaries on the host and on one of the coprocessors, and
+analyze the outputs. Modify the code in such a way that the array is
+divided in four parts.
+
+**1.3.12** A more elegant way to organize parallelism is to avoid
+hardwiring the number of parallel tasks and let Intel Cilk Plus take
+care of this automatically. To prevent racing conditions we will use one
+of the Intel Cilk Plus reducers named ‘reducer\_opadd’, a math operator
+that calculates the sum of a set of values. By definition, a reducer is
+a variable that can be safely used by multiple threads running in
+parallel. Intel Cilk Plus ships with a library of reducers you can use
+in your C and C++ code. The ‘reducer\_opadd’ is defined as:
+
+cilk::reducer\_opadd&lt;int&gt; sum
+
+Have a look at source code ‘cilk\_v4.c’, which uses reducer ‘sum’ to
+store the result of adding 20 consecutive integers iterated over with
+\_Cilk\_for loop, which is then printed out. Access to the reducer sum
+is done through calls to sum.set\_value(N) and sum.get\_value()
+functions. Compile the source code for host and coprocessors, execute
+the binaries on the host and on one of the coprocessors, and analyze the
+corresponding outputs.
+
+**Practical Exercises - Part 2**
+
+**Intel MPI programming models**
 
 **2.1 Goals**
 
-Traditionally, “Hello World” programs are used to illustrate basic
-syntax; most of the examples of this session will follow this tradition.
-The following set of activities will show you how to compile trivially
-simple source codes for native Intel Xeon Phi coprocessor execution. You
-will also learn how to offload parts of the code or specific function
-calls of an executable running on the host to the coprocessor, and will
-have the opportunity to play with simple MPI and OpenMP examples.
-
-**2.2 Hands-on Activities**
-
-**2.2.1** A development system with Intel Xeon Phi coprocessors must
-have the Intel software development tools installed, such as compilers,
-parallelization libraries and performance tuning utilities to support
-high performance code compilation. That said, before compiling and
-linking any source code, we need to be sure that 1) the host system has
-the Intel C (icc) and C++ (icpc) compilers, the libraries and the
-utilities we will use and 2) the environment is set up properly. In
-order to verify that the compilers are installed, run the following
-commands in the host system console:
-
-  -------------------------
-  **\[phi01\]\$ icc -V**
-
-  **\[phi01\]\$ icpc -V**
-  -------------------------
-  -------------------------
-
-**2.2.2** Let us begin with an extremely trivial code just to check if
-everything is running fine. Take a look at the source code hello.c
-located at /home/traineeN/source-files/session1, then compile and
-execute it:
-
-  ---------------------------------------------
-  **\[phi01\]\$ cd \~/source-files/session1**
-
-  **\[phi01\]\$ cat ./hello.c**
-
-  **\[phi01\]\$ icc hello.c -o hello**
-
-  **\[phi01\]\$ ./hello**
-
-  Hello world! I have 32 logical cores.
-  ---------------------------------------------
-  ---------------------------------------------
-
-**Note:** All the source codes we will be using in the following
-activities are located in your home directory:
-/home/traineeN/source-files/session1.
-
-Now recompile it using the –mmic flag to make it natively executable for
-the Intel Xeon Phi coprocessor (remember to change the name of the
-executable, e.g. hello.mic or hello.phi), and try to execute it:
-
-  ------------------------------------------------
-  **\[phi01\]\$ icc -mmic hello.c -o hello.mic**
-
-  **\[phi01\]\$ ./hello.mic**
-
-  -bash: ./hello.mic: cannot execute binary file
-  ------------------------------------------------
-  ------------------------------------------------
-
-The resultant binary can only be executed on the Intel Xeon Phi
-coprocessor (why?). As we have seen before, the Intel Xeon Phi
-coprocessor is an IP-addressable device which runs an independent Linux
-OS with an SSH server daemon. Let us use scp to copy the executable
-hello.mic to any of the coprocessors, for example mic0 and mic1 (and/or
-mic2):
-
-  -------------------------------------
-  **\[phi01\]\$ scp hello.mic mic0:**
-
-  **\[phi01\]\$ scp hello.mic mic1:**
-
-  **\[phi01\]\$ scp hello.mic mic2:**
-  -------------------------------------
-  -------------------------------------
-
-Connect to each coprocessor through ssh and execute the binary file
-locally:
-
-  ----------------------------------------
-  **\[phi01\]\$ ssh mic0**
-
-  **\[phi01-mic\]\$ ./hello.mic**
-
-  Hello world! I have 228 logical cores.
-
-  **\[phi01-mic\]\$ exit**
-
-  **\[phi01\]\$ ssh mic1**
-
-  **\[phi01-mic\]\$ ./hello.mic**
-
-  Hello world! I have 228 logical cores.
-
-  **\[phi01-mic\]\$ exit**
-  ----------------------------------------
-  ----------------------------------------
-
-**2.2.3** Now we are going to run the native MIC executable in the
-coprocessors from the host system, using the ‘micnativeloadex’ utility.
-It automatically copies the native binary to a specified coprocessor,
-checks library dependencies and also copies them prior to execution. By
-default, micnativeloadex redirects output from the application running
-on the coprocessor back to the host system console. The output of the
-application is redirected back to the console of the host system. The
-location of the Intel compiler runtime libraries for Intel Xeon Phi
-coprocessors is defined by the SINK\_LD\_LIBRARY\_PATH environment
-variable, so we need to set it first:
-
-  -----------------------------------------------------------------------------------------------------
-  **\[phi01\]\$ export SINK\_LD\_LIBRARY\_PATH=/opt/intel/composer\_xe\_2013.1.117/compiler/lib/mic**
-
-  **\[phi01\]\$ micnativeloadex ./hello.mic –d 0**
-
-  Hello world! I have 228 logical cores.
-
-  **\[phi01\]\$ micnativeloadex ./hello.mic –d 1**
-
-  Hello world! I have 228 logical cores.
-
-  **\[phi01\]\$ micnativeloadex ./hello.mic –d 2**
-
-  Hello world! I have 228 logical cores.
-  -----------------------------------------------------------------------------------------------------
-  -----------------------------------------------------------------------------------------------------
-
-The micnativeloadex utility can also be used to check the library
-dependencies of the binary code, by using the option –l:
-
-  **\[phi01\]\$ micnativeloadex ./hello.mic –d 0 –l**
-  -----------------------------------------------------
-
-**Extra activity:** rebuild the code hello.c with the –mmic and –mkl
-compiler directives, execute the previous command and identify the extra
-libraries that are related to the Intel MKL.
-
-**2.2.4** In this activity we will run three trivial Hello World
-examples, aiming to demonstrate the explicit offload model. In this
-programming model, execution begins on the host and, based on
-user-defined code, some sections are offloaded to the coprocessor(s), if
-there is one, or run in the host if not.
-
-The first example uses the directive *‘\#pragma offload target(mic)*’,
-which informs the compiler that the segment of the code immediately
-below it (and delimited with brackets) should be executed on an Intel
-Xeon Phi coprocessor. Take a look at the content of the source file
-hello-offload1.c in /home/traineeN/source-files/session1, then compile
-and run it:
-
-  --------------------------------------------------------
-  **\[phi01\]\$ icc hello-offload1.c –o hello-offload1**
-
-  **\[phi01\]\$ ./hello-offload1**
-  --------------------------------------------------------
-  --------------------------------------------------------
-
-The second example shows how to declare functions within the scope of
-\#pragma offload. The functions should be declared with the qualifier
-\_\_attribute\_\_((target(mic))), which instructs the compiler to
-generate code for the MIC architecture for that particular function. The
-code of the function is transferred to the coprocessor and launched when
-offload occurs. Take a careful look at the content of the source file
-hello-offload2.c, then compile and run it:
-
-  --------------------------------------------------------
-  **\[phi01\]\$ icc hello-offload2.c –o hello-offload2**
-
-  **\[phi01\]\$ ./hello-offload2**
-  --------------------------------------------------------
-  --------------------------------------------------------
-
-By default, environment variables defined on the host system are
-forwarded to the coprocessors when an offload application is launched.
-In this process, the variable names are not changed; to avoid variable
-name collisions on the host and the coprocessor, we need to define the
-environment variable MIC\_ENV\_PREFIX. When this variable is set, only
-the environment variables with names beginning with the specified prefix
-are forwarded. In the forwarding process, the prefix is dropped. The
-third example below shows how this process works. Take a look at the
-content of the source file hello-offload3.c, then compile and run it:
-
-  --------------------------------------------------------
-  **\[phi01\]\$ icc hello-offload3.c –o hello-offload3**
-
-  **\[phi01\]\$ ./hello-offload3**
-  --------------------------------------------------------
-  --------------------------------------------------------
-
-Set ENV\_VAR to a certain value, run the binary again and compare the
-output with the previous run:
-
-  -------------------------------------------
-  **\[phi01\]\$ export ENV\_VAR=any-value**
-
-  **\[phi01\]\$ ./hello-offload3**
-  -------------------------------------------
-  -------------------------------------------
-
-Define any value for MIC\_ENV\_PREFIX (e.g. MIC, PHI, etc), and run
-again, comparing the output with the previous runs:
-
-  ---------------------------------------------
-  **\[phi01\]\$ export MIC\_ENV\_PREFIX=PHI**
-
-  **\[phi01\]\$ ./hello-offload3**
-  ---------------------------------------------
-  ---------------------------------------------
-
-Now define a different value for PHI\_ENV\_VAR and run once again:
-
-  ------------------------------------------------------
-  **\[phi01\]\$ export PHI\_ENV\_VAR=any-other-value**
-
-  **\[phi01\]\$ ./hello-offload3**
-  ------------------------------------------------------
-  ------------------------------------------------------
-
-**Note:** to undefine an environment variable use the command ‘*unset*’:
-**unset MIC\_ENV\_PREFIX**
-
-**2.2.5** We can generate diagnostic output for offload applications
-that utilize Intel Xeon Phi coprocessors by using the environment
-variable OFFLOAD\_REPORT, which controls the verbosity of the diagnostic
-output: OFFLOAD\_REPORT = 1 produces output including the offload
-locations and times; OFFLOAD\_REPORT = 2 adds information regarding data
-traffic. If OFFLOAD\_REPORT is set to 0 or not defined, no diagnostic
-output is produced. Set the OFFLOAD\_REPORT environment variable to 1,
-and 2 and run hello-offload1, or hello-offload2, or hello-offload3
-again, and check the results.
-
-**2.2.6** One major difference between programming for a single system
-and for a cluster is that each cluster node has a separate memory space.
-Unlike multiple threads running in a shared memory space, communication
-between disjoint memory spaces usually requires the programmer to make
-explicit calls to communication routines. The explicit communications
-occur via messages and the Message Passing Interface (MPI) is the
-standard way to send and receive messages. MPI is not a programming
-language, but instead a set of library routines that can be called from
-C/C++ and Fortran programs. MPI programs typically employ a
-single-program, multiple-data (SPMD) approach: the same MPI application
-is launched on each MPI host or, in other words, each MPI host executes
-the same program. However, it does not mean that all processes perform
-the same work. At runtime, each MPI process is assigned a unique
-identifier called MPI rank. Multiple instances, or MPI ranks, of the
-same program run concurrently, where each rank computes a different part
-of the larger problem and uses MPI calls to communicate data between
-ranks.
-
-Let us start with a trivially simple “Hello World” application for MPI.
-Take a look at the hello-mpi.c source code. MPI implementations
-typically provide compiler wrappers (e.g. mpicc, mpiicc, mpiicpc, etc)
-to simplify the process of building MPI programs, and utilities (e.g.
-mpirun, mpiexec) to launch them. In order to verify that the wrappers
-and utilities are all set, run the following commands:
-
-  ------------------------------
-  **\[phi01\]\$ mpiicc -v**
-
-  **\[phi01\]\$ mpiicpc -v**
-
-  **\[phi01\]\$ mpirun -info**
-  ------------------------------
-  ------------------------------
-
-Let us start by using the mpiicc wrapper to compile the hello-mpi.c
-source code and the mpirun utility to run the binary in the host system:
-
-  -------------------------------------------------
-  **\[phi01\]\$ mpiicc hello-mpi.c -o hello-mpi**
-
-  **\[phi01\]\$ mpirun -n 32 ./hello-mpi**
-  -------------------------------------------------
+This set of exercises will show you practical aspects of heterogeneous
+execution of parallel application in distributed memory with MPI, widely
+recognized as the de facto standard for parallel programming.
+
+**2.2 Overview of MPI**
+
+The Message Passing Interface (MPI) has been the de facto standard for
+parallel programming for nearly two decades. It defines a set of library
+routines that can be called from C and Fortran programs, and includes a
+communication protocol that allows multiple processes, which do not
+share common memory, to perform parallel calculations, communicating
+with each other by passing messages through a communication channel. MPI
+messages are arrays of predefined and user-defined data types. The
+purpose of MPI messages range from task scheduling to exchanging large
+amounts of data necessary to perform calculations. MPI guarantees that
+the order of sent messages is preserved on the receiver side.
+
+In the old era of single-core compute nodes, the dominant MPI usage
+model in clusters of computers was to run one MPI process per physical
+machine. Nowadays, with the advent of multi-core, multi-socket, and now
+heterogeneous many-core systems, the range of usage models of MPI has
+grown. It is possible, for example, to run one MPI process per compute
+node, exploiting parallelism in each machine by means of a shared-memory
+parallel framework, such as OpenMP or Intel Cilk Plus. Alternatively,
+one single-threaded MPI process can run on each physical or logical core
+of each machine in a cluster of servers. In this case, MPI processes
+running on the same compute node still do not share memory address
+space. However, message passing between these processes is more
+efficient, because fast virtual fabrics can be used for communication.
+Another possible option is to run multiple multi-threaded MPI processes
+per compute node. In this case, each process exploits parallelism in
+shared memory, and MPI communication between processes adds
+distributed-memory parallelism. This hybrid approach may yield optimum
+performance for with a high frequency or large volume of communication.
+
+MPI programs typically employ a single-program, multiple-data (SPMD)
+approach. Multiple instances, or MPI ranks, of the same program run
+concurrently on different data. Each rank computes a different part of a
+larger problem and uses MPI calls to communicate data between ranks.
+From the programmer's perspective, ranks may run either on the same node
+or in different nodes; the communication path may be different but that
+is transparent to the MPI program.
+
+As we have seen in Session 1, Intel Xeon Phi coprocessors run its own
+operating system, independent of the host processor, and have their own
+memory domain. In other words, a Xeon Phi coprocessor behaves like an
+independent compute node. From this perspective, MPI is a natural fit.
+In principle, any existing MPI program can be run on a mixture of hosts
+and coprocessors without source code modification.
+
+In heterogeneous clusters with Intel Xeon processors and Xeon Phi
+coprocessors, MPI programmers have a choice of running MPI processes on
+hosts and coprocessors natively, or running MPI processes only on hosts
+and performing offload to coprocessors.
+
+**2.3 Hands-on Activities**
+
+**2.3.1** Please review exercises 2.2.6 to 2.2.8 from Session 1. As we
+have seen, MPI applications must be compiled with special wrapper
+applications – ‘mpiicc’ for C and ‘mpiicpc’ for C++, and the resulting
+executable is launched using the ‘mpirun’ script.
+
+**2.3.2** Intel MPI distribution includes a test directory, which
+contains a simple MPI program coded in C, C++, or Fortran. In directory
+‘/home/traineeN/source-files/session2’ you will find a copy of the
+source file ‘test.c’ from the Intel MPI distribution. Let us start
+working on this code as a quick remind on how to run an MPI program on
+the Intel Xeon Phi coprocessor. Compile the source file with the Intel
+compiler for the host with the usual Intel MPI wrapper:
+
+  **\[phi01\]\$ mpiicc -o test test.c**
+  ---------------------------------------
+
+Now compile the source file for Intel Xeon Phi coprocessor using the
+"-mmic" compiler flag. Because of this flag the Intel MPI script will
+provide the Intel MPI libraries for Intel Xeon Phi coprocessor to the
+linker (add the verbose flag "-v" to see it):
+
+  **\[phi01\]\$ mpiicc -mmic -o test.mic test.c**
   -------------------------------------------------
 
-Notice that the output is not ordered by rank; this occurs because each
-logical thread executes independently. Let us now compile, upload the
-binary and run the same code natively on the Intel Xeon coprocessor mic0
-(and do the same for mic1 and mic2):
+The ".mic" suffix is added to distinguish the coprocessor binary from
+the host one (it could be any suffix). As a starter run the Xeon binary
+with 4 MPI processes alone:
 
-  ---------------------------------------------------------------------------
-  **\[phi01\]\$ mpiicc -mmic hello-mpi.c -o hello-mpi.mic**
+  **\[phi01\]\$ mpirun -n 4 ./test**
+  ------------------------------------
 
-  **\[phi01\]\$ scp hello-mpi.mic mic0:**
+Copy the binary file ‘test.mic’ to the three coprocessors and run the
+Intel MPI test program on each of them in coprocessor-only mode.
 
-  **\[phi01\]\$ ssh mic0**
+**Note:** before launching the command below, we need to set the
+I\_MPI\_MIC environment variable to enable the MPI communication between
+host and coprocessors; please review exercise 2.2.8 in session 1).
 
-  **\[phi01-mic\]\$ mpirun -n XXX ./hello-mpi.mic** (XXX = 228 in our case)
-  ---------------------------------------------------------------------------
-  ---------------------------------------------------------------------------
+  **\[phi01\]\$ mpirun -host mic0 –n 4 ./test.mic**
+  ---------------------------------------------------
 
-**2.2.7** In this activity we work with a slightly more complex Hello
-World MPI code, which runs in the host system but offloads parts of the
-code to two coprocessors in such a way that each thread also says
-“hello”. This is accomplished by means of OpenMP. The number of threads
-will be controlled by the environment variable PHI\_OMP\_NUM\_THREADS.
-The information contained in this environment variable should be passed
-to the coprocessors, so we also need to tell the compiler that any
-variable starting with PHI refers to the coprocessors. We can do this by
-using the variable MIC\_ENV\_PREFIX. Take a look at code
-hello-mpi-omp-offload.c and try to understand it; then compile it, and
-launch the binary. Check the result.
+An alternative would be to login onto the coprocessor and run the test
+from there in a straightforward manner. Try it if you like.
 
-  ---------------------------------------------------------------------------------
-  **\[phi01\]\$ mpiicc -openmp -o hello-mpi-omp-offload hello-mpi-omp-offload.c**
+Pulling it together: you can run the test code on both the host
+processor and on one of the Xeon Phi coprocessor as one MPI program in
+symmetric mode by defining each argument set independently (with command
+line sections separated by a colon):
 
-  **\[phi01\]\$ export MIC\_ENV\_PREFIX=PHI**
+  **\[phi01\]\$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic**
+  ----------------------------------------------------------------------------------
 
-  **\[phi01\]\$ export PHI\_OMP\_NUM\_THREADS=4**
+Notice that in the symmetric mode you must provide the ‘-host’ flag for
+the MPI processes running on the Xeon host!
 
-  **\[phi01\]\$ mpirun -n 4 ./hello-mpi-omp-offload**
-  ---------------------------------------------------------------------------------
-  ---------------------------------------------------------------------------------
+**2.3.3** As a preparation for the next exercises on hybrid programming,
+the mapping/pinning of Intel MPI processes will be investigated step by
+step. Set the environment variable I\_MPI\_DEBUG equal or larger than 4
+to see the mapping information:
 
-**2.2.8** In this final activity for Part 2 we will work on a more
-realistic MPI application. Take a look at the source file montecarlo.c,
-a sample program that estimates de value of π (pi) using the Monte Carlo
-method. For more details please check the link below (Chapter 3):
+  **\[phi01\]\$ export I\_MPI\_DEBUG=4**
+  ----------------------------------------
 
-<http://software.intel.com/en-us/articles/using-the-intel-mpi-library-on-intel-xeon-phi-coprocessor-systems>
+For pure (non-hybrid) MPI programs the environment variable
+I\_MPI\_PIN\_PROCESSOR\_LIST controls the mapping/pinning. For hybrid
+codes the variable I\_MPI\_PIN\_DOMAIN takes precedence. It splits the
+(logical) processors into non-overlapping domains for which this rule
+applies: "one MPI process for one domain".
 
-Let us start by generating binaries for the Xeon processors and the Xeon
-Phi coprocessors, and then transfer the corresponding binary to the
-coprocessors:
+Repeat the Intel MPI test from before with I\_MPI\_DEBUG set. Because of
+the amount of output use the flag "-prepend-rank", which puts the MPI
+rank number in front of each output line:
 
-  -------------------------------------------------------------
-  **\[phi01\]\$ mpiicc montecarlo.c -o montecarlo**
+  ------------------------------------------------------------------------------------------------
+  **\[phi01\]\$ mpirun -prepend-rank -n 4 ./test**
 
-  **\[phi01\]\$ mpiicc -mmic montecarlo.c -o montecarlo.mic**
+  **\[phi01\]\$ mpirun -prepend-rank -host mic0 -n 4 \~/test.mic**
 
-  **\[phi01\]\$ scp montecarlo.mic mic0:**
+  **\[phi01\]\$ mpirun -prepend-rank -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic**
+  ------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------------
 
-  **\[phi01\]\$ scp montecarlo.mic mic1:**
+Sorting of the output can be beneficial for the mapping analysis,
+although this changes the order of the output. Try adding "2&gt;&1 |
+sort" to sort the output if you like.
 
-  **\[phi01\]\$ scp montecarlo.mic mic2:**
-  -------------------------------------------------------------
-  -------------------------------------------------------------
+Now set the variable I\_MPI\_PIN\_DOMAIN with the ‘-env’ flag. Possible
+values are ‘auto’, ‘omp’ (which relies on the OMP\_NUM\_THREADS
+variable), or a fixed number of logical cores. We have learned before
+(session 1, exercise 2.2.4) that by exporting I\_MPI\_PIN\_DOMAIN in the
+host’s command shell, the variable is identically exported to the host
+and to the Xeon Phi coprocessors. Typically this is not beneficial and
+an architecture adapted setting using ‘-env’ is recommended:
 
-We are going to learn how we can launch an MPI job on the coprocessors
-from the host system. First we need to set an additional environment
-variable on the host, I\_MPI\_MIC, to enable the MPI communication
-between host and coprocessors (valid values are: enable|yes|on|1):
+  -------------------------------------------------------------------------------------------------------------------------------------------------------
+  **\[phi01\]\$ mpirun -prepend-rank -env I\_MPI\_PIN\_DOMAIN auto -n 4 ./test**
 
-  **\[phi01\]\$ export I\_MPI\_MIC=enable**
-  -------------------------------------------
+  **\[phi01\]\$ mpirun -prepend-rank -env I\_MPI\_PIN\_DOMAIN auto -host mic0 -n 4 ./test.mic**
 
-Now execute the application on the host and then on the coprocessors,
-using the the flags –host and –n, which specifies the host name and the
-number of MPI processes, respectively (be patient, execution time is
-longer compared to the previous exercises):
+  **\[phi01\]\$ mpirun -prepend-rank -env I\_MPI\_PIN\_DOMAIN 4 -host localhost -n 2 ./test : -env I\_MPI\_PIN\_DOMAIN 12 -host mic0 -n 4 \~/test.mic**
+  -------------------------------------------------------------------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  ------------------------------------------------------------
-  **\[phi01\]\$ mpirun -host localhost -n 32 ./montecarlo**
+Experiment with pure Intel MPI mapping by setting
+I\_MPI\_PIN\_PROCESSOR\_LIST if you like. (See the Intel MPI reference
+manual for details).
 
-  **\[phi01\]\$ mpirun -host mic0 -n 228 \~/montecarlo.mic**
+**2.3.4** Now we are going to run a hybrid MPI/OpenMP program on the
+Intel Xeon Phi coprocessor. Have a look at the source code
+‘test\_openmp.c’, in which a simple printout from the OpenMP threads was
+added to the previous Intel MPI test code. You can compare the
+difference between the two files by means of the diff utility:
 
-  **\[phi01\]\$ mpirun -host mic1 -n 228 \~/montecarlo.mic**
+  **\[phi01\]\$ diff test.c test\_openmp.c**
+  --------------------------------------------
 
-  **\[phi01\]\$ mpirun -host mic2 -n 228 \~/montecarlo.mic**
-  ------------------------------------------------------------
-  ------------------------------------------------------------
+Compile with the "-openmp" compiler flag and upload to the Intel Xeon
+Phi coprocessor as usual:
 
-In order to start the application on two coprocessors simultaneously, we
-can specify the list of hosts and their respective parameters using the
-separator ‘:’, as shown below:
+  -------------------------------------------------------------------------
+  **\[phi01\]\$ mpiicc -openmp test\_openmp.c -o test\_openmp**
 
-  **\[phi01\]\$ mpirun -host mic0 -n 228 \~/montecarlo.mic : -host mic1 –n 228 \~/montecarlo.mic : -host mic2 –n 228**
-  ----------------------------------------------------------------------------------------------------------------------
+  **\[phi01\]\$ mpiicc -openmp -mmic test\_openmp.c -o test\_openmp.mic**
+  -------------------------------------------------------------------------
+  -------------------------------------------------------------------------
 
-Using this syntax, let us now execute the MPI application using all
-available threads (716):
+Because of the ‘-openmp’ flag, Intel MPI will link the code with the
+thread-safe version of the Intel MPI library (libmpi\_mt.so) by default.
+Run the Intel MPI tests from before:
 
-  **\[phi01\]\$ mpirun -host localhost -n 32 ./montecarlo : -host mic0 -n 228 \~/montecarlo.mic : -host mic1 -n 228 \~/montecarlo.mic : -host mic2 -n 228 \~/montecarlo.mic**
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------
+  **\[phi01\]\$ unset I\_MPI\_DEBUG** (to reduce the output for now)
+
+  **\[phi01\]\$ mpirun -prepend-rank -n 2 ./test\_openmp**
+
+  **\[phi01\]\$ mpirun -prepend-rank -host mic0 -n 2 \~/test\_openmp.mic**
+
+  **\[phi01\]\$ mpirun -prepend-rank -host localhost -n 2 ./test\_openmp : -host mic0 -n 4 \~/test\_openmp.mic**
+  ----------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------
+
+The execution generates a lot of output! The default for the OpenMP
+library is to assume as many OpenMP threads as there are logical
+processors. For the next steps, explicit OMP\_NUM\_THREADS values
+(different on host and Intel Xeon Phi coprocessor) will be set.
+
+In the following test the default OpenMP affinity is checked. Please
+notice that the range of logical processors is always defined by the
+splitting the threads based on the I\_MPI\_PIN\_DOMAIN variable. This
+time we also use I\_MPI\_PIN\_DOMAIN=omp, see how it depends on the
+OMP\_NUM\_THREADS setting:
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN auto -n 2 ./test\_openmp 2&gt;&1 | sort**
+
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN omp -host mic0 -n 2 \~/test\_openmp.mic 2&gt;&1 | sort**
+
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN 4 -host localhost -n 2 ./test\_openmp : -env KMP\_AFFINITY verbose -env OMP\_NUM\_THREADS 6 -env I\_MPI\_PIN\_DOMAIN 12 -host mic0 -n 4 \~/test\_openmp.mic 2&gt;&1 | sort**
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Remember that it is usually beneficial to avoid splitting of logical
+cores on Intel Xeon Phi coprocessor between MPI processes; either the
+number of MPI processes should be chosen so that
+I\_MPI\_PIN\_DOMAIN=auto creates domains which cover complete cores or
+the environment variable should be a multiply of 4.
+
+Use "scatter", "compact", or "balanced" (Intel Xeon Phi coprocessor
+specific) to modify the default OpenMP affinity.
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose,granularity=thread,scatter -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN auto -n 2 ./test\_openmp**
+
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose,granularity=thread,compact -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN omp -host mic0 -n 2 \~/test\_openmp.mic 2&gt;&1 | sort**
+
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose,granularity=thread,compact -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN 4 -host localhost -n 2 ./test\_openmp : -env KMP\_AFFINITY verbose,granularity=thread,balanced -env OMP\_NUM\_THREADS 6 -env I\_MPI\_PIN\_DOMAIN 12 -host mic0 -n 4 \~/test\_openmp.mic 2&gt;&1 | sort**
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Notice that, as well as other options, the OpenMP affinity can be set
+differently per Intel MPI argument set, i.e. different on the host and
+on the Intel Xeon Phi coprocessor.
+
+**2.3.5** Now we want to run the Intel MPI test program with some
+offload code on the Xeon Phi coprocessor. Have a look at source file
+‘test\_offload.c’, in which the simple printout from the OpenMP thread
+is now offloaded to the coprocessor. Compare the difference between the
+two files using the diff utility:
+
+  **\[phi01\]\$ diff test.c test\_offload.c**
+  ---------------------------------------------
+
+Compile for the Xeon host with the ‘-openmp’ compiler flag as before.
+The Intel compiler will automatically recognize the offload pragma and
+create the binary for it.
+
+  **\[phi01\]\$ mpiicc -openmp test\_offload.c -o test\_offload**
+  -----------------------------------------------------------------
+
+(Note that, if necessary, offloading could be switched off with the
+‘-no-offload’ flag).
+
+Execute the binary on the host:
+
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY granularity=thread,scatter -env OMP\_NUM\_THREADS 4 -n 2 ./test\_offload**
+  ----------------------------------------------------------------------------------------------------------------------------------
+
+Now repeat the execution, but ‘grep’ and ‘sort’ the output to focus on
+the essential information:
+
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY granularity=thread,scatter -env OMP\_NUM\_THREADS 4 -n 2 ./test\_offload 2&gt;&1 | grep bound | sort**
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+All OpenMP threads are mapped onto identical Intel Xeon Phi coprocessor
+threads! The variable I\_MPI\_PIN\_DOMAIN cannot be used because the
+domain splitting would be calculated according to the number of logical
+processors on the Xeon host!
+
+The solution is to specify explicit proclists per MPI process:
+
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP\_NUM\_THREADS 4 -n 1 ./test\_offload : -env KMP\_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP\_NUM\_THREADS 4 -n 1 ./test\_offload**
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Repeat the execution, but ‘grep’ and ‘sort’ the output to focus on the
+essential information:
+
+  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP\_NUM\_THREADS 4 - n 1 ./test\_offload : -env KMP\_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP\_NUM\_THREADS 4 -n 1 ./test\_offload 2&gt;&1 | grep bound | sort**
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **Practical Exercises - Part 3**
 
-**High Performance Test-Drive**
+**Using Intel Math Kernel Library (MKL)**
 
 **3.1 Goals**
 
-In this new set of activities we will use simple code examples to
-leverage the Intel Xeon Phi coprocessor towards peak performance, thus
-demonstrating some specific performance elements of the architecture.
+This set of activities aims to familiarize you with the Intel Math
+Kernel Library (MKL). You will learn how to compile a simple program for
+coprocessor only execution, and how to make use of automatic offload and
+compiler-assisted offload.
 
-**Note:** The main ideas discussed and the set of source codes used in
-Part 3 have been extracted from the *highly recommended* book “*Intel
-Xeon Phi Coprocessor High-Performance Programming*”, by Jim Jeffers and
-James Reinders (Elsevier, 2013).
+**3.2 Overview of Intel MKL**
 
-**3.2 Hands-on Activities**
+Intel Math Kernel Library (Intel MKL), first introduced to the public in
+2003, is a collection of general-purpose mathematical functions for
+science, engineering, and financial applications. Core functionality
+includes Basic Linear Algebra Subprograms (BLAS), Linear Algebra Package
+(LAPACK), Scalable Linear Algebra Package (ScaLAPACK), sparse solvers,
+Fast Fourier transform, and vector math. The routines in MKL are hand
+optimized by exploiting Intel's multi-/many-core processors. Intel MKL
+has the following functional categories:
 
-**3.2.1** In this activity we will compile a code that uses only one
-core of the Intel Xeon coprocessor. Take a look at the helloflops1.c
-code in /home/traineeN/source-files/session1 (use ´*less*´, as the file
-has over 90 lines). Line 72 of the code is related to an important
-compute capability of the Xeon Phi: the availability of fused multiply
-and add (FMA), a floating-point operation that computes the product of
-two numbers and adds that product to an accumulator register in one
-single instruction cycle. In principle, this code should approach the
-single precision peak performance of the Intel Xeon Phi coprocessor. The
-idea behind this set of tests is to try to reach the peak performance of
-one single core, and then spread the computation to the remaining ones,
-in order to approach the maximum performance of the coprocessor.
+-   Linear Algebra
 
-Before moving on, let us try to understand what we might expect in
-performance from a single core so we can determine if the results we get
-are good or not. One key measure for any processor is the number of
-floating point operations per second (FLOPS) it can handle. Another
-important feature of the Xeon Phi is related to vectorization. A vector
-is a group of data items of the same data type that can be processed in
-parallel by a single instruction. The compiler generates a vector by
-converting array expressions into the vector format supported by the
-processing architecture. As an example, in the Xeon Phi coprocessor,
-sixteen 32-bit wide single precision floating point numbers can be
-processed simultaneously, as its vector processing unit is 512-bit wide.
-Double precision floating point numbers are 64-bits wide, so eight
-64-bit wide double precision floating point numbers can be processed
-simultaneously in the Xeon Phi coprocessors.
+Intel MKL BLAS provides optimized vector-vector (Level 1), matrix-vector
+(Level 2) and matrix-matrix (Level 3) operations for single and double
+precision real and complex types. Level 1 BLAS routines operate on
+individual vectors, e.g., compute scalar product, norm, or the sum of
+vectors. Level 2 BLAS routines provide matrix-vector products, rank 1
+and 2 updates of a matrix, and triangular system solvers. Level 3 BLAS
+level 3 routines include matrix-matrix products, rank k matrix updates,
+and triangular solvers with multiple right-hand sides. Intel MKL LAPACK
+provides extremely well-tuned LU, Cholesky, and QR factorization and
+driver routines that can be used to solve linear systems of equations.
+Eigenvalue and least-squares solvers are also included, as are the
+latest LAPACK 3.4.1 interfaces and enhancements.
 
-In this sense, one possible approach to determine the peak single
-precision floating point capability of an Intel Xeon Phi coprocessor is
-by calculating the following expression:
+-   Fast Fourier Transforms
 
-  clock frequency x number of cores x 16 x 2 (FMA) FLOPS per cycle
-  ------------------------------------------------------------------
+Intel MKL FFTs include many optimizations and should provide significant
+performance gains over other libraries for medium and large transform
+sizes. The library supports a broad variety of FFTs, from single and
+double precision 1D to multi-dimensional, complex-to-complex,
+real-to-complex, and real-to-real transforms of arbitrary length.
 
-For the Intel Xeon Phi model 3120A we get:
+-   Vector Math
 
-  1.100 GHz x 57 cores x 16 x 2 = 2006.4 GigaFLOPS
-  --------------------------------------------------
+Intel MKL provides optimized vector implementations of computationally
+intensive core mathematical operations and functions for single and
+double precision real and complex types. The basic vector arithmetic
+operations include element-by-element summation, subtraction,
+multiplication, division, and conjugation as well as rounding operations
+such as floor, ceil, and round to the nearest integer. Additional
+functions include power, square root, inverse, logarithm, trigonometric,
+hyperbolic, (inverse) error and cumulative normal distribution, and
+pack/unpack. Enhanced capabilities include accuracy, denormalized number
+handling, and error mode controls, allowing users to customize the
+behavior to meet their individual needs.
 
-and for the Intel Xeon Phi model 5110P:
+-   Statistics
 
-  1.053 GHz x 60 cores x 16 x 2 = 2021.8 GigaFLOPS
-  --------------------------------------------------
+Intel MKL includes random number generators and probability
+distributions that can deliver significant application performance. The
+functions provide the user the ability to pair Random-Number Generators
+such as Mersenne Twister and, Niederreiter with a variety of Probability
+Distributions including Uniform, Gaussian and Exponential. Intel MKL
+also provides computationally intensive core/building blocks for
+statistical analysis both in and out-of-core. This enables users to
+compute basic statistics, estimation of dependencies, data outlier
+detection, and missing value replacements. These features can be used to
+speed-up applications in computational finance, life sciences,
+engineering/simulations, databases, and other areas.
 
-If we divide 2 TeraFLOPS by the number of cores, we might expect to get
-something near 34 GigaFLOPS per core.
+-   Data Fitting
 
-Let us now compile the hello-flops1.c code, upload it to one of the
-coprocessors, and run it:
+Intel MKL includes a rich set of splines functions for 1-dimensional
+interpolation. These are useful in a variety of application domains
+including data analytics (e.g. histograms), geometric modeling and
+surface approximation. Splines included are linear, quadratic, cubic,
+look-up, stepwise constant and user-defined.
 
-  --------------------------------------------------------------
-  **\[phi01\]\$ icc -mmic -O3 hello-flops1.c -o hello-flops1**
+The library supports Intel and compatible processors and is available
+for Windows, Linux and OS X operating systems. MKL functions are
+optimized with each new processor releases from Intel. MKL can
+automatically make use of the Intel Xeon Phi coprocessors, if they are
+available in the system, by offloading the compute intensive linear
+algebra functions. Many of the functions are also optimized to take
+advantage of the wider vector units (512 bit) available on the MIC
+architecture.
 
-  **\[phi01\]\$ scp hello-flops1 mic0:**
+MKL supports computation on Intel Xeon Phi coprocessors in three
+distinct operation modes, which take advantage of both the multi-core
+host system and the many-core Xeon Phi coprocessors:
 
-  **\[phi01\]\$ ssh mic0**
+-   Native Execution
 
-  **\[phi01-mic\]\$ ./hello-flops1**
+    -   uses an Intel Xeon Phi coprocessor as an independent compute
+        node;
 
-  Initializing
+    -   data is initialized and processed on the coprocessor or
+        communicated via MPI.
 
-  Starting Compute
+-   Automatic Offload (AO)
 
-  GFlops = 25.600, Secs = 1.470, GFlops per sec = 17.415
-  --------------------------------------------------------------
-  --------------------------------------------------------------
+    -   no need to modify the code in order to offload calculations to
+        an Intel Xeon Phi coprocessor;
 
-The result is about a half of one core's theoretical peak performance.
-The problem here is that the code runs only one thread in a single core.
-The Intel Xeon Phi coprocessor has been designed to handle highly
-parallel, scalable applications, so its instruction scheduling mechanism
-is built to assume that more than one thread will be launched by the
-application. In such a way, the coprocessor always schedules a new
-thread to execute at each clock cycle. In this special case where the
-code invokes only one thread on a single core, the scheduler switches to
-a special "null thread" that does nothing, but let a cycle pass before
-looking to reschedule an available thread. In other words, we always
-loose one cycle when only one thread is active, thus reducing the
-performance to one half.
+    -   automatically uses both the host and the Intel Xeon Phi
+        coprocessor;
 
-**3.2.2** Let us now run more than one thread. To ensure maximum
-performance, we need that each core executes the FMA calculation on
-every clock cycle, and, as we have learned in the previous activity, the
-coprocessor must be running more than one thread.
+    -   the library takes care of data transfer and
+        execution management.
 
-So our current goal now is to enable at least one more thread on a
-single core to enable our code to run closer to the core's peak
-performance. The code hello-flops2.c does that using OpenMP directives.
-Take a look at the code (less hello-flops2.c) and then repeat the
-compile – upload – run sequence (do not forget to use the compiler
-directive –openmp):
+-   Compiler Assisted Offload (CAO)
 
-  ----------------------------------------------------------------------
-  **\[phi01\]\$ icc -openmp -mmic -O3 hello-flops2.c -o hello-flops2**
+    -   programmer maintains explicit control of data transfer and
+        remote execution, using compiler offload pragmas and directives;
 
-  **\[phi01\]\$ scp hello-flops2 mic0:**
+    -   can be used together with Automatic Offload.
 
-  **\[phi01\]\$ ssh mic0**
+In order to compile applications using the Intel MKL with the Intel C++
+Compiler, the command line argument -mkl must be specified, and MKL
+header files must be included in the source code in order to declare the
+functions and data types used in the application.
 
-  **\[phi01-mic\]\$ ./hello-flops2**
+**3.3 Hands-on Activities**
 
-  Initializing
+The example used throughout this set of activities[^4] is a dense
+matrix-matrix multiplication (“gemm” with α = 1, and β = 0). The
+following topics are introduced:
 
-  Starting Compute on 2 threads
+-   Reuse and share existing code across Intel architectures including
+    the Intel Xeon Phi coprocessor
 
-  GFlops = 51.200, Secs = 1.469, GFlops per sec = 34.856
-  ----------------------------------------------------------------------
-  ----------------------------------------------------------------------
+-   Use the Intel Math Kernel Library (MKL) with the Xeon Phi
+    coprocessor for
 
-Much better, isn't it? With two threads operating, every cycle is being
-effectively used. This code gets close to the theoretical peak
-performance expected for one core of the Xeon Phi coprocessor.
+    -   Automatic offload (hybrid between host and coprocessor)
 
-Now open the source code using vi and go to line 55. Change the number
-of threads in omp\_set\_num\_threads() to 3 or 4. Remember that the
-maximum number of threads that each Xeon Phi core can handle is 4, so if
-you use a number greater than 4, the first four threads will be assigned
-to one core and the next ones will be assigned to (an)other core(s). The
-authors of this code wrote it in such a way that the maximum performance
-is achieved with only two threads per core; thus we will not achieve
-peak performance because each set of four threads will be assigned to a
-single core. Check this by changing the number of threads in
-omp\_set\_num\_threads(), first to 3 or 4, and then to a number greater
-than 4, recompile the code, upload it to the coprocessors and run again.
-You will see that the performance should remain more or less the same.
+    -   Compiler-assisted offload using Language Extensions for
+        Offload (LEO)
 
-**3.2.3** The next code, hello-flops3.c, is an updated version of
-hello-flops2.c. It allows that each new thread is assigned to one core
-until the maximum number of cores available. Subsequent threads will
-then be reassigned to the remaining cores in the same manner. If the
-code runs e.g. in a 60-core coprocessor and we define 120 threads, then
-the assignment will result in exactly two threads per core across all
-the coprocessor cores. We should then get close to the coprocessor's
-theoretical peak performance.
+    -   Coprocessor only execution
 
-Have a look at the source code. The way that threads are distributed is
-controlled by the KMP\_AFFINITY value. If it is set to "compact", the
-OpenMP runtime will assign threads to each core first before using the
-next one. On the other hand, if it is set to "scatter", threads will be
-scattered across the cores.
+-   Generate console output that is trigged by offloaded code (“printf”)
 
-Let us compile hello-flops3.c and upload it to one of the coprocessors
-using the same command-line commands we have been using so far:
+-   Offload C/C++ code that calls FORTRAN code
 
-  ----------------------------------------------------------------------
-  **\[phi01\]\$ icc -openmp -mmic -O3 hello-flops3.c -o hello-flops3**
+**Note:** The majority of the code does not change from activity to
+activity.
 
-  **\[phi01\]\$ scp hello-flops3 mic0:**
-  ----------------------------------------------------------------------
-  ----------------------------------------------------------------------
+**3.3.1** Go to directory
+‘/home/traineeN/source-files/session2/Intel\_mkl\_mic\_lab\_C’. Have a
+look at the source code 00\_getting\_started.cpp as well as
+00\_gemm\_mkl.hpp. Locate the main function, and follow the anticipated
+flow of the execution into the run function. Understand how
+single-precision and double-precision are mapped to either SGEMM or
+DGEMM calls. We will compile this code by using the supplied Makefile.
+Type ‘make’ to build the default exercise:
 
-Before running the compiled code, we need to define the following
-environment variables at each of the coprocessors' command prompts:
+  **\[phi01\]\$ make**
+  ----------------------
 
-  --------------------------------------------------
-  **\[phi01\]\$ ssh mic0**
+Go to directory ‘bin/intel64’ (‘cd bin/intel64’) and run the executable
+using the value 2000 as the input parameter:
 
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=2**
+  **\[phi01\]\$ ./00\_getting\_started 2000**
+  ---------------------------------------------
 
-  **\[phi01-mic\]\$ export KMP\_AFFINITY=compact**
-  --------------------------------------------------
-  --------------------------------------------------
+Let us now run the application with 16 threads and with thread affinity
+optimized for fine grain parallelization. Set the number of threads to
+16 using OMP\_NUM\_THREADS environment variable and pin the threads by
+using the OpenMP KMP\_AFFINITY environment variable:
 
-Execute the binary on the coprocessor, and take note of the results:
+  -------------------------------------------------------------------
+  **\[phi01\]\$ export OMP\_NUM\_THREADS=16**
 
-  **\[phi01-mic\]\$ ./hello-flops3**
-  ------------------------------------
+  **\[phi01\]\$ export KMP\_AFFINITY=granularity=fine,compact,1,0**
 
-What did you get? The same results we have got using the previous code.
-Look how we have defined the environment variables: two threads only,
-and assigned to one core (affinity value = compact). Let us now make a
-change in the environment variables (XXX must be two times the number of
-cores available: - 114 in our case):
+  **\[phi01\]\$ ./00\_getting\_started 2000**
+  -------------------------------------------------------------------
+  -------------------------------------------------------------------
 
-  --------------------------------------------------------------
-  **\[phi01-mic\]\$ ssh mic0**
+Compare the execution speed with the previous execution.
 
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=XXX** (XXX = 114)
+**Note:** for a refresh on the meaning of KMP\_AFFINITY review exercise
+3.2.3 of Session 1.
 
-  **\[phi01-mic\]\$ export KMP\_AFFINITY=scatter**
-  --------------------------------------------------------------
-  --------------------------------------------------------------
+**Bonus:** Take notes about the variation of the execution speed with
+the number of threads and with and without affinity settings.
 
-Run again and check the results. Change the environment variables to
-different settings, rerun the code, and compare the results obtained.
-How much did you get? Have you approached the Intel Xeon Phi peak
-performance?
+**3.3.2** Go back to directory
+/home/rogerio/session2/intel\_mkl\_mic\_lab\_C (‘cd ../..’) and
+recompile 00\_getting\_started.cpp for coprocessor execution, by
+requesting that the entire baseline code target the Intel Xeon Phi
+coprocessor (flag -mmic):
 
-**3.2.4** In the previous three activities we have been using the
-programming model known as native mode, in which we compile programs
-with the -mmic compiler option; the executable can then run directly on
-the coprocessors. Now let us try the offload programming model, as we
-have seen in previous exercises. In this programming model, a program
-running on the host can offload portions of code to a coprocessor
-installed on the same platform.
+  **\[phi01\]\$ icc -openmp -mkl -mmic 00\_getting\_started.cpp -o 00\_getting\_started\_native**
+  -------------------------------------------------------------------------------------------------
 
-Take a look at source code hello-flops3-offload.c. This code will be
-compiled to run on the host processor, and parts of it will be
-transferred from host to coprocessor. If no coprocessor is available,
-then the block of code that could be offloaded to the coprocessor runs
-on the host. Compile hello-flops3-offload.c using the command-line
-syntax shown below:
+Copy the generated executable to one of the the coprocessors, log in
+onto the corresponding coprocessor and run the executable using the same
+value 2000 as the input parameter.
 
-  **\[phi01\]\$ icc –openmp –O3 hello-flops3–offload.c –o hello-flops3-offload**
-  --------------------------------------------------------------------------------
+**3.3.3** Recompile 00\_getting\_started.cpp to use automatic offload.
+On the host, open 00\_getting\_started.cpp with an editor (e.g. nano,
+vi, emacs) and add the line below near the beginning of the main
+function, before the execution proceeds to SGEMM or DGEMM:
 
-Before executing it, we need to set up the environment variables the
-code requires. Enter the following lines on the host console:
+mkl\_mic\_enable();
 
-  ---------------------------------------------------
-  **\[phi01\]\$ export MIC\_ENV\_PREFIX=MIC**
+Alternatively, you can set the environment variable MKL\_MIC\_ENABLE=1.
+Compile and execute the program on the host:
 
-  **\[phi01\]\$ export MIC\_OMP\_NUM\_THREADS=114**
+  --------------------------------------------------------------------------------------------
+  **\[phi01\]\$ icc -openmp -mkl 00\_getting\_started.cpp -o 00\_getting\_started\_offload**
 
-  **\[phi01\]\$ export MIC\_KMP\_AFFINITY=scatter**
-  ---------------------------------------------------
-  ---------------------------------------------------
+  **\[phi01\]\$ ./00getting\_started\_offload 2000**
+  --------------------------------------------------------------------------------------------
+  --------------------------------------------------------------------------------------------
 
-Check the syntax of the commands by issuing:
+Now some of the work will automatically be offloaded to the coprocessor.
 
-  **\[phi01\]\$ env | grep MIC**
-  --------------------------------
+**3.3.4** Let us now compile file ‘01\_offload.cpp’ using the Language
+Extensions for Offload (LEO) to offload the entire ‘run()’ function to
+the coprocessor. Open ‘01\_offload.cpp’ with an editor and add a
+‘\#pragma offload’ directive before each call to the ‘run()’ function.
+Specify which data is going into the offload section and which is coming
+out. For example, the line
 
-If everything is ok, launch the code:
+\#pragma offload target(mic) in(a:length(n))
 
-  **\[phi01\]\$ ./hello-flops3-offload**
-  ----------------------------------------
+in front of a section or function copies in n elements of array a. Have
+a look at file ‘01\_offload\_solution.cpp’, with the implemented
+solution. Compile using the syntax below:
 
-Check the results and compare with the results obtained in the previous
-activity for the mic0 coprocessor. The code as it is will run on mic0.
-If you want to run it on mic1, change lines 37, 38, 55, and 75 from
-“*target (mic)*” to “*target (mic:1)*”. Then recompile the source code
-and, before launching it, modify the environment variable
-MIC\_OMP\_NUM\_THREADS to the appropriate number of threads (228).
+  **\[phi01\]\$ icpc -openmp -mkl 01\_offload.cpp -o 01\_offload\_solution -lmkl\_intel\_lp64 -lmkl\_intel\_thread -lmkl\_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3**
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now execute the program. The Intel compiler does not require an option
+in order to enable compiler-assisted offload. LEO can be disabled even
+when an offload directive/pragma is found, using -no-offload.
 
 **Practical Exercises - Part 4**
 
-**Running a basic N-body simulation**
+**Optimizing a real-world code example**
 
 **4.1 Goals**
 
-In this activity you are invited to run the N-body simulation described
-in the white paper mentioned in the very beginning of this lab workbook
-(page 4, “Before you start”). This article is a good reference to review
-when evaluating how to write high-performance code for the Intel Xeon
-Phi coprocessor.
+In this final set of activities we will make use of a real scientific
+code example that comes from Naoya Maruyama of Riken Advanced Institute
+for Computational Science, in Japan[^5]. The code simulates diffusion of
+a solute through a volume of liquid. We will start with a baseline C
+code and implement successive optimizations on it, aiming to improve
+performance.
 
-**4.2 Activities**
+**Note:** The following activities (and corresponding source codes) have
+been extracted from chapter 4 of this outstanding and *highly
+recommended* book: “*Intel Xeon Phi Coprocessor High-Performance
+Programming*”, by Jim Jeffers and James Reinders (Elsevier, 2013).
 
-Please read carefully and refer to the white paper below for compiler
-instructions (Listings 2, 3, 5, and 6). The source codes (listings 1 and
-4) can be found on the host system in the usual location
-(/home/traineeN/source-files/session1). Please refer to the teaching
-assistant(s) if you have any question.
+**4.2 Overview of the diffusion simulation algorithm**
 
-A. Vladimirov, V. Karpusenko, “*Test-driving Intel Xeon Phi coprocessors
-with a basic N-body simulation*”, Colfax International, January 2013.
-Available at
+The purpose of the code is to simulate the diffusion of a solute through
+a volume of liquid over time within a 3D fluid container, such as a
+cube, as shown in Figure 1. A three-dimensional seven-point stencil
+operation is used to calculate the effects on the neighboring sub-volume
+sections on each other over time.
 
-<http://research.colfaxinternational.com/post/2013/01/07/Nbody-Xeon-Phi.aspx>
+![](media/image1.tif){width="2.435184820647419in"
+height="1.3065179352580927in"}
 
-[^1]: https://software.intel.com/sites/default/files/blog/337861/reindersxeonandxeonphi-v20121112a.pdf
+**Figure 1: Diffusion of a compound over time through an enclosed volume
+(Jeffers & Reinders book)**
 
-[^2]: http://www.prweb.com/releases/2012/11/prweb10124930.htm
+We need to understand enough about the algorithm being used to ensure we
+perform correct and complete calculations. As shown in Figure 2, we are
+going to apply a seven-point stencil to calculate a new density in the
+volume using weighted values in the stencil applied to the current
+target sub-volume and its neighbors. This calculation will be repeated
+for every section of the volume, creating a new baseline volume. The
+code then iterates over the number of time steps selected to create the
+final diffused volume state.
 
-[^3]: http://en.wikipedia.org/wiki/P54C
+![](media/image2.tif){width="2.7333333333333334in"
+height="1.4266666666666667in"}
 
-[^4]: http://en.wikipedia.org/wiki/Protection\_ring
+**Figure 2: Illustration of the 7-point 3D stencil (Jeffers & Reinders
+book)**
 
-[^5]: http://info.adtechglobal.com/blog/bid/329382/Harnessing-the-Compute-Power-of-the-Intel-Xeon-Phi-Part-2
+The baseline C code that shows the primary diffusion algorithm
+implementation is shown below:
+
+![](media/image3.tif){width="4.485621172353456in"
+height="1.2314818460192476in"}
+
+The f1\[ \] array contains the current volume data and the f2\[ \] array
+is used to store the results of the current time step iteration. There
+are four loops, one for each dimension and one for the number of time
+steps requested. The inner loop applies the stencil calculations using
+the target center sub-volume section and its neighboring north, south,
+east, west, top, and bottom sections. Once all sub-volumes for the
+current time step are processed, the f1\[ \] and f2\[ \] array pointers
+are swapped, setting the new reference state.
+
+The diffusion simulation must also account for a structural issue: the
+three dimensional container has boundary walls. Since the stencil
+operates on each sub-volume section that comprises the whole, we need to
+consider how to properly calculate the molecular density for sub-volumes
+that sit next to the edges of the container. At a minimum, we need to
+avoid calculating array index values that go outside our allocated
+memory space representing the container volume. The code snippet below
+shows an evolved implementation that accounts for the boundary
+conditions:
+
+![](media/image4.tif){width="4.989584426946632in"
+height="2.2175929571303588in"}
+
+The implementation also simplifies the f1\[ \] array access by
+linearizing the stencil indices through the addition of variables w, e,
+n, s, b, t (west, east, north, south, bottom, top). The boundary
+conditions occur for any sub-volume that has an x, y, or z value of zero
+or a value at the full width, height, or depth of the volume as
+represented by the variables nx, ny, nz. In these cases, we simply
+replace the value of the neighbor volume with the target central density
+value to get a reasonable approximation of the diffusion at that point.
+Now, we have reached the first important stage of implementing a
+real-world algorithm; it will provide the correct results when run.
+
+**4.3 Hands-on Activities**
+
+**4.3.1** Take a careful look at the complete code listing,
+‘diffusion\_base.c’, that can be found at
+‘/home/traineeN/source-files/session2’. The function
+‘diffusion\_baseline()’ implements the key computational processing.
+Find the main() function, and see that two arrays of equal size, f1\[ \]
+and f2\[ \], are allocated to support the double buffering used in the
+primary calculation function. The double buffering is required to ensure
+the stencil processing is completed without modifying the in-place
+target volume data, which will be used in subsequent calculations when
+its neighboring sub-volumes are calculated. After initializing the f1\[
+\] array, and the east, west, north, south, bottom, top, stencil
+diffusion weights, ce, cw, cn, cs, cb, ct, and the time step dt, based
+on the size of the volume, the time step is used to determine the
+iteration count. Next, a time stamp is taken and the diffusion
+calculation function is called to perform count time steps. Upon
+completion of the function, the resultin floating-point performance is
+calculated based on the thirteen floating-point operations per inner
+loop iteration, and the memory bandwidth (in GB/s) is determined, using
+number of bytes of volume data read and written during the call.
+
+Since we have not applied any optimizations, such as scaling across
+cores, when compiled and run we can expect this single-threaded code to
+perform quite slowly. You can skip compiling and running this baseline
+code yourself, as it will indeed take well over an hour for the run to
+complete. However, to establish an initial baseline performance we will
+show the result. Use the following command to compile the code to run
+natively on the Intel Xeon Phi coprocessor:
+
+  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_base.c -o diffusion\_base**
+  ---------------------------------------------------------------------------------------------------
+
+Upload the executable program diffusion\_base to the coprocessor as
+usual. On the coprocessor command prompt the code can be executed by
+just typing (you do not need to do that because execution will take an
+excessively long time):
+
+  **\[phi01\]\$ ./diffusion\_base**
+  -----------------------------------
+
+On the Xeon Phi card we are using the output is:
+
+  -------------------------------------
+  Running diffusion kernel 6553 times
+
+  Elapsed time : 5653.587 (s)
+
+  FLOPS : 252.801 (MFlops)
+
+  Throughput : 0.233 (GB/s)
+
+  Accuracy : 1.592295e-05
+  -------------------------------------
+  -------------------------------------
+
+As you can see, this is a substantial set of calculations and took close
+to 95 minutes using just one core and one thread of the coprocessor. Our
+next step is to exploit the available parallelism through scaling the
+code across the many cores of the coprocessor.
+
+**4.3.2** To start off, we will look at scaling the code using OpenMP.
+Source file ‘diffusion\_omp.c’ is an updated version of the code that
+adds OpenMP directives to distribute and scale the work across the
+available cores and threads. The key OpenMP clause is the ‘\#pragma omp
+for collapse(2)’ before the z loop, which tells the compiler to collapse
+the next two loops (z and y) into one loop and then apply the OpenMP
+‘omp for’ work division mechanism to split the loop calculations among
+the current available threads. Conceptually, the for loop changes to a
+single loop that executes as
+
+for (yz=0; yz&lt;ny\*nx; ++yz)
+
+with the associated similar implied mapping for the use of y and z in
+the body of the loop. This will enable each thread to be assigned larger
+chunks of data to process more calculations, and therefore, allow more
+efficiency on each pass through the loop.
+
+Now, compile and run the code to see what performance you get; use the
+following command:
+
+  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_omp.c -o diffusion\_omp**
+  -------------------------------------------------------------------------------------------------
+
+Upload the file to one of the coprocessors, issue and ssh to it and
+then, on the coprocessor command prompt, set the number of threads and
+affinity and run the program:
+
+  ---------------------------------------------------------------------------
+  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=228** (4x the number of cores)
+
+  **\[phi01-mic\]\$ export KMP\_AFFINITY=scatter**
+
+  **\[phi01-mic\]\$ ./diffusion\_omp**
+  ---------------------------------------------------------------------------
+  ---------------------------------------------------------------------------
+
+Take note of the output and compare with the result for the baseline
+code shown before.
+
+**4.3.3** Now we can experiment with the number of threads per core to
+ensure that we consider balancing the access to resources to avoid
+conflicts and resource saturation, particularly with respect to memory.
+Set for three, two, and one thread(s) per core and run again for each
+change of the parameter OMP\_NUM\_THREADS, and take note of the result
+of each execution:
+
+  --------------------------------------------------
+  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=171**
+
+  **\[phi01-mic\]\$ ./diffusion\_omp**
+
+  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=114**
+
+  **\[phi01-mic\]\$ ./diffusion\_omp**
+
+  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=57**
+
+  **\[phi01-mic\]\$ ./diffusion\_omp**
+  --------------------------------------------------
+  --------------------------------------------------
+
+Compare the outputs and assess which gives the best result. How many
+times the scaled code runs compared to the baseline?
+
+**4.3.4** Our next goal is speed up the code by vectoring it. Look back
+at the output of the vector report after compilation finishes (exercise
+4.3.2). Now have a look at source file ‘diffusion\_ompvect.c’. The line
+‘\#pragma simd’ requests the compiler to vectorize the loop regardless
+of potential dependencies or other potential constraints. That was a
+pretty simple one line change but should provide an extra improvement.
+Compile it using the following command:
+
+  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_ompvect.c -o diffusion\_ompvect**
+  ---------------------------------------------------------------------------------------------------------
+
+Note that now you should see that the vector report indicates the inner
+loop was indeed vectorized. Upload the file to one of the coprocessors
+and perform four runs from the coprocessor prompt adjusting the threads
+per core based on the number of cores for the coprocessor on each run as
+indicated below:
+
+  --------------------------------------------------
+  **\[phi01-mic\]\$ export KMP\_AFFINITY=scatter**
+
+  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=228**
+
+  **\[phi01-mic\]\$ ./diffusion\_ompvect**
+  --------------------------------------------------
+  --------------------------------------------------
+
+As in the previous exercise, set for three, two, and one thread(s) per
+core and run again, and take note of the results:
+
+  --------------------------------------------------
+  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=171**
+
+  **\[phi01-mic\]\$ ./diffusion\_ompvect**
+
+  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=114**
+
+  **\[phi01-mic\]\$ ./diffusion\_ompvect**
+
+  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=57**
+
+  **\[phi01-mic\]\$ ./diffusion\_ompvect**
+  --------------------------------------------------
+  --------------------------------------------------
+
+Compare with previous results. How many times the scaled code runs
+compared to the baseline? We can see the significant impact of
+vectorization.
+
+**4.3.5** We have both scaled and vectorized our code, and we have seen
+very significant performance improvement over the baseline. Now we will
+start looking towards finer-grained tuning to see if we can gain a bit
+more performance. The idea is to remove unneeded code from the inner
+loop. Reviewing the code carefully, we see that the boundary check might
+be a candidate. Consider that for a volume of any significant size, the
+code will encounter a boundary that requires altering the baseline
+stencil usage relatively rarely. If possible, we want to look for a way
+to “peel out“ the boundary checks from the inner loop portions because
+we know that the code does the bulk of its processing without
+encountering a boundary condition.
+
+Have a look at the source code ‘diffusion\_peel.c’ and compare with the
+previous version, ‘diffusion\_ompvect.c’. Since only our starting and
+ending x coordinates 0 and nx-1 will hit the boundary condition, we can
+create an inner loop without any boundary checks by simply ensuring we
+process x indices from 1 to nx-2. Furthermore, since the stencil always
+traverses in single units across the x row of sub-volumes, we can update
+the stencil positions by simply incrementing them. Also, we can
+eliminate calculating the east and west locations by referencing their
+positions directly in the arrayindex (e=c-1 and w=c+1). This new inner
+loop now has the X-edge checks removed. The file ‘diffusion\_peel.c’
+contains the code with the modifications. Compile and run it to see if
+we achieved any improvement:
+
+  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_peel.c -o diffusion\_peel**
+  ---------------------------------------------------------------------------------------------------
+
+Upload the file to one of the coprocessors, set the affinity and number
+of threads at the coprocessor prompt iterating through the number of
+threads needed (based on core count) to perform one to four threads per
+core in the same way you have done in the previous two exercises. Take
+note of the results, choose the best one and compare it with the result
+of the previous exercise. Did you get a measurable improvement?
+
+**4.3.6** In many circumstances, improvements can be found by analyzing
+the data access patterns to take advantage of data locality. We want to
+create a more optimal pattern of data reuse within our innermost loops
+to maintain data in the L1 and L2 caches for much faster access. Stencil
+operations contain data reuse patterns that make them strong candidates
+for exploiting data locality. Tiling and blocking are terms used to
+describe a technique often used for improving data reuse in cache
+architectures. Cache architectures generally employ “least recently
+used“ (LRU) methods to determine which data is evicted from the cache as
+new data is requested. Therefore, the longer the data remains unused,
+the more likely it will be evicted from the cache and no longer
+available immediately when needed. Since memory accesses are
+significantly longer than cache accesses, a goal is to find techniques
+and usage patterns that can help reduce memory accesses by reusing
+cached data. To most successful, reusing data in cache lines have been
+used very recently – or local to current code sequence – is really
+important.
+
+Tiling the access pattern can exploit data that remains in the cache
+from recent, previous iterations. For instance, in our diffusion stencil
+code, each innermost loop iteration processes the x elements of a y row
+sequentially, and then moves on to the following y row. Ignoring the
+work division from scheduling multiple threads for a moment, there is a
+high likelihood of accessing data in the L1 or L2 cache we have used
+before from the current and previous y rows since our access of those y
+data is recent. However, the bottom and top data on the adjacent z pane
+are used once and then not accessed again until the next full y plane is
+processed at the same row. Therefore, there is a low likelihood that the
+z data are being reused and so they must be fetched again from main
+memory on the next iteration of the z loop. If we consider processing a
+rectangular tile of y – actually a slab of yx values across a range of
+z, the top row in a given z iteration will still be in cache to serve as
+left, center, and right rows for the next z, and the bottom row for the
+z after that. This usage avoids additional memory requests and a
+performance improvement is likely possible.
+
+A code implementation with these improvements is ‘diffusion\_tiled.c’.
+We select a blocking factor value YBF for the number of y rows we will
+process in each slab; the goal being to select an optimal number that
+will maintain the sufficient amounts of y and z data in the cache long
+enough to be reused during computation.
+
+Since we will be processing a portion - or tile - of y rows across the
+full z dimension, we add an outer y loop to control stepping to the
+start of each tile. The x processing with the peeled out boundary
+management is maintained so we keep that optimization intact. That said,
+let us compile, upload and run the code on one of the coprocessors. Use
+the following command:
+
+  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_tiled.c -o diffusion\_tiled**
+  -----------------------------------------------------------------------------------------------------
+
+Upload the code and go to the processor command prompt, set the affinity
+and number of threads iterating through the number of threads needed to
+perform one to four threads per core in the same way you have done in
+previous exercises. Take note of the results, choose the best one and
+compare it with the result of the previous exercise. Did you get a
+measurable improvement? Now compare this result with the original
+single-threaded baseline. How many times faster does this tuned code run
+compared to the baseline code?
+
+[^1]: https://computing.llnl.gov/tutorials/pthreads/
+
+[^2]: http://en.wikipedia.org/wiki/Directive\_(programming)
+
+[^3]: http://en.wikipedia.org/wiki/Cilk\_Plus
+
+[^4]: https://software.intel.com/en-us/articles/intelr-xeon-phitm-advanced-workshop-labs
+
+[^5]: http://www.exastencils.org/histencils/2014/papers/histencils2014\_optimizing\_stencil\_computations\_
+    for\_nvidia\_kepler\_gpus.pdf
