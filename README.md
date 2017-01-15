@@ -106,13 +106,16 @@ should be able to run X11.
 
 Use the syntax below to log in to the host system.
 
-  **\$ ssh –X phi01.ncc.unesp.br –l traineeN** (N is a number assigned to each participant)
-  -------------------------------------------------------------------------------------------
+```
+$ ssh –X phi01.ncc.unesp.br –l traineeN
+```
+
+**(N is a number assigned to each participant)**
 
 **Note:** Before starting the lab exercises make sure that the Xeon Phi
-coprocessors are up and running (status = ‘online’):
+coprocessors are up and running `status = ‘online’`:
 
-  **\[phi01\]\$ micctrl --status** (show the status of all MIC cards installed on the host system)
+[phi01]$ micctrl --status** (show the status of all MIC cards installed on the host system)
   --------------------------------------------------------------------------------------------------
 
 Please refer to the teaching assistant(s) if you have any question.
@@ -183,10 +186,10 @@ standard currently supported by gcc 4.7 or above and the Intel C++
 Compiler. Its functionality and scope of application are similar to
 those of OpenMP; however, it is distinguished by its focus on minimal
 but sufficient support for parallelism in C and C++. The three main
-keywords in the Cilk Plus standard are \_Cilk\_for, \_Cilk\_spawn and
-\_Cilk\_sync. They allow for the implementation of a variety of parallel
+keywords in the Cilk Plus standard are _Cilk_for, _Cilk_spawn and
+_Cilk_sync. They allow for the implementation of a variety of parallel
 algorithms. Programming for Intel Xeon Phi coprocessors may also require
-the keywords \_Cilk\_shared and \_Cilk\_offload. Language extensions
+the keywords _Cilk_shared and _Cilk_offload. Language extensions
 such as array notation, hyperobjects, elemental function and ‘\#pragma
 simd’ are also part of Intel Cilk Plus.
 
@@ -242,17 +245,17 @@ of OpenMP threads and for each fork-join branch prints out “Hello world
 from thread %d". Compile the code using ‘icc’ for the Xeon processor and
 for the Xeon coprocessor, using the appropriate flag (-openmp) to enable
 OpenMP. Before running it, set the environment variable
-OMP\_NUM\_THREADS to a number N between 1 and the maximum number of
+OMP_NUM_THREADS to a number N between 1 and the maximum number of
 threads available either on the host or on the coprocessor, using the
 command:
 
-  **\$ export OMP\_NUM\_THREADS=N** (you need to assign a value to N!)
+  **\$ export OMP_NUM_THREADS=N** (you need to assign a value to N!)
   ----------------------------------------------------------------------
 
 Execute the binary code and make sure that you understand how it works.
 Recompile the source using the -mmic flag, upload the binary to one of
 the coprocessors, connect to it using ssh and run the executable there
-(do not forget to define OMP\_NUM\_THREADS=N on the Xeon Phi command
+(do not forget to define OMP_NUM_THREADS=N on the Xeon Phi command
 shell before launching the executable).
 
 Test yourself by answering these trivial questions:
@@ -267,12 +270,12 @@ iteration. Use the directive “\#pragma omp for” (hint: “\#pragma omp
 parallel” spawns a group of threads, while “\#pragma omp for” divides
 loop iterations between the spawned threads; you can do both things at
 once with the fused “\#pragma omp parallel for” directive). Save the
-modified source as ‘openmp\_v1.c’, compile and execute the binary on the
+modified source as ‘openmp_v1.c’, compile and execute the binary on the
 host system, checking the result. Recompile the source using the -mmic
 flag, upload the corresponding binary to one of the coprocessors,
 connect to it using ssh and execute it there.
 
-**1.3.3** Have a look at source file ‘openmp\_v2.c’. In this slightly
+**1.3.3** Have a look at source file ‘openmp_v2.c’. In this slightly
 modified version, constant variable nthreads is initialized with the
 maximum value of OpenMP threads and is made available for all threads.
 Notice that a private integer has been defined, which should be
@@ -285,7 +288,7 @@ the coprocessors, connect to it using ssh and execute there.
 
 **1.3.4** Control over the variables scope can also be done with OpenMP
 parallel clauses private, shared, and firstprivate. Have a look at the
-source file ‘openmp\_v3.c’, which uses these three variables. Check what
+source file ‘openmp_v3.c’, which uses these three variables. Check what
 values will be assigned to them within the parallel region and how they
 will react to the modifications of their values. Then compile the source
 and execute on the host system, and check if your assumptions were
@@ -297,7 +300,7 @@ fact, its value is unpredictable. Why does this happen?
 **1.3.5** A common mistake when implementing parallel algorithms is
 creating racing conditions, which occur when shared variables are
 accessed for reading and writing by different threads at the same time.
-Have a look at the source file ‘openmp\_v4.c’, which uses a parallel for
+Have a look at the source file ‘openmp_v4.c’, which uses a parallel for
 loop over the sequence of N = 10000 numbers added together in a shared
 variable sum. Correct value should be equal to (N−1)\*N/2 (note: lower
 and upper boundaries of the loop are, respectively, 0 and N–1). Compile
@@ -309,7 +312,7 @@ each execution?
 **1.3.6** There are several ways to fix racing conditions in OpenMP
 parallel codes. One of them is applying ‘\#pragma omp critical’ to the
 region where the racing conditions occur. Take a look at file
-openmp\_v5.c, which is an example that uses this solution to fix the
+openmp_v5.c, which is an example that uses this solution to fix the
 summation problem. It should be noted, however, that only one thread
 will execute the critical region marked with the critical pragma at a
 time. Therefore, the parallel code technically becomes serial, since
@@ -320,13 +323,13 @@ one of the coprocessors, and check the results.
 **1.3.7** ‘Reduction’ is a clause of OpenMP for loop, which indicates
 what operation will be used on what reduction variable. OpenMP will
 automatically take care of avoiding racing conditions and receiving
-correct result. Have a look at example ‘openmp\_v6.c’, which implements
+correct result. Have a look at example ‘openmp_v6.c’, which implements
 the proposed solution. Compile it, execute and check the result.
 
 **1.3.8** In this exercise you will be introduced to a source code that
 uses Intel Cilk Plus parallelism model. Have a look at source file
-‘cilk\_v0.cpp’. It prints out the total number of Intel Cilk Plus
-workers available on the system. The keyword \_Cilk\_for is used to
+‘cilk_v0.cpp’. It prints out the total number of Intel Cilk Plus
+workers available on the system. The keyword _Cilk_for is used to
 iterate through the number of available workers and to print out the
 current worker number. Since the workload is very light, all iteration
 should be done by only one worker (this ‘for loop’ gets serialized).
@@ -334,35 +337,35 @@ Therefore, we need to add extra workload to the ‘for loop’ to see Intel
 Cilk Plus parallelism. For this reason, within the ‘for loop’ there is
 an additional ‘while loop’ that multiplies some numbers to the private
 variable. At the end the code prints out the current worker number
-responsible for the previous calculation. Compile ‘cilk\_v0.cpp’ using
+responsible for the previous calculation. Compile ‘cilk_v0.cpp’ using
 either icc or icpc generating binaries for the host and the
 coprocessors, execute them on the host and analyze the output. Recompile
 the source using the -mmic flag, upload the binary to one of the
 coprocessors, connect to it using ssh and run the executable there.
 
-**1.3.9** In the previous exercise we used the \_Cilk\_for loop to to
+**1.3.9** In the previous exercise we used the _Cilk_for loop to to
 iterate through the number of available workers and to print out the
 current worker number. If the workload was significant for each worker,
 than each of them should have been involved in the calculations only
 once. The number of iterations distributed among the workers can be
 controlled by the clause ‘\#pragma cilk grainsize’. In this exercise the
 original code has been modified to grant 4 iteration steps for each
-worker. Have a look at source file ‘cilk\_v1.cpp’, compile it for host
+worker. Have a look at source file ‘cilk_v1.cpp’, compile it for host
 and coprocessors and execute the binaries on the host and on one of the
 coprocessors, and analyze the outputs.
 
-**1.3.10** Using the keyword \_Cilk\_spawn for asynchronous parallelism
+**1.3.10** Using the keyword _Cilk_spawn for asynchronous parallelism
 we can run recursive tasks in parallel. Have a look at source
-‘cilk\_v2.cpp’, which recursively calls function Recurse(const int task)
+‘cilk_v2.cpp’, which recursively calls function Recurse(const int task)
 and prints out the number of current worker, doing some calculations
 within the function. Like in the previous exercises, compile (host and
 coprocessor) and execute the binaries on the host and on one of the
 coprocessors, and analyze the outputs.
 
 **1.3.11** Quite often we need synchronization between the parallel
-tasks. Intel Cilk Plus has \_Cilk\_sync keyword for this. In source code
-‘cilk\_v3.cpp’, a thousand dynamically allocated consecutive integer
-elements of an array are summed up by two parallel (\_Cilk\_spawn)
+tasks. Intel Cilk Plus has _Cilk_sync keyword for this. In source code
+‘cilk_v3.cpp’, a thousand dynamically allocated consecutive integer
+elements of an array are summed up by two parallel (_Cilk_spawn)
 function calls named Sum(), each operating over one half of the array. A
 synchronization keyword is then used to wait for sums to complete, and
 the final result is printed out. Compile (host and coprocessor) and
@@ -373,18 +376,18 @@ divided in four parts.
 **1.3.12** A more elegant way to organize parallelism is to avoid
 hardwiring the number of parallel tasks and let Intel Cilk Plus take
 care of this automatically. To prevent racing conditions we will use one
-of the Intel Cilk Plus reducers named ‘reducer\_opadd’, a math operator
+of the Intel Cilk Plus reducers named ‘reducer_opadd’, a math operator
 that calculates the sum of a set of values. By definition, a reducer is
 a variable that can be safely used by multiple threads running in
 parallel. Intel Cilk Plus ships with a library of reducers you can use
-in your C and C++ code. The ‘reducer\_opadd’ is defined as:
+in your C and C++ code. The ‘reducer_opadd’ is defined as:
 
-cilk::reducer\_opadd&lt;int&gt; sum
+cilk::reducer_opadd&lt;int&gt; sum
 
-Have a look at source code ‘cilk\_v4.c’, which uses reducer ‘sum’ to
+Have a look at source code ‘cilk_v4.c’, which uses reducer ‘sum’ to
 store the result of adding 20 consecutive integers iterated over with
-\_Cilk\_for loop, which is then printed out. Access to the reducer sum
-is done through calls to sum.set\_value(N) and sum.get\_value()
+_Cilk_for loop, which is then printed out. Access to the reducer sum
+is done through calls to sum.set_value(N) and sum.get_value()
 functions. Compile the source code for host and coprocessors, execute
 the binaries on the host and on one of the coprocessors, and analyze the
 corresponding outputs.
@@ -465,7 +468,7 @@ working on this code as a quick remind on how to run an MPI program on
 the Intel Xeon Phi coprocessor. Compile the source file with the Intel
 compiler for the host with the usual Intel MPI wrapper:
 
-  **\[phi01\]\$ mpiicc -o test test.c**
+[phi01]$ mpiicc -o test test.c**
   ---------------------------------------
 
 Now compile the source file for Intel Xeon Phi coprocessor using the
@@ -473,24 +476,24 @@ Now compile the source file for Intel Xeon Phi coprocessor using the
 provide the Intel MPI libraries for Intel Xeon Phi coprocessor to the
 linker (add the verbose flag "-v" to see it):
 
-  **\[phi01\]\$ mpiicc -mmic -o test.mic test.c**
+[phi01]$ mpiicc -mmic -o test.mic test.c**
   -------------------------------------------------
 
 The ".mic" suffix is added to distinguish the coprocessor binary from
 the host one (it could be any suffix). As a starter run the Xeon binary
 with 4 MPI processes alone:
 
-  **\[phi01\]\$ mpirun -n 4 ./test**
+[phi01]$ mpirun -n 4 ./test**
   ------------------------------------
 
 Copy the binary file ‘test.mic’ to the three coprocessors and run the
 Intel MPI test program on each of them in coprocessor-only mode.
 
 **Note:** before launching the command below, we need to set the
-I\_MPI\_MIC environment variable to enable the MPI communication between
+I_MPI_MIC environment variable to enable the MPI communication between
 host and coprocessors; please review exercise 2.2.8 in session 1).
 
-  **\[phi01\]\$ mpirun -host mic0 –n 4 ./test.mic**
+[phi01]$ mpirun -host mic0 –n 4 ./test.mic**
   ---------------------------------------------------
 
 An alternative would be to login onto the coprocessor and run the test
@@ -501,7 +504,7 @@ processor and on one of the Xeon Phi coprocessor as one MPI program in
 symmetric mode by defining each argument set independently (with command
 line sections separated by a colon):
 
-  **\[phi01\]\$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic**
+[phi01]$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic**
   ----------------------------------------------------------------------------------
 
 Notice that in the symmetric mode you must provide the ‘-host’ flag for
@@ -509,28 +512,28 @@ the MPI processes running on the Xeon host!
 
 **2.3.3** As a preparation for the next exercises on hybrid programming,
 the mapping/pinning of Intel MPI processes will be investigated step by
-step. Set the environment variable I\_MPI\_DEBUG equal or larger than 4
+step. Set the environment variable I_MPI_DEBUG equal or larger than 4
 to see the mapping information:
 
-  **\[phi01\]\$ export I\_MPI\_DEBUG=4**
+[phi01]$ export I_MPI_DEBUG=4**
   ----------------------------------------
 
 For pure (non-hybrid) MPI programs the environment variable
-I\_MPI\_PIN\_PROCESSOR\_LIST controls the mapping/pinning. For hybrid
-codes the variable I\_MPI\_PIN\_DOMAIN takes precedence. It splits the
+I_MPI_PIN_PROCESSOR_LIST controls the mapping/pinning. For hybrid
+codes the variable I_MPI_PIN_DOMAIN takes precedence. It splits the
 (logical) processors into non-overlapping domains for which this rule
 applies: "one MPI process for one domain".
 
-Repeat the Intel MPI test from before with I\_MPI\_DEBUG set. Because of
+Repeat the Intel MPI test from before with I_MPI_DEBUG set. Because of
 the amount of output use the flag "-prepend-rank", which puts the MPI
 rank number in front of each output line:
 
   ------------------------------------------------------------------------------------------------
-  **\[phi01\]\$ mpirun -prepend-rank -n 4 ./test**
+[phi01]$ mpirun -prepend-rank -n 4 ./test**
 
-  **\[phi01\]\$ mpirun -prepend-rank -host mic0 -n 4 \~/test.mic**
+[phi01]$ mpirun -prepend-rank -host mic0 -n 4 \~/test.mic**
 
-  **\[phi01\]\$ mpirun -prepend-rank -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic**
+[phi01]$ mpirun -prepend-rank -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic**
   ------------------------------------------------------------------------------------------------
   ------------------------------------------------------------------------------------------------
 
@@ -538,96 +541,96 @@ Sorting of the output can be beneficial for the mapping analysis,
 although this changes the order of the output. Try adding "2&gt;&1 |
 sort" to sort the output if you like.
 
-Now set the variable I\_MPI\_PIN\_DOMAIN with the ‘-env’ flag. Possible
-values are ‘auto’, ‘omp’ (which relies on the OMP\_NUM\_THREADS
+Now set the variable I_MPI_PIN_DOMAIN with the ‘-env’ flag. Possible
+values are ‘auto’, ‘omp’ (which relies on the OMP_NUM_THREADS
 variable), or a fixed number of logical cores. We have learned before
-(session 1, exercise 2.2.4) that by exporting I\_MPI\_PIN\_DOMAIN in the
+(session 1, exercise 2.2.4) that by exporting I_MPI_PIN_DOMAIN in the
 host’s command shell, the variable is identically exported to the host
 and to the Xeon Phi coprocessors. Typically this is not beneficial and
 an architecture adapted setting using ‘-env’ is recommended:
 
   -------------------------------------------------------------------------------------------------------------------------------------------------------
-  **\[phi01\]\$ mpirun -prepend-rank -env I\_MPI\_PIN\_DOMAIN auto -n 4 ./test**
+[phi01]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -n 4 ./test**
 
-  **\[phi01\]\$ mpirun -prepend-rank -env I\_MPI\_PIN\_DOMAIN auto -host mic0 -n 4 ./test.mic**
+[phi01]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -host mic0 -n 4 ./test.mic**
 
-  **\[phi01\]\$ mpirun -prepend-rank -env I\_MPI\_PIN\_DOMAIN 4 -host localhost -n 2 ./test : -env I\_MPI\_PIN\_DOMAIN 12 -host mic0 -n 4 \~/test.mic**
+[phi01]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test : -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test.mic**
   -------------------------------------------------------------------------------------------------------------------------------------------------------
   -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Experiment with pure Intel MPI mapping by setting
-I\_MPI\_PIN\_PROCESSOR\_LIST if you like. (See the Intel MPI reference
+I_MPI_PIN_PROCESSOR_LIST if you like. (See the Intel MPI reference
 manual for details).
 
 **2.3.4** Now we are going to run a hybrid MPI/OpenMP program on the
 Intel Xeon Phi coprocessor. Have a look at the source code
-‘test\_openmp.c’, in which a simple printout from the OpenMP threads was
+‘test_openmp.c’, in which a simple printout from the OpenMP threads was
 added to the previous Intel MPI test code. You can compare the
 difference between the two files by means of the diff utility:
 
-  **\[phi01\]\$ diff test.c test\_openmp.c**
+[phi01]$ diff test.c test_openmp.c**
   --------------------------------------------
 
 Compile with the "-openmp" compiler flag and upload to the Intel Xeon
 Phi coprocessor as usual:
 
   -------------------------------------------------------------------------
-  **\[phi01\]\$ mpiicc -openmp test\_openmp.c -o test\_openmp**
+[phi01]$ mpiicc -openmp test_openmp.c -o test_openmp**
 
-  **\[phi01\]\$ mpiicc -openmp -mmic test\_openmp.c -o test\_openmp.mic**
+[phi01]$ mpiicc -openmp -mmic test_openmp.c -o test_openmp.mic**
   -------------------------------------------------------------------------
   -------------------------------------------------------------------------
 
 Because of the ‘-openmp’ flag, Intel MPI will link the code with the
-thread-safe version of the Intel MPI library (libmpi\_mt.so) by default.
+thread-safe version of the Intel MPI library (libmpi_mt.so) by default.
 Run the Intel MPI tests from before:
 
   ----------------------------------------------------------------------------------------------------------------
-  **\[phi01\]\$ unset I\_MPI\_DEBUG** (to reduce the output for now)
+[phi01]$ unset I_MPI_DEBUG** (to reduce the output for now)
 
-  **\[phi01\]\$ mpirun -prepend-rank -n 2 ./test\_openmp**
+[phi01]$ mpirun -prepend-rank -n 2 ./test_openmp**
 
-  **\[phi01\]\$ mpirun -prepend-rank -host mic0 -n 2 \~/test\_openmp.mic**
+[phi01]$ mpirun -prepend-rank -host mic0 -n 2 \~/test_openmp.mic**
 
-  **\[phi01\]\$ mpirun -prepend-rank -host localhost -n 2 ./test\_openmp : -host mic0 -n 4 \~/test\_openmp.mic**
+[phi01]$ mpirun -prepend-rank -host localhost -n 2 ./test_openmp : -host mic0 -n 4 \~/test_openmp.mic**
   ----------------------------------------------------------------------------------------------------------------
   ----------------------------------------------------------------------------------------------------------------
 
 The execution generates a lot of output! The default for the OpenMP
 library is to assume as many OpenMP threads as there are logical
-processors. For the next steps, explicit OMP\_NUM\_THREADS values
+processors. For the next steps, explicit OMP_NUM_THREADS values
 (different on host and Intel Xeon Phi coprocessor) will be set.
 
 In the following test the default OpenMP affinity is checked. Please
 notice that the range of logical processors is always defined by the
-splitting the threads based on the I\_MPI\_PIN\_DOMAIN variable. This
-time we also use I\_MPI\_PIN\_DOMAIN=omp, see how it depends on the
-OMP\_NUM\_THREADS setting:
+splitting the threads based on the I_MPI_PIN_DOMAIN variable. This
+time we also use I_MPI_PIN_DOMAIN=omp, see how it depends on the
+OMP_NUM_THREADS setting:
 
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN auto -n 2 ./test\_openmp 2&gt;&1 | sort**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp 2&gt;&1 | sort**
 
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN omp -host mic0 -n 2 \~/test\_openmp.mic 2&gt;&1 | sort**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2&gt;&1 | sort**
 
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN 4 -host localhost -n 2 ./test\_openmp : -env KMP\_AFFINITY verbose -env OMP\_NUM\_THREADS 6 -env I\_MPI\_PIN\_DOMAIN 12 -host mic0 -n 4 \~/test\_openmp.mic 2&gt;&1 | sort**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2&gt;&1 | sort**
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Remember that it is usually beneficial to avoid splitting of logical
 cores on Intel Xeon Phi coprocessor between MPI processes; either the
 number of MPI processes should be chosen so that
-I\_MPI\_PIN\_DOMAIN=auto creates domains which cover complete cores or
+I_MPI_PIN_DOMAIN=auto creates domains which cover complete cores or
 the environment variable should be a multiply of 4.
 
 Use "scatter", "compact", or "balanced" (Intel Xeon Phi coprocessor
 specific) to modify the default OpenMP affinity.
 
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose,granularity=thread,scatter -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN auto -n 2 ./test\_openmp**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp**
 
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose,granularity=thread,compact -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN omp -host mic0 -n 2 \~/test\_openmp.mic 2&gt;&1 | sort**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2&gt;&1 | sort**
 
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY verbose,granularity=thread,compact -env OMP\_NUM\_THREADS 4 -env I\_MPI\_PIN\_DOMAIN 4 -host localhost -n 2 ./test\_openmp : -env KMP\_AFFINITY verbose,granularity=thread,balanced -env OMP\_NUM\_THREADS 6 -env I\_MPI\_PIN\_DOMAIN 12 -host mic0 -n 4 \~/test\_openmp.mic 2&gt;&1 | sort**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2&gt;&1 | sort**
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -637,18 +640,18 @@ on the Intel Xeon Phi coprocessor.
 
 **2.3.5** Now we want to run the Intel MPI test program with some
 offload code on the Xeon Phi coprocessor. Have a look at source file
-‘test\_offload.c’, in which the simple printout from the OpenMP thread
+‘test_offload.c’, in which the simple printout from the OpenMP thread
 is now offloaded to the coprocessor. Compare the difference between the
 two files using the diff utility:
 
-  **\[phi01\]\$ diff test.c test\_offload.c**
+[phi01]$ diff test.c test_offload.c**
   ---------------------------------------------
 
 Compile for the Xeon host with the ‘-openmp’ compiler flag as before.
 The Intel compiler will automatically recognize the offload pragma and
 create the binary for it.
 
-  **\[phi01\]\$ mpiicc -openmp test\_offload.c -o test\_offload**
+[phi01]$ mpiicc -openmp test_offload.c -o test_offload**
   -----------------------------------------------------------------
 
 (Note that, if necessary, offloading could be switched off with the
@@ -656,29 +659,29 @@ create the binary for it.
 
 Execute the binary on the host:
 
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY granularity=thread,scatter -env OMP\_NUM\_THREADS 4 -n 2 ./test\_offload**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload**
   ----------------------------------------------------------------------------------------------------------------------------------
 
 Now repeat the execution, but ‘grep’ and ‘sort’ the output to focus on
 the essential information:
 
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY granularity=thread,scatter -env OMP\_NUM\_THREADS 4 -n 2 ./test\_offload 2&gt;&1 | grep bound | sort**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload 2&gt;&1 | grep bound | sort**
   --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 All OpenMP threads are mapped onto identical Intel Xeon Phi coprocessor
-threads! The variable I\_MPI\_PIN\_DOMAIN cannot be used because the
+threads! The variable I_MPI_PIN_DOMAIN cannot be used because the
 domain splitting would be calculated according to the number of logical
 processors on the Xeon host!
 
 The solution is to specify explicit proclists per MPI process:
 
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP\_NUM\_THREADS 4 -n 1 ./test\_offload : -env KMP\_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP\_NUM\_THREADS 4 -n 1 ./test\_offload**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload**
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Repeat the execution, but ‘grep’ and ‘sort’ the output to focus on the
 essential information:
 
-  **\[phi01\]\$ mpirun -prepend-rank -env KMP\_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP\_NUM\_THREADS 4 - n 1 ./test\_offload : -env KMP\_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP\_NUM\_THREADS 4 -n 1 ./test\_offload 2&gt;&1 | grep bound | sort**
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 - n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload 2&gt;&1 | grep bound | sort**
   --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **Practical Exercises - Part 3**
@@ -833,80 +836,80 @@ following topics are introduced:
 activity.
 
 **3.3.1** Go to directory
-‘/home/traineeN/source-files/session2/Intel\_mkl\_mic\_lab\_C’. Have a
-look at the source code 00\_getting\_started.cpp as well as
-00\_gemm\_mkl.hpp. Locate the main function, and follow the anticipated
+‘/home/traineeN/source-files/session2/Intel_mkl_mic_lab_C’. Have a
+look at the source code 00_getting_started.cpp as well as
+00_gemm_mkl.hpp. Locate the main function, and follow the anticipated
 flow of the execution into the run function. Understand how
 single-precision and double-precision are mapped to either SGEMM or
 DGEMM calls. We will compile this code by using the supplied Makefile.
 Type ‘make’ to build the default exercise:
 
-  **\[phi01\]\$ make**
+[phi01]$ make**
   ----------------------
 
 Go to directory ‘bin/intel64’ (‘cd bin/intel64’) and run the executable
 using the value 2000 as the input parameter:
 
-  **\[phi01\]\$ ./00\_getting\_started 2000**
+[phi01]$ ./00_getting_started 2000**
   ---------------------------------------------
 
 Let us now run the application with 16 threads and with thread affinity
 optimized for fine grain parallelization. Set the number of threads to
-16 using OMP\_NUM\_THREADS environment variable and pin the threads by
-using the OpenMP KMP\_AFFINITY environment variable:
+16 using OMP_NUM_THREADS environment variable and pin the threads by
+using the OpenMP KMP_AFFINITY environment variable:
 
   -------------------------------------------------------------------
-  **\[phi01\]\$ export OMP\_NUM\_THREADS=16**
+[phi01]$ export OMP_NUM_THREADS=16**
 
-  **\[phi01\]\$ export KMP\_AFFINITY=granularity=fine,compact,1,0**
+[phi01]$ export KMP_AFFINITY=granularity=fine,compact,1,0**
 
-  **\[phi01\]\$ ./00\_getting\_started 2000**
+[phi01]$ ./00_getting_started 2000**
   -------------------------------------------------------------------
   -------------------------------------------------------------------
 
 Compare the execution speed with the previous execution.
 
-**Note:** for a refresh on the meaning of KMP\_AFFINITY review exercise
+**Note:** for a refresh on the meaning of KMP_AFFINITY review exercise
 3.2.3 of Session 1.
 
 **Bonus:** Take notes about the variation of the execution speed with
 the number of threads and with and without affinity settings.
 
 **3.3.2** Go back to directory
-/home/rogerio/session2/intel\_mkl\_mic\_lab\_C (‘cd ../..’) and
-recompile 00\_getting\_started.cpp for coprocessor execution, by
+/home/rogerio/session2/intel_mkl_mic_lab_C (‘cd ../..’) and
+recompile 00_getting_started.cpp for coprocessor execution, by
 requesting that the entire baseline code target the Intel Xeon Phi
 coprocessor (flag -mmic):
 
-  **\[phi01\]\$ icc -openmp -mkl -mmic 00\_getting\_started.cpp -o 00\_getting\_started\_native**
+[phi01]$ icc -openmp -mkl -mmic 00_getting_started.cpp -o 00_getting_started_native**
   -------------------------------------------------------------------------------------------------
 
 Copy the generated executable to one of the the coprocessors, log in
 onto the corresponding coprocessor and run the executable using the same
 value 2000 as the input parameter.
 
-**3.3.3** Recompile 00\_getting\_started.cpp to use automatic offload.
-On the host, open 00\_getting\_started.cpp with an editor (e.g. nano,
+**3.3.3** Recompile 00_getting_started.cpp to use automatic offload.
+On the host, open 00_getting_started.cpp with an editor (e.g. nano,
 vi, emacs) and add the line below near the beginning of the main
 function, before the execution proceeds to SGEMM or DGEMM:
 
-mkl\_mic\_enable();
+mkl_mic_enable();
 
-Alternatively, you can set the environment variable MKL\_MIC\_ENABLE=1.
+Alternatively, you can set the environment variable MKL_MIC_ENABLE=1.
 Compile and execute the program on the host:
 
   --------------------------------------------------------------------------------------------
-  **\[phi01\]\$ icc -openmp -mkl 00\_getting\_started.cpp -o 00\_getting\_started\_offload**
+[phi01]$ icc -openmp -mkl 00_getting_started.cpp -o 00_getting_started_offload**
 
-  **\[phi01\]\$ ./00getting\_started\_offload 2000**
+[phi01]$ ./00getting_started_offload 2000**
   --------------------------------------------------------------------------------------------
   --------------------------------------------------------------------------------------------
 
 Now some of the work will automatically be offloaded to the coprocessor.
 
-**3.3.4** Let us now compile file ‘01\_offload.cpp’ using the Language
+**3.3.4** Let us now compile file ‘01_offload.cpp’ using the Language
 Extensions for Offload (LEO) to offload the entire ‘run()’ function to
-the coprocessor. Open ‘01\_offload.cpp’ with an editor and add a
+the coprocessor. Open ‘01_offload.cpp’ with an editor and add a
 ‘\#pragma offload’ directive before each call to the ‘run()’ function.
 Specify which data is going into the offload section and which is coming
 out. For example, the line
@@ -914,10 +917,10 @@ out. For example, the line
 \#pragma offload target(mic) in(a:length(n))
 
 in front of a section or function copies in n elements of array a. Have
-a look at file ‘01\_offload\_solution.cpp’, with the implemented
+a look at file ‘01_offload_solution.cpp’, with the implemented
 solution. Compile using the syntax below:
 
-  **\[phi01\]\$ icpc -openmp -mkl 01\_offload.cpp -o 01\_offload\_solution -lmkl\_intel\_lp64 -lmkl\_intel\_thread -lmkl\_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3**
+[phi01]$ icpc -openmp -mkl 01_offload.cpp -o 01_offload_solution -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3**
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Now execute the program. The Intel compiler does not require an option
@@ -1013,9 +1016,9 @@ real-world algorithm; it will provide the correct results when run.
 **4.3 Hands-on Activities**
 
 **4.3.1** Take a careful look at the complete code listing,
-‘diffusion\_base.c’, that can be found at
+‘diffusion_base.c’, that can be found at
 ‘/home/traineeN/source-files/session2’. The function
-‘diffusion\_baseline()’ implements the key computational processing.
+‘diffusion_baseline()’ implements the key computational processing.
 Find the main() function, and see that two arrays of equal size, f1\[ \]
 and f2\[ \], are allocated to support the double buffering used in the
 primary calculation function. The double buffering is required to ensure
@@ -1040,15 +1043,15 @@ complete. However, to establish an initial baseline performance we will
 show the result. Use the following command to compile the code to run
 natively on the Intel Xeon Phi coprocessor:
 
-  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_base.c -o diffusion\_base**
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base**
   ---------------------------------------------------------------------------------------------------
 
-Upload the executable program diffusion\_base to the coprocessor as
+Upload the executable program diffusion_base to the coprocessor as
 usual. On the coprocessor command prompt the code can be executed by
 just typing (you do not need to do that because execution will take an
 excessively long time):
 
-  **\[phi01\]\$ ./diffusion\_base**
+[phi01]$ ./diffusion_base**
   -----------------------------------
 
 On the Xeon Phi card we are using the output is:
@@ -1072,7 +1075,7 @@ next step is to exploit the available parallelism through scaling the
 code across the many cores of the coprocessor.
 
 **4.3.2** To start off, we will look at scaling the code using OpenMP.
-Source file ‘diffusion\_omp.c’ is an updated version of the code that
+Source file ‘diffusion_omp.c’ is an updated version of the code that
 adds OpenMP directives to distribute and scale the work across the
 available cores and threads. The key OpenMP clause is the ‘\#pragma omp
 for collapse(2)’ before the z loop, which tells the compiler to collapse
@@ -1091,7 +1094,7 @@ efficiency on each pass through the loop.
 Now, compile and run the code to see what performance you get; use the
 following command:
 
-  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_omp.c -o diffusion\_omp**
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp**
   -------------------------------------------------------------------------------------------------
 
 Upload the file to one of the coprocessors, issue and ssh to it and
@@ -1099,11 +1102,11 @@ then, on the coprocessor command prompt, set the number of threads and
 affinity and run the program:
 
   ---------------------------------------------------------------------------
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=228** (4x the number of cores)
+[phi01-mic]$ export OMP_NUM_THREADS=228** (4x the number of cores)
 
-  **\[phi01-mic\]\$ export KMP\_AFFINITY=scatter**
+[phi01-mic]$ export KMP_AFFINITY=scatter**
 
-  **\[phi01-mic\]\$ ./diffusion\_omp**
+[phi01-mic]$ ./diffusion_omp**
   ---------------------------------------------------------------------------
   ---------------------------------------------------------------------------
 
@@ -1114,21 +1117,21 @@ code shown before.
 ensure that we consider balancing the access to resources to avoid
 conflicts and resource saturation, particularly with respect to memory.
 Set for three, two, and one thread(s) per core and run again for each
-change of the parameter OMP\_NUM\_THREADS, and take note of the result
+change of the parameter OMP_NUM_THREADS, and take note of the result
 of each execution:
 
   --------------------------------------------------
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=171**
+[phi01-mic]$ export OMP_NUM_THREADS=171**
 
-  **\[phi01-mic\]\$ ./diffusion\_omp**
+[phi01-mic]$ ./diffusion_omp**
 
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=114**
+[phi01-mic]$ export OMP_NUM_THREADS=114**
 
-  **\[phi01-mic\]\$ ./diffusion\_omp**
+[phi01-mic]$ ./diffusion_omp**
 
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=57**
+[phi01-mic]$ export OMP_NUM_THREADS=57**
 
-  **\[phi01-mic\]\$ ./diffusion\_omp**
+[phi01-mic]$ ./diffusion_omp**
   --------------------------------------------------
   --------------------------------------------------
 
@@ -1137,13 +1140,13 @@ times the scaled code runs compared to the baseline?
 
 **4.3.4** Our next goal is speed up the code by vectoring it. Look back
 at the output of the vector report after compilation finishes (exercise
-4.3.2). Now have a look at source file ‘diffusion\_ompvect.c’. The line
+4.3.2). Now have a look at source file ‘diffusion_ompvect.c’. The line
 ‘\#pragma simd’ requests the compiler to vectorize the loop regardless
 of potential dependencies or other potential constraints. That was a
 pretty simple one line change but should provide an extra improvement.
 Compile it using the following command:
 
-  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_ompvect.c -o diffusion\_ompvect**
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvect**
   ---------------------------------------------------------------------------------------------------------
 
 Note that now you should see that the vector report indicates the inner
@@ -1153,11 +1156,11 @@ per core based on the number of cores for the coprocessor on each run as
 indicated below:
 
   --------------------------------------------------
-  **\[phi01-mic\]\$ export KMP\_AFFINITY=scatter**
+[phi01-mic]$ export KMP_AFFINITY=scatter**
 
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=228**
+[phi01-mic]$ export OMP_NUM_THREADS=228**
 
-  **\[phi01-mic\]\$ ./diffusion\_ompvect**
+[phi01-mic]$ ./diffusion_ompvect**
   --------------------------------------------------
   --------------------------------------------------
 
@@ -1165,17 +1168,17 @@ As in the previous exercise, set for three, two, and one thread(s) per
 core and run again, and take note of the results:
 
   --------------------------------------------------
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=171**
+[phi01-mic]$ export OMP_NUM_THREADS=171**
 
-  **\[phi01-mic\]\$ ./diffusion\_ompvect**
+[phi01-mic]$ ./diffusion_ompvect**
 
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=114**
+[phi01-mic]$ export OMP_NUM_THREADS=114**
 
-  **\[phi01-mic\]\$ ./diffusion\_ompvect**
+[phi01-mic]$ ./diffusion_ompvect**
 
-  **\[phi01-mic\]\$ export OMP\_NUM\_THREADS=57**
+[phi01-mic]$ export OMP_NUM_THREADS=57**
 
-  **\[phi01-mic\]\$ ./diffusion\_ompvect**
+[phi01-mic]$ ./diffusion_ompvect**
   --------------------------------------------------
   --------------------------------------------------
 
@@ -1195,8 +1198,8 @@ to “peel out“ the boundary checks from the inner loop portions because
 we know that the code does the bulk of its processing without
 encountering a boundary condition.
 
-Have a look at the source code ‘diffusion\_peel.c’ and compare with the
-previous version, ‘diffusion\_ompvect.c’. Since only our starting and
+Have a look at the source code ‘diffusion_peel.c’ and compare with the
+previous version, ‘diffusion_ompvect.c’. Since only our starting and
 ending x coordinates 0 and nx-1 will hit the boundary condition, we can
 create an inner loop without any boundary checks by simply ensuring we
 process x indices from 1 to nx-2. Furthermore, since the stencil always
@@ -1204,11 +1207,11 @@ traverses in single units across the x row of sub-volumes, we can update
 the stencil positions by simply incrementing them. Also, we can
 eliminate calculating the east and west locations by referencing their
 positions directly in the arrayindex (e=c-1 and w=c+1). This new inner
-loop now has the X-edge checks removed. The file ‘diffusion\_peel.c’
+loop now has the X-edge checks removed. The file ‘diffusion_peel.c’
 contains the code with the modifications. Compile and run it to see if
 we achieved any improvement:
 
-  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_peel.c -o diffusion\_peel**
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel**
   ---------------------------------------------------------------------------------------------------
 
 Upload the file to one of the coprocessors, set the affinity and number
@@ -1254,7 +1257,7 @@ left, center, and right rows for the next z, and the bottom row for the
 z after that. This usage avoids additional memory requests and a
 performance improvement is likely possible.
 
-A code implementation with these improvements is ‘diffusion\_tiled.c’.
+A code implementation with these improvements is ‘diffusion_tiled.c’.
 We select a blocking factor value YBF for the number of y rows we will
 process in each slab; the goal being to select an optimal number that
 will maintain the sufficient amounts of y and z data in the cache long
@@ -1267,7 +1270,7 @@ management is maintained so we keep that optimization intact. That said,
 let us compile, upload and run the code on one of the coprocessors. Use
 the following command:
 
-  **\[phi01\]\$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion\_tiled.c -o diffusion\_tiled**
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled**
   -----------------------------------------------------------------------------------------------------
 
 Upload the code and go to the processor command prompt, set the affinity
@@ -1281,11 +1284,11 @@ compared to the baseline code?
 
 [^1]: https://computing.llnl.gov/tutorials/pthreads/
 
-[^2]: http://en.wikipedia.org/wiki/Directive\_(programming)
+[^2]: http://en.wikipedia.org/wiki/Directive_(programming)
 
-[^3]: http://en.wikipedia.org/wiki/Cilk\_Plus
+[^3]: http://en.wikipedia.org/wiki/Cilk_Plus
 
 [^4]: https://software.intel.com/en-us/articles/intelr-xeon-phitm-advanced-workshop-labs
 
-[^5]: http://www.exastencils.org/histencils/2014/papers/histencils2014\_optimizing\_stencil\_computations\_
-    for\_nvidia\_kepler\_gpus.pdf
+[^5]: http://www.exastencils.org/histencils/2014/papers/histencils2014_optimizing_stencil_computations_
+    for_nvidia_kepler_gpus.pdf
