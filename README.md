@@ -250,8 +250,10 @@ threads available either on the host or on the coprocessor, using the
 command:
 
 ```
-$ export OMP_NUM_THREADS=N** (you need to assign a value to N!)
+$ export OMP_NUM_THREADS=N 
 ```
+
+**(you need to assign a value to N!)**
 
 Execute the binary code and make sure that you understand how it works.
 Recompile the source using the -mmic flag, upload the binary to one of
