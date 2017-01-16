@@ -958,7 +958,27 @@ final diffused volume state.
 The baseline C code that shows the primary diffusion algorithm
 implementation is shown below:
 
-![infieri02_pic03](img/infieri01_pic03.png)
+```c
+for (int i = 0; i < count; ++i){
+	for (int z = 0; z < nz; z++){
+		for (int y = 0; y < ny; y++){
+			for (int x = 0; x < nx; x++){
+				int c, w, e, n, s, b, t;
+				c = x + y * nx + z * nx * ny;
+				w = ( x == 0) ? c : c - 1;
+				n = ( y == 0) ? c : c - nx;
+				b = ( z == 0) ? c : c - nx * ny;
+				e = ( x == nx-1) ? c : c + 1;
+				s = ( y == ny-1) ? c : c + nx;
+				t = ( z == nz-1) ? c : c + nx * ny;
+				f2_t[c] == cc * f1_t[c] + cw * f1_t[w] + ce * f1_t[e] + cs * f1_t[s] + cn * f1_t[n] + cb * f1_t[b] + ct * f1_t[t];
+
+			}
+		}
+	}		
+	REAL *t = f1_t; f1_t = f2_t; f2_t = t;
+}
+```
 
 The f1\[ \] array contains the current volume data and the f2\[ \] array
 is used to store the results of the current time step iteration. There
@@ -1059,7 +1079,7 @@ the current available threads. Conceptually, the for loop changes to a
 single loop that executes as
 
 ```c
-for (yz=0; yz&lt;ny\*nx; ++yz)
+for (yz=0; yz<ny*nx; ++yz)
 ```
 
 with the associated similar implied mapping for the use of y and z in
