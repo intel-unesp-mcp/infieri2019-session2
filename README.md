@@ -696,7 +696,7 @@ Kernel Library (MKL). You will learn how to compile a simple program for
 coprocessor only execution, and how to make use of automatic offload and
 compiler-assisted offload.
 
-**3.2 Overview of Intel MKL**
+### 3.2 Overview of Intel MKL
 
 Intel Math Kernel Library (Intel MKL), first introduced to the public in
 2003, is a collection of general-purpose mathematical functions for
@@ -938,11 +938,9 @@ cube, as shown in Figure 1. A three-dimensional seven-point stencil
 operation is used to calculate the effects on the neighboring sub-volume
 sections on each other over time.
 
-![](media/image1.tif){width="2.435184820647419in"
-height="1.3065179352580927in"}
+![infieri02_pic01](img/infieri02_pic01.png)
 
-**Figure 1: Diffusion of a compound over time through an enclosed volume
-(Jeffers & Reinders book)**
+**Figure 1: Diffusion of a compound over time through an enclosed volume (Jeffers & Reinders book)**
 
 We need to understand enough about the algorithm being used to ensure we
 perform correct and complete calculations. As shown in Figure 2, we are
@@ -953,17 +951,14 @@ for every section of the volume, creating a new baseline volume. The
 code then iterates over the number of time steps selected to create the
 final diffused volume state.
 
-![](media/image2.tif){width="2.7333333333333334in"
-height="1.4266666666666667in"}
+![infieri02_pic02](img/infieri02_pic02.png)
 
-**Figure 2: Illustration of the 7-point 3D stencil (Jeffers & Reinders
-book)**
+**Figure 2: Illustration of the 7-point 3D stencil (Jeffers & Reinders book)**
 
 The baseline C code that shows the primary diffusion algorithm
 implementation is shown below:
 
-![](media/image3.tif){width="4.485621172353456in"
-height="1.2314818460192476in"}
+![infieri02_pic03](img/infieri01_pic03.png)
 
 The f1\[ \] array contains the current volume data and the f2\[ \] array
 is used to store the results of the current time step iteration. There
@@ -984,8 +979,7 @@ memory space representing the container volume. The code snippet below
 shows an evolved implementation that accounts for the boundary
 conditions:
 
-![](media/image4.tif){width="4.989584426946632in"
-height="2.2175929571303588in"}
+![infieri02_pic04](img/infieri02_pic04.png)
 
 The implementation also simplifies the f1\[ \] array access by
 linearizing the stencil indices through the addition of variables w, e,
