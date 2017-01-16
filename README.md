@@ -625,7 +625,7 @@ specific) to modify the default OpenMP affinity.
 ```
 [phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp
 [phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2>&1 | sort
-[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2&gt;&1 | sort
+[phi01]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2>&1 | sort
 ```
 
 Notice that, as well as other options, the OpenMP affinity can be set
@@ -706,7 +706,7 @@ Fast Fourier transform, and vector math. The routines in MKL are hand
 optimized by exploiting Intel's multi-/many-core processors. Intel MKL
 has the following functional categories:
 
--   Linear Algebra
+- Linear Algebra
 
 Intel MKL BLAS provides optimized vector-vector (Level 1), matrix-vector
 (Level 2) and matrix-matrix (Level 3) operations for single and double
@@ -721,7 +721,7 @@ driver routines that can be used to solve linear systems of equations.
 Eigenvalue and least-squares solvers are also included, as are the
 latest LAPACK 3.4.1 interfaces and enhancements.
 
--   Fast Fourier Transforms
+- Fast Fourier Transforms
 
 Intel MKL FFTs include many optimizations and should provide significant
 performance gains over other libraries for medium and large transform
@@ -729,7 +729,7 @@ sizes. The library supports a broad variety of FFTs, from single and
 double precision 1D to multi-dimensional, complex-to-complex,
 real-to-complex, and real-to-real transforms of arbitrary length.
 
--   Vector Math
+- Vector Math
 
 Intel MKL provides optimized vector implementations of computationally
 intensive core mathematical operations and functions for single and
@@ -743,7 +743,7 @@ pack/unpack. Enhanced capabilities include accuracy, denormalized number
 handling, and error mode controls, allowing users to customize the
 behavior to meet their individual needs.
 
--   Statistics
+- Statistics
 
 Intel MKL includes random number generators and probability
 distributions that can deliver significant application performance. The
@@ -757,7 +757,7 @@ detection, and missing value replacements. These features can be used to
 speed-up applications in computational finance, life sciences,
 engineering/simulations, databases, and other areas.
 
--   Data Fitting
+- Data Fitting
 
 Intel MKL includes a rich set of splines functions for 1-dimensional
 interpolation. These are useful in a variety of application domains
@@ -778,94 +778,73 @@ MKL supports computation on Intel Xeon Phi coprocessors in three
 distinct operation modes, which take advantage of both the multi-core
 host system and the many-core Xeon Phi coprocessors:
 
--   Native Execution
-
-    -   uses an Intel Xeon Phi coprocessor as an independent compute
-        node;
-
-    -   data is initialized and processed on the coprocessor or
-        communicated via MPI.
-
--   Automatic Offload (AO)
-
-    -   no need to modify the code in order to offload calculations to
-        an Intel Xeon Phi coprocessor;
-
-    -   automatically uses both the host and the Intel Xeon Phi
-        coprocessor;
-
-    -   the library takes care of data transfer and
-        execution management.
-
--   Compiler Assisted Offload (CAO)
-
-    -   programmer maintains explicit control of data transfer and
-        remote execution, using compiler offload pragmas and directives;
-
-    -   can be used together with Automatic Offload.
+-  Native Execution
+  -  uses an Intel Xeon Phi coprocessor as an independent computer node;
+  -  data is initialized and processed on the coprocessor or communicated via MPI.
+-  Automatic Offload (AO)
+  -  no need to modify the code in order to offload calculations to an Intel Xeon Phi coprocessor;
+  -  automatically uses both the host and the Intel Xeon Phi coprocessor;
+  -  the library takes care of data transfer and execution management.
+-  Compiler Assisted Offload (CAO)
+  -  programmer maintains explicit control of data transfer and remote execution, using compiler offload pragmas and directives;
+  -  can be used together with Automatic Offload.
 
 In order to compile applications using the Intel MKL with the Intel C++
 Compiler, the command line argument -mkl must be specified, and MKL
 header files must be included in the source code in order to declare the
 functions and data types used in the application.
 
-**3.3 Hands-on Activities**
+## 3.3 Hands-on Activities
 
 The example used throughout this set of activities[^4] is a dense
-matrix-matrix multiplication (“gemm” with α = 1, and β = 0). The
+matrix-matrix multiplication (`gemm` with α = 1, and β = 0). The
 following topics are introduced:
 
--   Reuse and share existing code across Intel architectures including
-    the Intel Xeon Phi coprocessor
-
--   Use the Intel Math Kernel Library (MKL) with the Xeon Phi
-    coprocessor for
-
-    -   Automatic offload (hybrid between host and coprocessor)
-
-    -   Compiler-assisted offload using Language Extensions for
-        Offload (LEO)
-
-    -   Coprocessor only execution
-
--   Generate console output that is trigged by offloaded code (“printf”)
-
--   Offload C/C++ code that calls FORTRAN code
+-  Reuse and share existing code across Intel architectures including the Intel Xeon Phi coprocessor
+-  Use the Intel Math Kernel Library (MKL) with the Xeon Phi coprocessor for:
+  -  Automatic offload (hybrid between host and coprocessor)
+  -  Compiler-assisted offload using Language Extensions for Offload (LEO)
+  -  Coprocessor only execution
+-  Generate console output that is trigged by offloaded code (“printf”)
+-  Offload C/C++ code that calls FORTRAN code
 
 **Note:** The majority of the code does not change from activity to
 activity.
 
-**3.3.1** Go to directory
-‘/home/traineeN/source-files/session2/Intel_mkl_mic_lab_C’. Have a
-look at the source code 00_getting_started.cpp as well as
-00_gemm_mkl.hpp. Locate the main function, and follow the anticipated
+**3.3.1** Go to directory `/home/traineeN/source-files/session2/Intel_mkl_mic_lab_C`. Have a
+look at the source code `00_getting_started.cpp` as well as
+`00_gemm_mkl.hpp`. Locate the main function, and follow the anticipated
 flow of the execution into the run function. Understand how
 single-precision and double-precision are mapped to either SGEMM or
 DGEMM calls. We will compile this code by using the supplied Makefile.
-Type ‘make’ to build the default exercise:
+Type `make` to build the default exercise:
 
-[phi01]$ make**
-  ----------------------
+```
+[phi01]$ make
+```
 
-Go to directory ‘bin/intel64’ (‘cd bin/intel64’) and run the executable
-using the value 2000 as the input parameter:
+Go to directory `bin/intel64`: 
 
-[phi01]$ ./00_getting_started 2000**
-  ---------------------------------------------
+```
+[phi01]$ cd bin/intel64
+```
+
+Run the executable using the value 2000 as the input parameter:
+
+```
+[phi01]$ ./00_getting_started 2000
+```
 
 Let us now run the application with 16 threads and with thread affinity
 optimized for fine grain parallelization. Set the number of threads to
-16 using OMP_NUM_THREADS environment variable and pin the threads by
-using the OpenMP KMP_AFFINITY environment variable:
+16 using `OMP_NUM_THREADS` environment variable and pin the threads by
+using the `OpenMP KMP_AFFINITY` environment variable:
 
-  -------------------------------------------------------------------
-[phi01]$ export OMP_NUM_THREADS=16**
-
-[phi01]$ export KMP_AFFINITY=granularity=fine,compact,1,0**
-
-[phi01]$ ./00_getting_started 2000**
-  -------------------------------------------------------------------
-  -------------------------------------------------------------------
+```
+[phi01]$ export OMP_NUM_THREADS=16
+[phi01]$ export KMP_AFFINITY=granularity=fine,compact,1,0
+[phi01]$ ./00_getting_started 2000
+```
 
 Compare the execution speed with the previous execution.
 
@@ -875,63 +854,68 @@ Compare the execution speed with the previous execution.
 **Bonus:** Take notes about the variation of the execution speed with
 the number of threads and with and without affinity settings.
 
-**3.3.2** Go back to directory
-/home/rogerio/session2/intel_mkl_mic_lab_C (‘cd ../..’) and
-recompile 00_getting_started.cpp for coprocessor execution, by
+**3.3.2** Go back to directory `/home/rogerio/session2/intel_mkl_mic_lab_C` (`cd ../..`) and
+recompile `00_getting_started.cpp` for coprocessor execution, by
 requesting that the entire baseline code target the Intel Xeon Phi
-coprocessor (flag -mmic):
+coprocessor (`flag -mmic`):
 
-[phi01]$ icc -openmp -mkl -mmic 00_getting_started.cpp -o 00_getting_started_native**
-  -------------------------------------------------------------------------------------------------
+```
+[phi01]$ icc -openmp -mkl -mmic 00_getting_started.cpp -o 00_getting_started_native
+```
 
 Copy the generated executable to one of the the coprocessors, log in
 onto the corresponding coprocessor and run the executable using the same
 value 2000 as the input parameter.
 
-**3.3.3** Recompile 00_getting_started.cpp to use automatic offload.
-On the host, open 00_getting_started.cpp with an editor (e.g. nano,
+**3.3.3** Recompile `00_getting_started.cpp` to use automatic offload.
+On the host, open `00_getting_started.cpp` with an editor (e.g. nano,
 vi, emacs) and add the line below near the beginning of the main
 function, before the execution proceeds to SGEMM or DGEMM:
 
+```
 mkl_mic_enable();
+```
 
-Alternatively, you can set the environment variable MKL_MIC_ENABLE=1.
+Alternatively, you can set the environment variable `MKL_MIC_ENABLE=1`.
 Compile and execute the program on the host:
 
-  --------------------------------------------------------------------------------------------
-[phi01]$ icc -openmp -mkl 00_getting_started.cpp -o 00_getting_started_offload**
-
-[phi01]$ ./00getting_started_offload 2000**
-  --------------------------------------------------------------------------------------------
-  --------------------------------------------------------------------------------------------
+```
+[phi01]$ icc -openmp -mkl 00_getting_started.cpp -o 00_getting_started_offload
+[phi01]$ ./00getting_started_offload 2000
+```
 
 Now some of the work will automatically be offloaded to the coprocessor.
 
-**3.3.4** Let us now compile file ‘01_offload.cpp’ using the Language
-Extensions for Offload (LEO) to offload the entire ‘run()’ function to
-the coprocessor. Open ‘01_offload.cpp’ with an editor and add a
-‘\#pragma offload’ directive before each call to the ‘run()’ function.
+**3.3.4** Let us now compile file `01_offload.cpp` using the Language
+Extensions for Offload (LEO) to offload the entire `run()` function to
+the coprocessor. Open `01_offload.cpp` with an editor and add a
+`#pragma offload` directive before each call to the `run()` function.
 Specify which data is going into the offload section and which is coming
 out. For example, the line
 
-\#pragma offload target(mic) in(a:length(n))
+```
+#pragma offload target(mic) in(a:length(n))
+```
 
 in front of a section or function copies in n elements of array a. Have
-a look at file ‘01_offload_solution.cpp’, with the implemented
+a look at file `01_offload_solution.cpp`, with the implemented
 solution. Compile using the syntax below:
 
-[phi01]$ icpc -openmp -mkl 01_offload.cpp -o 01_offload_solution -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3**
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+```
+[phi01]$ icpc -openmp -mkl 01_offload.cpp -o 01_offload_solution -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3
+```
 
 Now execute the program. The Intel compiler does not require an option
 in order to enable compiler-assisted offload. LEO can be disabled even
-when an offload directive/pragma is found, using -no-offload.
+when an offload directive/pragma is found, using `-no-offload`.
 
-**Practical Exercises - Part 4**
+______
 
-**Optimizing a real-world code example**
+# Practical Exercises - Part 4
 
-**4.1 Goals**
+## Optimizing a real-world code example
+
+### 4.1 Goals
 
 In this final set of activities we will make use of a real scientific
 code example that comes from Naoya Maruyama of Riken Advanced Institute
@@ -945,7 +929,7 @@ been extracted from chapter 4 of this outstanding and *highly
 recommended* book: “*Intel Xeon Phi Coprocessor High-Performance
 Programming*”, by Jim Jeffers and James Reinders (Elsevier, 2013).
 
-**4.2 Overview of the diffusion simulation algorithm**
+### 4.2 Overview of the diffusion simulation algorithm
 
 The purpose of the code is to simulate the diffusion of a solute through
 a volume of liquid over time within a 3D fluid container, such as a
@@ -1013,13 +997,13 @@ value to get a reasonable approximation of the diffusion at that point.
 Now, we have reached the first important stage of implementing a
 real-world algorithm; it will provide the correct results when run.
 
-**4.3 Hands-on Activities**
+### 4.3 Hands-on Activities
 
 **4.3.1** Take a careful look at the complete code listing,
-‘diffusion_base.c’, that can be found at
-‘/home/traineeN/source-files/session2’. The function
-‘diffusion_baseline()’ implements the key computational processing.
-Find the main() function, and see that two arrays of equal size, f1\[ \]
+`diffusion_base.c`, that can be found at
+`/home/traineeN/source-files/session2`. The function
+`diffusion_baseline()` implements the key computational processing.
+Find the `main()` function, and see that two arrays of equal size, f1\[ \]
 and f2\[ \], are allocated to support the double buffering used in the
 primary calculation function. The double buffering is required to ensure
 the stencil processing is completed without modifying the in-place
@@ -1043,31 +1027,27 @@ complete. However, to establish an initial baseline performance we will
 show the result. Use the following command to compile the code to run
 natively on the Intel Xeon Phi coprocessor:
 
-[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base**
-  ---------------------------------------------------------------------------------------------------
+```
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
+```
 
-Upload the executable program diffusion_base to the coprocessor as
+Upload the executable program `diffusion_base` to the coprocessor as
 usual. On the coprocessor command prompt the code can be executed by
 just typing (you do not need to do that because execution will take an
 excessively long time):
 
-[phi01]$ ./diffusion_base**
-  -----------------------------------
+```
+[phi01]$ ./diffusion_base
+```
 
 On the Xeon Phi card we are using the output is:
 
-  -------------------------------------
-  Running diffusion kernel 6553 times
+> Running diffusion kernel 6553 times  
+Elapsed time : 5653.587 (s)  
+FLOPS : 252.801 (MFlops)  
+Throughput : 0.233 (GB/s)  
+Accuracy : 1.592295e-05  
 
-  Elapsed time : 5653.587 (s)
-
-  FLOPS : 252.801 (MFlops)
-
-  Throughput : 0.233 (GB/s)
-
-  Accuracy : 1.592295e-05
-  -------------------------------------
-  -------------------------------------
 
 As you can see, this is a substantial set of calculations and took close
 to 95 minutes using just one core and one thread of the coprocessor. Our
@@ -1075,16 +1055,17 @@ next step is to exploit the available parallelism through scaling the
 code across the many cores of the coprocessor.
 
 **4.3.2** To start off, we will look at scaling the code using OpenMP.
-Source file ‘diffusion_omp.c’ is an updated version of the code that
+Source file `diffusion_omp.c` is an updated version of the code that
 adds OpenMP directives to distribute and scale the work across the
-available cores and threads. The key OpenMP clause is the ‘\#pragma omp
-for collapse(2)’ before the z loop, which tells the compiler to collapse
+available cores and threads. The key OpenMP clause is the `#pragma omp for collapse(2)` before the z loop, which tells the compiler to collapse
 the next two loops (z and y) into one loop and then apply the OpenMP
-‘omp for’ work division mechanism to split the loop calculations among
+`omp for` work division mechanism to split the loop calculations among
 the current available threads. Conceptually, the for loop changes to a
 single loop that executes as
 
+```c
 for (yz=0; yz&lt;ny\*nx; ++yz)
+```
 
 with the associated similar implied mapping for the use of y and z in
 the body of the loop. This will enable each thread to be assigned larger
@@ -1094,21 +1075,19 @@ efficiency on each pass through the loop.
 Now, compile and run the code to see what performance you get; use the
 following command:
 
-[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp**
-  -------------------------------------------------------------------------------------------------
+```
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp
+```
 
 Upload the file to one of the coprocessors, issue and ssh to it and
 then, on the coprocessor command prompt, set the number of threads and
 affinity and run the program:
 
-  ---------------------------------------------------------------------------
+```
 [phi01-mic]$ export OMP_NUM_THREADS=228** (4x the number of cores)
-
-[phi01-mic]$ export KMP_AFFINITY=scatter**
-
-[phi01-mic]$ ./diffusion_omp**
-  ---------------------------------------------------------------------------
-  ---------------------------------------------------------------------------
+[phi01-mic]$ export KMP_AFFINITY=scatter
+[phi01-mic]$ ./diffusion_omp
+```
 
 Take note of the output and compare with the result for the baseline
 code shown before.
@@ -1117,37 +1096,32 @@ code shown before.
 ensure that we consider balancing the access to resources to avoid
 conflicts and resource saturation, particularly with respect to memory.
 Set for three, two, and one thread(s) per core and run again for each
-change of the parameter OMP_NUM_THREADS, and take note of the result
+change of the parameter `OMP_NUM_THREADS`, and take note of the result
 of each execution:
 
-  --------------------------------------------------
-[phi01-mic]$ export OMP_NUM_THREADS=171**
-
-[phi01-mic]$ ./diffusion_omp**
-
-[phi01-mic]$ export OMP_NUM_THREADS=114**
-
-[phi01-mic]$ ./diffusion_omp**
-
-[phi01-mic]$ export OMP_NUM_THREADS=57**
-
-[phi01-mic]$ ./diffusion_omp**
-  --------------------------------------------------
-  --------------------------------------------------
+```
+[phi01-mic]$ export OMP_NUM_THREADS=171
+[phi01-mic]$ ./diffusion_omp
+[phi01-mic]$ export OMP_NUM_THREADS=114
+[phi01-mic]$ ./diffusion_omp
+[phi01-mic]$ export OMP_NUM_THREADS=57
+[phi01-mic]$ ./diffusion_omp
+```
 
 Compare the outputs and assess which gives the best result. How many
 times the scaled code runs compared to the baseline?
 
 **4.3.4** Our next goal is speed up the code by vectoring it. Look back
 at the output of the vector report after compilation finishes (exercise
-4.3.2). Now have a look at source file ‘diffusion_ompvect.c’. The line
-‘\#pragma simd’ requests the compiler to vectorize the loop regardless
+4.3.2). Now have a look at source file `diffusion_ompvect.c`. The line
+`#pragma simd` requests the compiler to vectorize the loop regardless
 of potential dependencies or other potential constraints. That was a
 pretty simple one line change but should provide an extra improvement.
 Compile it using the following command:
 
-[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvect**
-  ---------------------------------------------------------------------------------------------------------
+```
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvec
+```
 
 Note that now you should see that the vector report indicates the inner
 loop was indeed vectorized. Upload the file to one of the coprocessors
@@ -1155,32 +1129,23 @@ and perform four runs from the coprocessor prompt adjusting the threads
 per core based on the number of cores for the coprocessor on each run as
 indicated below:
 
-  --------------------------------------------------
-[phi01-mic]$ export KMP_AFFINITY=scatter**
-
-[phi01-mic]$ export OMP_NUM_THREADS=228**
-
-[phi01-mic]$ ./diffusion_ompvect**
-  --------------------------------------------------
-  --------------------------------------------------
+```
+[phi01-mic]$ export KMP_AFFINITY=scatter
+[phi01-mic]$ export OMP_NUM_THREADS=228
+[phi01-mic]$ ./diffusion_ompvect
+```
 
 As in the previous exercise, set for three, two, and one thread(s) per
 core and run again, and take note of the results:
 
-  --------------------------------------------------
-[phi01-mic]$ export OMP_NUM_THREADS=171**
-
-[phi01-mic]$ ./diffusion_ompvect**
-
-[phi01-mic]$ export OMP_NUM_THREADS=114**
-
-[phi01-mic]$ ./diffusion_ompvect**
-
-[phi01-mic]$ export OMP_NUM_THREADS=57**
-
-[phi01-mic]$ ./diffusion_ompvect**
-  --------------------------------------------------
-  --------------------------------------------------
+```
+[phi01-mic]$ export OMP_NUM_THREADS=171
+[phi01-mic]$ ./diffusion_ompvect
+[phi01-mic]$ export OMP_NUM_THREADS=114
+[phi01-mic]$ ./diffusion_ompvect
+[phi01-mic]$ export OMP_NUM_THREADS=57
+[phi01-mic]$ ./diffusion_ompvect
+```
 
 Compare with previous results. How many times the scaled code runs
 compared to the baseline? We can see the significant impact of
@@ -1198,8 +1163,8 @@ to “peel out“ the boundary checks from the inner loop portions because
 we know that the code does the bulk of its processing without
 encountering a boundary condition.
 
-Have a look at the source code ‘diffusion_peel.c’ and compare with the
-previous version, ‘diffusion_ompvect.c’. Since only our starting and
+Have a look at the source code `diffusion_peel.c` and compare with the
+previous version, `diffusion_ompvect.c`. Since only our starting and
 ending x coordinates 0 and nx-1 will hit the boundary condition, we can
 create an inner loop without any boundary checks by simply ensuring we
 process x indices from 1 to nx-2. Furthermore, since the stencil always
@@ -1207,12 +1172,13 @@ traverses in single units across the x row of sub-volumes, we can update
 the stencil positions by simply incrementing them. Also, we can
 eliminate calculating the east and west locations by referencing their
 positions directly in the arrayindex (e=c-1 and w=c+1). This new inner
-loop now has the X-edge checks removed. The file ‘diffusion_peel.c’
+loop now has the X-edge checks removed. The file `diffusion_peel.c`
 contains the code with the modifications. Compile and run it to see if
 we achieved any improvement:
 
-[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel**
-  ---------------------------------------------------------------------------------------------------
+```
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel
+```
 
 Upload the file to one of the coprocessors, set the affinity and number
 of threads at the coprocessor prompt iterating through the number of
@@ -1257,7 +1223,7 @@ left, center, and right rows for the next z, and the bottom row for the
 z after that. This usage avoids additional memory requests and a
 performance improvement is likely possible.
 
-A code implementation with these improvements is ‘diffusion_tiled.c’.
+A code implementation with these improvements is `diffusion_tiled.c`.
 We select a blocking factor value YBF for the number of y rows we will
 process in each slab; the goal being to select an optimal number that
 will maintain the sufficient amounts of y and z data in the cache long
@@ -1270,8 +1236,9 @@ management is maintained so we keep that optimization intact. That said,
 let us compile, upload and run the code on one of the coprocessors. Use
 the following command:
 
-[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled**
-  -----------------------------------------------------------------------------------------------------
+```
+[phi01]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled
+```
 
 Upload the code and go to the processor command prompt, set the affinity
 and number of threads iterating through the number of threads needed to
@@ -1282,13 +1249,16 @@ measurable improvement? Now compare this result with the original
 single-threaded baseline. How many times faster does this tuned code run
 compared to the baseline code?
 
-[^1]: https://computing.llnl.gov/tutorials/pthreads/
+______
 
-[^2]: http://en.wikipedia.org/wiki/Directive_(programming)
+### Other references:
 
-[^3]: http://en.wikipedia.org/wiki/Cilk_Plus
+[^1]: <https://computing.llnl.gov/tutorials/pthreads/>
 
-[^4]: https://software.intel.com/en-us/articles/intelr-xeon-phitm-advanced-workshop-labs
+[^2]: <http://en.wikipedia.org/wiki/Directive_(programming)>
 
-[^5]: http://www.exastencils.org/histencils/2014/papers/histencils2014_optimizing_stencil_computations_
-    for_nvidia_kepler_gpus.pdf
+[^3]: <http://en.wikipedia.org/wiki/Cilk_Plus>
+
+[^4]: <https://software.intel.com/en-us/articles/intelr-xeon-phitm-advanced-workshop-labs>
+
+[^5]: <http://www.exastencils.org/histencils/2014/papers/histencils2014_optimizing_stencil_computations_for_nvidia_kepler_gpus.pdf>
