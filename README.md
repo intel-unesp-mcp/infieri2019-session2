@@ -1108,10 +1108,11 @@ then, on the coprocessor command prompt, set the number of threads and
 affinity and run the program:
 
 ```
-[phi01-mic]$ export OMP_NUM_THREADS=228** (4x the number of cores)
+[phi01-mic]$ export OMP_NUM_THREADS=228 
 [phi01-mic]$ export KMP_AFFINITY=scatter
 [phi01-mic]$ ./diffusion_omp
 ```
+**Note:** `OMP_NUM_THREADS=228` is the 4x the number of cores.
 
 Take note of the output and compare with the result for the baseline
 code shown before.
