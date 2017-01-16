@@ -680,15 +680,16 @@ The solution is to specify explicit proclists per MPI process:
 Repeat the execution, but `grep` and `sort` the output to focus on the
 essential information:
 
+```
 [phi01]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 - n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload 2>&1 | grep bound | sort
 ```
 ______
 
-**Practical Exercises - Part 3**
+# Practical Exercises - Part 3
 
-**Using Intel Math Kernel Library (MKL)**
+## Using Intel Math Kernel Library (MKL)
 
-**3.1 Goals**
+### 3.1 Goals
 
 This set of activities aims to familiarize you with the Intel Math
 Kernel Library (MKL). You will learn how to compile a simple program for
