@@ -959,25 +959,14 @@ The baseline C code that shows the primary diffusion algorithm
 implementation is shown below:
 
 ```c
-for (int i = 0; i < count; ++i){
-	for (int z = 0; z < nz; z++){
-		for (int y = 0; y < ny; y++){
-			for (int x = 0; x < nx; x++){
-				int c, w, e, n, s, b, t;
-				c = x + y * nx + z * nx * ny;
-				w = (x == 0) ? c : c - 1;
-				n = (y == 0) ? c : c - nx;
-				b = (z == 0) ? c : c - nx * ny;
-				e = (x == nx-1) ? c : c + 1;
-				s = (y == ny-1) ? c : c + nx;
-				t = (z == nz-1) ? c : c + nx * ny;
-				f2_t[c] = cc * f1_t[c] + cw * f1_t[w] + ce * f1_t[e] + 
-				cs * f1_t[s] + cn * f1_t[n] + cb * f1_t[b] + ct * f1_t[t];
-
-			}
-		}
-	}		
-	REAL *t = f1_t; f1_t = f2_t; f2_t = t;
+for (i = 0; i < niter; i++) {
+	for (z = 0; z < nz; z++)
+		for (y = 0; y < ny; y++)
+			for (x = 0: x < nx; x++)
+				f2[x,y,z] = cc*f1[z,y,x] + cw*f1[z,y,x-1] + ce*f1[z,y,x+1] +
+					    cn*f1[z,y-1,x] + cs*f1[z,y+1,x] +
+					    cb*f1[z-1,y,x] + ct*f1[z+1,y,x]
+	temp = f2; f2 = f1; f1 = temp;
 }
 ```
 
@@ -1000,15 +989,27 @@ memory space representing the container volume. The code snippet below
 shows an evolved implementation that accounts for the boundary
 conditions:
 
+
 ```c
-for (i = 0; i < niter; i++) {
-	for (z = 0; z < nz; z++)
-		for (y = 0; y < ny; y++)
-			for (x = 0: x < nx; x++)
-				f2[x,y,z] = cc*f1[z,y,x] + cw*f1[z,y,x-1] + ce*f1[z,y,x+1] +
-					    cn*f1[z,y-1,x] + cs*f1[z,y+1,x] +
-					    cb*f1[z-1,y,x] + ct*f1[z+1,y,x]
-	temp = f2; f2 = f1; f1 = temp;
+for (int i = 0; i < count; ++i){
+	for (int z = 0; z < nz; z++){
+		for (int y = 0; y < ny; y++){
+			for (int x = 0; x < nx; x++){
+				int c, w, e, n, s, b, t;
+				c = x + y * nx + z * nx * ny;
+				w = (x == 0) ? c : c - 1;
+				n = (y == 0) ? c : c - nx;
+				b = (z == 0) ? c : c - nx * ny;
+				e = (x == nx-1) ? c : c + 1;
+				s = (y == ny-1) ? c : c + nx;
+				t = (z == nz-1) ? c : c + nx * ny;
+				f2_t[c] = cc * f1_t[c] + cw * f1_t[w] + ce * f1_t[e] + 
+				cs * f1_t[s] + cn * f1_t[n] + cb * f1_t[b] + ct * f1_t[t];
+
+			}
+		}
+	}		
+	REAL *t = f1_t; f1_t = f2_t; f2_t = t;
 }
 ```
 
