@@ -707,7 +707,7 @@ Fast Fourier transform, and vector math. The routines in MKL are hand
 optimized by exploiting Intel's multi-/many-core processors. Intel MKL
 has the following functional categories:
 
-- Linear Algebra
+- **Linear Algebra**
 
 Intel MKL BLAS provides optimized vector-vector (Level 1), matrix-vector
 (Level 2) and matrix-matrix (Level 3) operations for single and double
@@ -722,7 +722,7 @@ driver routines that can be used to solve linear systems of equations.
 Eigenvalue and least-squares solvers are also included, as are the
 latest LAPACK 3.4.1 interfaces and enhancements.
 
-- Fast Fourier Transforms
+- **Fast Fourier Transforms**
 
 Intel MKL FFTs include many optimizations and should provide significant
 performance gains over other libraries for medium and large transform
@@ -730,7 +730,7 @@ sizes. The library supports a broad variety of FFTs, from single and
 double precision 1D to multi-dimensional, complex-to-complex,
 real-to-complex, and real-to-real transforms of arbitrary length.
 
-- Vector Math
+- **Vector Math**
 
 Intel MKL provides optimized vector implementations of computationally
 intensive core mathematical operations and functions for single and
@@ -744,7 +744,7 @@ pack/unpack. Enhanced capabilities include accuracy, denormalized number
 handling, and error mode controls, allowing users to customize the
 behavior to meet their individual needs.
 
-- Statistics
+- **Statistics**
 
 Intel MKL includes random number generators and probability
 distributions that can deliver significant application performance. The
@@ -758,7 +758,7 @@ detection, and missing value replacements. These features can be used to
 speed-up applications in computational finance, life sciences,
 engineering/simulations, databases, and other areas.
 
-- Data Fitting
+- **Data Fitting**
 
 Intel MKL includes a rich set of splines functions for 1-dimensional
 interpolation. These are useful in a variety of application domains
@@ -791,7 +791,7 @@ host system and the many-core Xeon Phi coprocessors:
   -  can be used together with Automatic Offload.
 
 In order to compile applications using the Intel MKL with the Intel C++
-Compiler, the command line argument -mkl must be specified, and MKL
+Compiler, the command line argument `-mkl` must be specified, and MKL
 header files must be included in the source code in order to declare the
 functions and data types used in the application.
 
@@ -806,7 +806,7 @@ following topics are introduced:
   -  Automatic offload (hybrid between host and coprocessor)
   -  Compiler-assisted offload using Language Extensions for Offload (LEO)
   -  Coprocessor only execution
--  Generate console output that is trigged by offloaded code (“printf”)
+-  Generate console output that is trigged by offloaded code (`printf`)
 -  Offload C/C++ code that calls FORTRAN code
 
 **Note:** The majority of the code does not change from activity to
@@ -849,7 +849,7 @@ using the `OpenMP KMP_AFFINITY` environment variable:
 
 Compare the execution speed with the previous execution.
 
-**Note:** for a refresh on the meaning of KMP_AFFINITY review exercise
+**Note:** for a refresh on the meaning of `KMP_AFFINITY` review exercise
 3.2.3 of Session 1.
 
 **Bonus:** Take notes about the variation of the execution speed with
