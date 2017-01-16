@@ -971,7 +971,8 @@ for (int i = 0; i < count; ++i){
 				e = ( x == nx-1) ? c : c + 1;
 				s = ( y == ny-1) ? c : c + nx;
 				t = ( z == nz-1) ? c : c + nx * ny;
-				f2_t[c] == cc * f1_t[c] + cw * f1_t[w] + ce * f1_t[e] + cs * f1_t[s] + cn * f1_t[n] + cb * f1_t[b] + ct * f1_t[t];
+				f2_t[c] = cc * f1_t[c] + cw * f1_t[w] + ce * f1_t[e] + 
+				cs * f1_t[s] + cn * f1_t[n] + cb * f1_t[b] + ct * f1_t[t];
 
 			}
 		}
