@@ -1,3 +1,5 @@
+<a name="top"></a>
+
 # 4rd International Summer School on INtelligent Signal Processing for FrontIEr Research and Industry
 
 ## Lab Workbook - Session 2 (CL6)
@@ -55,6 +57,19 @@ They will also work on MPI application examples that should be executed
 simultaneously on the Xeon processors and the Xeon Phi coprocessors,
 explore the use of Intel Math Kernel Library (MKL), and develop insights
 on tuning parallel applications.
+
+______
+
+## Navigation ##
+
+This course is divided into four parts:
+
+* [Practical Exercises - **Part 1**: Task parallelism using OpenMP and Cilk Plus](#part1)
+* [Practical Exercices - **Part 2**: Intel MPI programming models](#part2)
+* [Practical Exercices - **Part 3**: Using Intel Math Kernel Library (MKL)](#part3)
+* [Practical Exercices - **Part 4**: Optimizing a real-world code example](#part4)
+
+______
 
 ## Useful References
 
@@ -121,8 +136,15 @@ coprocessors are up and running `status = ‘online’`:
 this command shows the status of all MIC cards installed on the host system. 
 
 Please refer to the teaching assistant(s) if you have any question.
+______
+
+### Quick Navigation ###
+
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
 
 ______
+
+<a name="part1"></a>
 
 # Practical Exercises - Part 1
 
@@ -395,8 +417,15 @@ is done through calls to `sum.set_value(N)` and `sum.get_value()`
 functions. Compile the source code for host and coprocessors, execute
 the binaries on the host and on one of the coprocessors, and analyze the
 corresponding outputs.
+______
+
+### Quick Navigation ###
+
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
 
 ______
+
+<a name="part2"></a>
 
 # Practical Exercises - Part 2
 
@@ -685,6 +714,15 @@ essential information:
 ```
 ______
 
+### Quick Navigation ###
+
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
+
+______
+
+
+<a name="part3"></a>
+
 # Practical Exercises - Part 3
 
 ## Using Intel Math Kernel Library (MKL)
@@ -909,8 +947,15 @@ solution. Compile using the syntax below:
 Now execute the program. The Intel compiler does not require an option
 in order to enable compiler-assisted offload. LEO can be disabled even
 when an offload directive/pragma is found, using `-no-offload`.
+______
+
+### Quick Navigation ###
+
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
 
 ______
+
+<a name="part4"></a>
 
 # Practical Exercises - Part 4
 
@@ -966,6 +1011,7 @@ for (i = 0; i < niter; i++) {
 				f2[x,y,z] = cc*f1[z,y,x] + cw*f1[z,y,x-1] + ce*f1[z,y,x+1] + cn*f1[z,y-1,x] + cs*f1[z,y+1,x] + cb*f1[z-1,y,x] + ct*f1[z+1,y,x]
 	temp = f2; f2 = f1; f1 = temp;
 }
+
 ```
 
 The f1\[ \] array contains the current volume data and the f2\[ \] array
@@ -1275,6 +1321,8 @@ single-threaded baseline. How many times faster does this tuned code run
 compared to the baseline code?
 
 ______
+
+<a name="bottom"></a>
 
 ### Other references:
 
