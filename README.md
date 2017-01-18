@@ -1336,7 +1336,6 @@ ______
 
 [^5]: <http://www.exastencils.org/histencils/2014/papers/histencils2014_optimizing_stencil_computations_for_nvidia_kepler_gpus.pdf>
 
-
 ______
 
 ### Quick Navigation ###
