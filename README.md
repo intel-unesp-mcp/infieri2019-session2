@@ -1320,6 +1320,13 @@ measurable improvement? Now compare this result with the original
 single-threaded baseline. How many times faster does this tuned code run
 compared to the baseline code?
 
+
+______
+
+### Quick Navigation ###
+
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
+
 ______
 
 <a name="bottom"></a>
@@ -1336,11 +1343,6 @@ ______
 
 [^5]: <http://www.exastencils.org/histencils/2014/papers/histencils2014_optimizing_stencil_computations_for_nvidia_kepler_gpus.pdf>
 
-______
 
-### Quick Navigation ###
 
-[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
-
-______
 
