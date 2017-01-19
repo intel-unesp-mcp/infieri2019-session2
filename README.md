@@ -417,6 +417,142 @@ is done through calls to `sum.set_value(N)` and `sum.get_value()`
 functions. Compile the source code for host and coprocessors, execute
 the binaries on the host and on one of the coprocessors, and analyze the
 corresponding outputs.
+
+**1.3.13** The next set of exercises will show how to identify parallel opportunities on the code and perform estimates about performance gains before parallelizing, using a profiler tool called Intel® Advisor XE.
+Intel® Advisor XE is a shared memory threading designing and prototyping tool for C, C++, C# and Fortran. This tool supports basic profiling to identify time spent in each line of code and also provides a mechanism to estimate performance gains on sequential code. Such estimate is done using a mechanism called annotation, that is used to identify loops which could be parallelized. Based on such annotations a model is built in order to compare the performance scaling of different threading designs without the cost and disruption of implementation. 
+In this set of exercises, you will execute the following steps in order to perform threading prototyping:
+- Create new advisor project to evaluate a code that performs matrix multiplication;
+- Discover opportunities for parallelization, using “Survey Data” Analysis;
+- Include annotations on source code to check scalability;
+- Evaluate the performance of annotated loops in different architectures and frameworks, using “Check Suitability” analysis.
+
+**1.3.13.1** The application that we are going to profile is a basic matrix multiplication serial application. Showed below
+
+```
+void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
+{ 
+  int i,j,k;
+
+  // Basic serial implementation
+  for(i=0; i<msize; i++) {
+    for(j=0; j<msize; j++) {
+      for(k=0; k<msize; k++) {
+	c[i][j] = c[i][j] + a[i][k] * b[k][j];
+      }
+    }
+  } 
+}
+```
+
+
+This code is on the directory
+
+```
+<git_dir>/matrix/src
+```
+
+In order to compile the application go to 
+
+```
+<git_dir>/matrix/linux
+```
+
+and execute 
+
+```
+make clean 
+make icc
+```
+
+**1.3.13.1** Execute Intel Advisor on terminal: 
+
+```
+advixe-gui
+```
+
+**1.3.13.2** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
+
+- name: matrix
+- application: <git_dir>/matrix/linux/matrix.icc
+- Source Folder: <git_dir>/matrix/src
+ 
+Figure 1. Create New Project
+ 
+Figure 2. Setup Project Name
+ 
+Figure 3. Setup Application binary and parameters.
+ 
+Figure 4. Setup Source Directory.
+
+**1.3.13.3** After create the project start the Survey target analysis (Figure 5).
+ 
+Figure 5.Start Survey Target Analysis.
+
+The Survey Target report shows basic profiling information, such as the time spent in each line of the code. This information is useful to identify the parallel opportunities (Figure 5).
+ 
+Figure 6. Survey Target Report
+
+**1.3.13.4** In some cases, the code presents several parallel opportunities. In our example there are four points in the code that spends too much time: main function and the three loops of function multiply0 that performs the matrix multiplication. In this scenario, we will use the Suitability Analysis to estimate for each loop identified in survey target analysis the performance gains after parallelizing those loops.
+
+This evaluation is done through the following steps:
+- Include annotations on candidate loops that will be evaluated;
+- Recompile application, linking with advisor library;
+- Run “collect suitability” analysis.
+
+**1.3.13.5**  The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
+
+The annotations have to be included in the following way:
+
+- #include "advisor-annotate.h“: include header file
+- ANNOTATE_SITE_BEGIN(id): before beginning of loop;
+- ANNOTATE_ITERATION_TASK(id): first line inside the loop;
+- ANNOTATE_SITE_END(): after end of loop;
+
+Red Lines shows the lines that has to be included in original source code;
+
+```
+void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
+{ 
+  int i,j,k;
+
+  // Basic serial implementation
+ANNOTATE_SITE_BEGIN(id1):
+  for(i=0; i<msize; i++) {
+ANNOTATE_ITERATION_TASK(tid1)
+ANNOTATE_SITE_BEGIN(id2):
+    for(j=0; j<msize; j++) {
+             ANNOTATE_ITERATION_TASK(tid2)
+             ANNOTATE_SITE_BEGIN(id3):
+      for(k=0; k<msize; k++) {
+	ANNOTATE_ITERATION_TASK(tid3)
+	c[i][j] = c[i][j] + a[i][k] * b[k][j];
+      }
+             ANNOTATE_SITE_END()
+    }
+    ANNOTATE_SITE_END()
+  }  
+    ANNOTATE_SITE_END()
+}
+```
+
+After include these lines recompile application:
+
+```
+cd <git_dir>/matrix/linux
+make clean
+make icc
+```
+
+Check your annotations on “view annotations” options;
+
+Start Check Suitability
+
+The Check Suitability Expected Results 
+ 
+Notice that considering OpenMP the two first loops presents similar time but the scalability of outer loop is higher. Considering OpenMP or cilk plus on CPU.  
+
+What loop presents higher scalability?
+
 ______
 
 ### Quick Navigation ###
