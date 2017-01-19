@@ -426,7 +426,7 @@ In this set of exercises, you will execute the following steps in order to perfo
 - Include annotations on source code to check scalability;
 - Evaluate the performance of annotated loops in different architectures and frameworks, using “Check Suitability” analysis.
 
-**1.3.13.1** The application that we are going to profile is a basic matrix multiplication serial application. Showed below
+**1.4** The application that we are going to profile is a basic matrix multiplication serial application. Showed below
 
 ```
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
@@ -464,42 +464,48 @@ make clean
 make icc
 ```
 
-**1.3.13.1** Execute Intel Advisor on terminal: 
+**1.4.1** Execute Intel Advisor on terminal: 
 
 ```
 advixe-gui
 ```
 
-**1.3.13.2** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
+**1.4.2** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
 
 - name: matrix
 - application: <git_dir>/matrix/linux/matrix.icc
 - Source Folder: <git_dir>/matrix/src
  
+![infieri02_pic03](img/infieri02_pic03.png)
 Figure 1. Create New Project
- 
+
+![infieri02_pic04](img/infieri02_pic04.png) 
 Figure 2. Setup Project Name
  
+![infieri02_pic05](img/infieri02_pic05.png)
 Figure 3. Setup Application binary and parameters.
  
+![infieri02_pic06](img/infieri02_pic06.png)
 Figure 4. Setup Source Directory.
 
-**1.3.13.3** After create the project start the Survey target analysis (Figure 5).
- 
+**1.4.3** After create the project start the Survey target analysis (Figure 5).
+
+![infieri02_pic07](img/infieri02_pic07.png) 
 Figure 5.Start Survey Target Analysis.
 
 The Survey Target report shows basic profiling information, such as the time spent in each line of the code. This information is useful to identify the parallel opportunities (Figure 5).
  
+![infieri02_pic08](img/infieri02_pic08.png)
 Figure 6. Survey Target Report
 
-**1.3.13.4** In some cases, the code presents several parallel opportunities. In our example there are four points in the code that spends too much time: main function and the three loops of function multiply0 that performs the matrix multiplication. In this scenario, we will use the Suitability Analysis to estimate for each loop identified in survey target analysis the performance gains after parallelizing those loops.
+**1.4.4** In some cases, the code presents several parallel opportunities. In our example there are four points in the code that spends too much time: main function and the three loops of function multiply0 that performs the matrix multiplication. In this scenario, we will use the Suitability Analysis to estimate for each loop identified in survey target analysis the performance gains after parallelizing those loops.
 
 This evaluation is done through the following steps:
 - Include annotations on candidate loops that will be evaluated;
 - Recompile application, linking with advisor library;
 - Run “collect suitability” analysis.
 
-**1.3.13.5**  The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
+**1.4.5**  The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
 
 The annotations have to be included in the following way:
 
@@ -545,11 +551,15 @@ make icc
 
 Check your annotations on “view annotations” options;
 
+![infieri02_pic09](img/infieri02_pic09.png)
+
 Start Check Suitability
 
 The Check Suitability Expected Results 
  
 Notice that considering OpenMP the two first loops presents similar time but the scalability of outer loop is higher. Considering OpenMP or cilk plus on CPU.  
+
+![infieri02_pic10](img/infieri02_pic10.png)
 
 What loop presents higher scalability?
 
