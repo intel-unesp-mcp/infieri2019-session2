@@ -418,7 +418,9 @@ functions. Compile the source code for host and coprocessors, execute
 the binaries on the host and on one of the coprocessors, and analyze the
 corresponding outputs.
 
-**1.3.13** The next set of exercises will show how to identify parallel opportunities on the code and perform estimates about performance gains before parallelizing, using a profiler tool called Intel® Advisor XE.
+### 1.4 Hands-on Activities about Profiling 
+
+The next set of exercises will show how to identify parallel opportunities on the code and perform estimates about performance gains before parallelizing, using a profiler tool called Intel® Advisor XE.
 Intel® Advisor XE is a shared memory threading designing and prototyping tool for C, C++, C# and Fortran. This tool supports basic profiling to identify time spent in each line of code and also provides a mechanism to estimate performance gains on sequential code. Such estimate is done using a mechanism called annotation, that is used to identify loops which could be parallelized. Based on such annotations a model is built in order to compare the performance scaling of different threading designs without the cost and disruption of implementation. 
 In this set of exercises, you will execute the following steps in order to perform threading prototyping:
 - Create new advisor project to evaluate a code that performs matrix multiplication;
@@ -426,7 +428,7 @@ In this set of exercises, you will execute the following steps in order to perfo
 - Include annotations on source code to check scalability;
 - Evaluate the performance of annotated loops in different architectures and frameworks, using “Check Suitability” analysis.
 
-**1.4** The application that we are going to profile is a basic matrix multiplication serial application. Showed below
+**1.4.1** The application that we are going to profile is a basic matrix multiplication serial application. Showed below
 
 ```
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
@@ -464,13 +466,13 @@ make clean
 make icc
 ```
 
-**1.4.1** Execute Intel Advisor on terminal: 
+**1.4.2** Execute Intel Advisor on terminal: 
 
 ```
 advixe-gui
 ```
 
-**1.4.2** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
+**1.4.3** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
 
 - name: matrix
 - application: <git_dir>/matrix/linux/matrix.icc
@@ -488,7 +490,7 @@ Figure 3. Setup Application binary and parameters.
 ![infieri02_pic06](img/infieri02_pic06.png)
 Figure 4. Setup Source Directory.
 
-**1.4.3** After create the project start the Survey target analysis (Figure 5).
+**1.4.4** After create the project start the Survey target analysis (Figure 5).
 
 ![infieri02_pic07](img/infieri02_pic07.png) 
 Figure 5.Start Survey Target Analysis.
@@ -498,14 +500,14 @@ The Survey Target report shows basic profiling information, such as the time spe
 ![infieri02_pic08](img/infieri02_pic08.JPG)
 Figure 6. Survey Target Report
 
-**1.4.4** In some cases, the code presents several parallel opportunities. In our example there are four points in the code that spends too much time: main function and the three loops of function multiply0 that performs the matrix multiplication. In this scenario, we will use the Suitability Analysis to estimate for each loop identified in survey target analysis the performance gains after parallelizing those loops.
+**1.4.5** In some cases, the code presents several parallel opportunities. In our example there are four points in the code that spends too much time: main function and the three loops of function multiply0 that performs the matrix multiplication. In this scenario, we will use the Suitability Analysis to estimate for each loop identified in survey target analysis the performance gains after parallelizing those loops.
 
 This evaluation is done through the following steps:
 - Include annotations on candidate loops that will be evaluated;
 - Recompile application, linking with advisor library;
 - Run “collect suitability” analysis.
 
-**1.4.5**  The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
+**1.4.6**  The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
 
 The annotations have to be included in the following way:
 
