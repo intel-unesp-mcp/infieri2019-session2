@@ -426,12 +426,12 @@ Intel® Advisor XE is a shared memory threading designing and prototyping tool f
 
 In this set of exercises, you will execute the following steps in order to perform threading prototyping:
 
-- 	Create new advisor project to evaluate a code that performs matrix multiplication;
+- 	Create new advisor project to profile a matrix multiplication application;
 - 	Discover opportunities for parallelization, using “Survey Data” Analysis;
 - 	Include annotations on source code to check scalability;
 - 	Evaluate the performance of annotated loops in different architectures and frameworks, using “Check Suitability” analysis.
 
-**1.4.1** The application that we are going to profile is a basic matrix multiplication serial application. Showed below: 
+**1.4.1** The main part of application that we are going to profile is a basic matrix multiplication serial application. Showed below: 
 
 ```
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
@@ -456,15 +456,10 @@ This code is on the directory
 <git_dir>/matrix/src
 ```
 
-In order to compile the application go to 
+In order to compile the application execute 
 
 ```
-<git_dir>/matrix/linux
-```
-
-and execute 
-
-```
+cd <git_dir>/matrix/linux
 make clean 
 make icc
 ```
@@ -493,12 +488,12 @@ Figure 3. Setup Application binary and parameters.
 ![infieri02_pic06](img/infieri02_pic06.png)
 Figure 4. Setup Source Directory.
 
-**1.4.4** After create the project start the Survey target analysis (Figure 5).
+**1.4.4** Start the Survey target analysis (Figure 5).
 
 ![infieri02_pic07](img/infieri02_pic07.png) 
 Figure 5.Start Survey Target Analysis.
 
-The Survey Target report shows basic profiling information, such as the time spent in each line of the code. This information is useful to identify the parallel opportunities (Figure 5).
+The Survey Target report shows basic profiling information, such as the time spent in each line of the code. This information is useful to identify the parallel opportunities (Figure 6).
  
 ![infieri02_pic08](img/infieri02_pic08.JPG)
 Figure 6. Survey Target Report
@@ -506,11 +501,12 @@ Figure 6. Survey Target Report
 **1.4.5** In some cases, the code presents several parallel opportunities. In our example there are four points in the code that spends too much time: main function and the three loops of function multiply0 that performs the matrix multiplication. In this scenario, we will use the Suitability Analysis to estimate for each loop identified in survey target analysis the performance gains after parallelizing those loops.
 
 This evaluation is done through the following steps:
-- Include annotations on candidate loops that will be evaluated;
-- Recompile application, linking with advisor library;
-- Run “collect suitability” analysis.
 
-**1.4.6**  The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
+- 	Include annotations on candidate loops that will be evaluated;
+- 	Recompile application, linking with advisor library;
+- 	Run “collect suitability” analysis.
+
+**1.4.6** The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
 
 The annotations have to be included in the following way:
 
@@ -558,7 +554,7 @@ Check your annotations on “view annotations” options;
 
 ![infieri02_pic09](img/infieri02_pic09.JPG)
 
-Start Check Suitability
+**1.4.6** Start Check Suitability 
 
 The Check Suitability Expected Results 
  
