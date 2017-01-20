@@ -542,12 +542,12 @@ make clean
 make icc
 ```
 
-Check your annotations on “view annotations” options;
+Check your annotations on “view annotations” options (Figure 7);
 
 ![infieri02_pic09](img/infieri02_pic09.JPG)
 Figure 7. An example of annotations included in the code.
 
-**1.4.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model. 
+**1.4.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model (Figure 8). 
 
 ![infieri02_pic10](img/infieri02_pic10.JPG)
 Figure 8. An example of suitability report.
