@@ -508,6 +508,7 @@ The annotations have to be included in the following way:
 - 	ANNOTATE_SITE_END(): after end of loop;
 
 The code below show how to include the annotation directives in the original code:
+
 ```
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
 { 
