@@ -422,7 +422,7 @@ corresponding outputs.
 
 The next set of exercises will show how to identify parallel opportunities on the code and perform estimates about performance gains before parallelizing, using a profiler tool called Intel® Advisor XE.
 
-Intel® Advisor XE is a shared memory threading designing and prototyping tool for C, C++, C# and Fortran. This tool supports basic profiling to identify time spent in each line of code and also provides a mechanism to estimate performance gains on sequential code. Such estimate is done using a mechanism called annotation, that is used to mark loops which could be parallelized for profiling. Based on such annotations a model is built in order to compare the performance scaling of different threading designs without the cost and disruption of implementation. 
+Intel® Advisor XE is a shared memory threading designing and prototyping tool for C, C++, C# and Fortran. This tool supports basic profiling to identify time spent in each line of code and also provides a mechanism to estimate performance gains on sequential code. Such estimate is done using a mechanism called annotation, that is used to mark loops for profiling. Based on such annotations a model is built in order to compare the performance scaling of different threading designs without the cost and disruption of implementation. 
 
 In this set of exercises, you will execute the following steps in order to perform threading prototyping:
 
@@ -431,7 +431,7 @@ In this set of exercises, you will execute the following steps in order to perfo
 - 	Include annotations on source code to check scalability;
 - 	Evaluate the performance of annotated loops in different architectures and frameworks, using “Check Suitability” analysis.
 
-**1.4.1** The main part of application that we are going to profile is a basic matrix multiplication serial application. Showed below: 
+**1.4.1** The main part of application that we are going to profile is a basic matrix multiplication serial application: 
 
 ```
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
@@ -491,7 +491,7 @@ Figure 4. Setup Source Directory.
 **1.4.4** Start the Survey target analysis (Figure 5).
 
 ![infieri02_pic07](img/infieri02_pic07.png) 
-Figure 5.Start Survey Target Analysis.
+Figure 5.Starting Survey Target Analysis.
 
 The Survey Target report shows basic profiling information, such as the time spent in each line of the code. This information is useful to identify the parallel opportunities (Figure 6).
  
@@ -502,8 +502,8 @@ Figure 6. Survey Target Report
 
 This evaluation is done through the following steps:
 
-- 	Include annotations on candidate loops that will be evaluated;
-- 	Recompile application, linking with advisor library;
+- 	Include annotations on candidate loops;
+- 	Recompile application, linking with Intel Advisor library;
 - 	Run “collect suitability” analysis.
 
 **1.4.6** The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
@@ -553,14 +553,12 @@ make icc
 Check your annotations on “view annotations” options;
 
 ![infieri02_pic09](img/infieri02_pic09.JPG)
+Figure 7. An example of annotations included in the code.
 
-**1.4.6** Start Check Suitability 
-
-The Check Suitability Expected Results 
- 
-Notice that considering OpenMP the two first loops presents similar time but the scalability of outer loop is higher. Considering OpenMP or cilk plus on CPU.  
+**1.4.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model. 
 
 ![infieri02_pic10](img/infieri02_pic10.JPG)
+Figure 7. An example of suitability report.
 
 What loop presents higher scalability?
 
