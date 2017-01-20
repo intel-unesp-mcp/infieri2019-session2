@@ -498,22 +498,14 @@ The Survey Target report shows basic profiling information, such as the time spe
 ![infieri02_pic08](img/infieri02_pic08.JPG)
 Figure 6. Survey Target Report
 
-**1.4.5** In some cases, the code presents several parallel opportunities. In our example there are four points in the code that spends too much time: main function and the three loops of function multiply0 that performs the matrix multiplication. In this scenario, we will use the Suitability Analysis to estimate for each loop identified in survey target analysis the performance gains after parallelizing those loops.
-
-This evaluation is done through the following steps:
-
-- 	Include annotations on candidate loops;
-- 	Recompile application, linking with Intel Advisor library;
-- 	Run “collect suitability” analysis.
-
-**1.4.6** The three loops of this function presents high execution time, so to identify the best candidates loop to parallelize, we will annotate all the loops
+**1.4.5** One application can have more than one loop that presents high computationl cost, so several parallel opportunities can be explored. The profiling of Matrix Multiplication shows that three loops of function multiply0 has high computational cost. In this sense, we will use annotations to mark the loops that presents parallel opportunities to evaluate the potencial performance gains paralelizing those loops.
 
 The annotations have to be included in the following way:
 
-- #include "advisor-annotate.h“: include header file
-- ANNOTATE_SITE_BEGIN(id): before beginning of loop;
-- ANNOTATE_ITERATION_TASK(id): first line inside the loop;
-- ANNOTATE_SITE_END(): after end of loop;
+- 	#include "advisor-annotate.h“: include header file
+- 	ANNOTATE_SITE_BEGIN(id): before beginning of loop;
+- 	ANNOTATE_ITERATION_TASK(id): first line inside the loop;
+- 	ANNOTATE_SITE_END(): after end of loop;
 
 Red Lines shows the lines that has to be included in original source code;
 
@@ -523,22 +515,22 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
   int i,j,k;
 
   // Basic serial implementation
-ANNOTATE_SITE_BEGIN(id1):
+  ANNOTATE_SITE_BEGIN(id1):
   for(i=0; i<msize; i++) {
-ANNOTATE_ITERATION_TASK(tid1)
-ANNOTATE_SITE_BEGIN(id2):
+    ANNOTATE_ITERATION_TASK(tid1)
+    ANNOTATE_SITE_BEGIN(id2):
     for(j=0; j<msize; j++) {
-             ANNOTATE_ITERATION_TASK(tid2)
-             ANNOTATE_SITE_BEGIN(id3):
+      ANNOTATE_ITERATION_TASK(tid2)
+      ANNOTATE_SITE_BEGIN(id3):
       for(k=0; k<msize; k++) {
 	ANNOTATE_ITERATION_TASK(tid3)
 	c[i][j] = c[i][j] + a[i][k] * b[k][j];
       }
-             ANNOTATE_SITE_END()
+      ANNOTATE_SITE_END()
     }
     ANNOTATE_SITE_END()
-  }  
-    ANNOTATE_SITE_END()
+  }
+  ANNOTATE_SITE_END()
 }
 ```
 
@@ -555,7 +547,7 @@ Check your annotations on “view annotations” options;
 ![infieri02_pic09](img/infieri02_pic09.JPG)
 Figure 7. An example of annotations included in the code.
 
-**1.4.7** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model. 
+**1.4.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model. 
 
 ![infieri02_pic10](img/infieri02_pic10.JPG)
 Figure 8. An example of suitability report.
