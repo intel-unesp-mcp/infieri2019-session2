@@ -431,7 +431,7 @@ In this set of exercises, you will execute the following steps in order to perfo
 - 	Include annotations on source code to check scalability;
 - 	Evaluate the performance of annotated loops in different architectures and frameworks, using “Check Suitability” analysis.
 
-**1.4.1** The application that we are going to profile is a basic matrix multiplication serial application. Showed below
+**1.4.1** The application that we are going to profile is a basic matrix multiplication serial application. Showed below: 
 
 ```
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
