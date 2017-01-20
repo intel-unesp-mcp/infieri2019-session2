@@ -479,7 +479,7 @@ advixe-gui
 ![infieri02_pic03](img/infieri02_pic03.png)
 Figure 1. Create New Project
 
-![infieri02_pic04](img/infieri02_pic04.png) 
+![infieri02_pic04](img/infieri02_pic04.jpg) 
 Figure 2. Setup Project Name
  
 ![infieri02_pic05](img/infieri02_pic05.png)
