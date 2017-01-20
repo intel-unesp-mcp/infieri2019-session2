@@ -1,0 +1,78 @@
+HOW TO BUILD
+
+The given Makefile allows various compilers and runtimes.
+
+Linux: make the Intel compiler available, for example run:
+  source /opt/intel/composerxe/bin/compilervars.sh intel64
+
+  Examples:
+    make
+    make CXX=icc
+    make CXX=icc IPO=0
+
+  To use the GNU Compiler Collection
+    make CXX=g++
+
+Windows: use MinGW/msys or a similar provider (Cygwin) of GNU make.
+Make the make binary available by appending(!) the path to "make" to the
+PATH environment variable (otherwise Microsoft "link" will be hidden by
+the GNU linker). On Windows 64-bit, type:
+    make IA=intel64
+This is because of the MinGW shell is 32-bit (uname -m).
+
+  Examples:
+    make
+    make CXX=icl
+    make CXX=icl IPO=0
+
+  To use the GNU Compiler Collection (MinGW)
+    make CXX=g++ WIN=1 LDIRWIN=-L LWIN=-l LIBEXT= OMP=0
+
+More options which are mapped to the actual compiler-supported options.
+  IA := ia32|intel64    Cross-compile to the specified architecture.
+
+  OPT := O3|O1|O2|Od    Select the optimization level. The leading "O"
+                        cannot be omitted to enable an arbitrary option
+                        name (e.g. "fast").
+
+  IPO := 1|0            Enable/disable the interprocedural optimization.
+
+  PAR := 1|0            Enable/disable the auto-parallelization.
+
+  DIR := 1|0            Define INTEL_DIRECTIVES to control directives
+                        (#pragma) protected by conditional compilation.
+                        Allows to investigate their effect.
+
+  OMP := 1|0            Select OpenMP support. Tries to use the compiler's
+                        default OpenMP implementation (gomp vs. iomp)
+
+  GAP := 0|1|2|3|4      Guided auto-parallelization (GAP) analysis level.
+                        Intel-specific. Does not produce a valid executable.
+
+  VEC := 1|0            Enable/disable vectorized code generation.
+                        Different from PAR and DIR option.
+
+  VEC-THRESHOLD         Number [0, 100], can be used to increase
+                        the use of vectorized code below an estimated
+                        effectiveness of 100%. Default value: 100.
+                        Intel-specific.
+
+  SSA := 0|1|2|3        Static security analysis (SSA) level.
+  SSA-DIR := ssa        Folder to store the results of SSA. The generated
+                        project can be loaded using Intel Inspector.
+                        Intel-specific.
+
+  RPT := vec|par        Generate for example the vectorization report (vec).
+                        Intel-specific.
+  RPT-LEVEL := 3        Set the report level (verbosity) of the enabled
+                        report facility. Intel-specific.
+  RPT-FILE := filename  Capture the specified report in filename.
+
+  ARGS                  Supply arguments for the built-in "run" target.
+
+  FORTRAN := 1|0        Exclude the Fortran compilation even when the Fortran
+                        compiler is detected. Might solve issues with non-
+                        matching IR in case of IPO, and when the Fortran
+                        compiler revision is different than the C/C++ compiler
+                        revision. This only applies to mixed language projects
+                        with optional Fortran components.

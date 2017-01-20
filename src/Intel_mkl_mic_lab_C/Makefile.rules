@@ -1,0 +1,510 @@
+
+ # Copyright 2003-2013 Intel Corporation. All Rights Reserved.
+ 
+ # The source code contained or described herein and all documents related 
+ # to the source code ("Material") are owned by Intel Corporation or its
+ # suppliers or licensors.  Title to the Material remains with Intel Corporation
+ # or its suppliers and licensors.  The Material is protected by worldwide
+ # copyright and trade secret laws and treaty provisions.  No part of the
+ # Material may be used, copied, reproduced, modified, published, uploaded,
+ # posted, transmitted, distributed, or disclosed in any way without Intel's
+ # prior express written permission.
+ 
+ # No license under any patent, copyright, trade secret or other intellectual
+ # property right is granted to or conferred upon you by disclosure or delivery
+ # of the Materials, either expressly, by implication, inducement, estoppel
+ # or otherwise.  Any license under such intellectual property rights must
+ # be express and approved by Intel in writing.
+
+GCC += \
+	-Wall \
+	$(NULL)
+
+GFC += \
+	-x f95-cpp-input \
+	-fno-underscoring \
+	$(NULL)
+
+ICC += \
+	-Wall \
+	$(NULL)
+
+ICL += \
+	-W4 \
+	-MD -EHsc -GF -FD -GS- -nologo \
+	-D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES \
+	-D_CRT_SECURE_NO_DEPRECATE \
+	-D_SCL_SECURE_NO_DEPRECATE \
+	-D_USE_MATH_DEFINES \
+	-DWIN32_LEAN_AND_MEAN \
+	-DNOMINMAX \
+	-Fo"$(BLD)/" \
+	$(NULL)
+
+IFC += \
+	-fpp -nofor_main \
+	$(NULL)
+
+IFW += \
+	-fpp -nologo \
+	$(NULL)
+
+LCC += \
+	-Wall \
+	$(NULL)
+
+VCC += \
+	-W4 -wd4068 -wd4127 \
+	-MD -EHsc -GF -FD -GS- -nologo \
+	-D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES \
+	-D_CRT_SECURE_NO_DEPRECATE \
+	-D_SCL_SECURE_NO_DEPRECATE \
+	-D_USE_MATH_DEFINES \
+	-DWIN32_LEAN_AND_MEAN \
+	-DNOMINMAX \
+	-Fo"$(BLD)/" \
+	$(NULL)
+
+PGC += \
+	-Munroll \
+	-Mnobounds \
+	-Mcache_align \
+	-Mdse -Mlre -Mpre \
+	-DWIN32_LEAN_AND_MEAN \
+	-DNOMINMAX \
+	-m$(BITS) \
+	$(NULL)
+
+PGF += \
+	-Munroll \
+	-Mnobounds \
+	-Mcache_align \
+	-Mdse -Mlre -Mpre \
+	-m$(BITS) \
+	$(NULL)
+
+ifeq (1,$(PGO))
+	ICC += -prof-gen
+	IFC += -prof-gen
+	ICL += -Qprof-gen
+	IFW += -Qprof-gen
+else
+	ifneq (0,$(IPO))
+		ICC += -ipo
+		IFC += -ipo
+		ICL += -Qipo -GL
+		IFW += -Qipo
+		VCC += -GL
+		# IPO requires HOST
+		ifneq (0,$(HOST))
+			PGC += -Mipa=fast
+			PGF += -Mipa=fast
+		endif
+		PGC += -Msmart
+		PGF += -Msmart
+	endif
+endif
+ifeq (2,$(PGO))
+	ICC += -prof-use
+	IFC += -prof-use
+	ICL += -Qprof-use
+	IFW += -Qprof-use
+endif
+ifneq (0,$(VEC))
+	GCC += -ftree-vectorize -ffast-math -funsafe-math-optimizations
+	GFC += -ftree-vectorize -ffast-math -funsafe-math-optimizations
+	ICC += -vec-threshold$(VEC-THRESHOLD)
+	IFC += -vec-threshold$(VEC-THRESHOLD)
+	ICL += -Qvec-threshold$(VEC-THRESHOLD)
+	IFW += -Qvec-threshold$(VEC-THRESHOLD)
+	ifeq (2,$(EXT))
+		LCC += -Xclang -fuse-vectorizer=intel_ocl
+	endif
+	PGC += -Mvect -Mscalarsse
+	PGF += -Mvect -Mscalarsse
+else
+	ICC += -no-vec -no-simd
+	IFC += -no-vec -no-simd
+	ICL += -Qvec- -Qsimd-
+	IFW += -Qvec- -Qsimd-
+	PGC += -Mnovect -Mnoscalarsse
+	PGF += -Mnovect -Mnoscalarsse
+endif
+ifneq (0,$(EXT))
+	GCC += -std=gnu++0x
+	ICC += -std=c++0x -restrict
+	ICL += -Qstd=c++0x -Qrestrict
+	LCC += -std=c++11 -DUSE_CILK
+	MIC_CXXFLAGS += -U__GXX_EXPERIMENTAL_CXX0X__
+endif
+ICC += -ansi-alias
+ICL += -Qansi-alias
+IFC += -ansi-alias
+IFW += -Qansi-alias
+PGC += -alias=ansi
+ifeq (0,$(ALI))
+	ICC += -alias-const
+	ICL += -Oa -Ow -Qalias-const
+	IFW += -Oa -Ow
+	PGC += -Msafeptr
+endif
+ifneq (0,$(FMA))
+	ICC += -fma
+	IFC += -fma
+	ICL += -Qfma
+	IFW += -Qfma
+	ifneq (0,$(EXT))
+		LCC += -Xclang -ffp-contract=fast
+	endif
+	#PGC += 
+	#PGF += 
+endif
+ifneq (0,$(FPX))
+	ICC += -ftz -no-prec-div -no-prec-sqrt -fast-transcendentals
+	IFC += -ftz -no-prec-div -no-prec-sqrt -fast-transcendentals
+	ICL += -Qftz -Qprec-div- -Qprec-sqrt- -Qfast-transcendentals
+	IFW += -Qftz -Qprec-div- -Qprec-sqrt- -Qfast-transcendentals
+	PGC += -Mflushz -Mdaz -Mfpapprox -Mfprelaxed
+	PGF += -Mflushz -Mdaz -Mfpapprox -Mfprelaxed
+	VCC += -fp:fast -Qfast_transcendentals
+	ifneq (2,$(MIC))
+		ICC += -fp-trap=none
+		IFC += -fpe0
+		ICL += -Qfp-trap:none
+		IFW += -fpe:0
+	endif
+endif
+ifneq (0,$(PAR))
+	ICC += -parallel
+	IFC += -parallel
+	ICL += -Qparallel
+	VCC += -Qpar
+	IFW += -Qparallel
+	PGC += -Mconcur
+	PGF += -Mconcur
+	OMP := 1
+endif
+ifneq (0,$(OMP))
+	ICC += -openmp
+	IFC += -openmp
+	ICL += -Qopenmp
+	IFW += -Qopenmp
+	GCC += -fopenmp
+	GFC += -fopenmp
+	LCC += -openmp
+	VCC += -openmp
+	PGC += -mp
+	PGF += -mp
+endif
+ifneq (0,$(DBG))
+	GCC += -g
+	GFC += -g
+	ICC += -g
+	IFC += -g
+	LCC += -g
+else
+	PGC += -Mnoframe
+	PGF += -Mnoframe
+endif
+ifneq (0,$(DIR))
+	ICC += -DINTEL_DIRECTIVES
+	ICL += -DINTEL_DIRECTIVES
+endif
+ifneq (0,$(GAP))
+	ICC += -guide=$(GAP)
+	ICL += -Qguide:$(GAP)
+endif
+ifneq (,$(RPT))
+	ICC += -$(RPT)-report$(RPT-LEVEL)
+	IFC += -$(RPT)-report$(RPT-LEVEL)
+	ICL += -Q$(RPT)-report:$(RPT-LEVEL)
+	IFW += -Q$(RPT)-report:$(RPT-LEVEL)
+endif
+
+ifneq (0,$(IS_GCC))
+	FCFLAGS += $(GFC) -$(OPT)
+	LDLIBS_FORTRAN += gfortran
+	CXXFLAGS += $(GCC) -$(OPT)
+	LDFLAGS += $(GCC) -$(OPT)
+	ifneq (0,$(OMP))
+		LD_LIBS := gomp $(LD_LIBS)
+	endif
+	ifneq (0,$(HOST))
+		NATIVE := -march=native
+		# workaround for broken "-march=native" -> "-mxop-m..." rather than "-mxop -m..."
+		NATIVE := $(shell $(CXX) -march=native -E -v - </dev/null 2>&1 | grep -o -e "cc1.*" | grep -o -e "-m\S\+" | sed "s/-mxop-/-mxop -/" | tr -d \" | sort -u | tr "\n" " ")
+		FCFLAGS += $(NATIVE)
+		CXXFLAGS += $(NATIVE)
+		LDFLAGS += $(NATIVE)
+	else
+		ifneq (1,$(PGO))
+			# -mfpmath=sse
+			FCFLAGS += -msse3
+			CXXFLAGS += -msse3
+			LDFLAGS += -msse3
+		endif
+	endif
+	ifeq ($(IA),ia32)
+		INCLUDE_PATHS += /usr/include/i386-linux-gnu
+	endif
+else ifneq (0,$(IS_ICC))
+	ifneq (0,$(MPI))
+		CXX := mpiicpc
+		LNK := $(CXX)
+	endif
+	FCFLAGS += $(IFC) -$(OPT)
+	LDLIBS_FORTRAN += ifcore imf intlc
+	CXXFLAGS += $(ICC) -$(OPT)
+	LDFLAGS += $(ICC) -$(OPT)
+	ifneq (0,$(OMP))
+		ifneq (,$(OMPROOT))
+			LD_PATHS += $(call path,$(OMPROOT)/lib/$(IA))
+		endif
+		LD_LIBS := iomp5 pthread $(LD_LIBS)
+	endif
+	LD_LIBS += cilkrts
+	ifneq (0,$(SSA))
+		LDFLAGS := -diag-enable sc$(SSA) -diag-sc-dir=$(SSA-DIR)
+	endif
+	ifneq (,$(KMP))
+		LDFLAGS += -par-affinity=$(KMP)
+	endif
+	ifeq (2,$(MIC))
+		CXXFLAGS += -mmic
+		LDFLAGS += -mmic
+		FCFLAGS += -mmic
+	else
+		ifeq (1,$(MIC))
+			MIC_CXXFLAGS += $(CXXFLAGS)
+			MIC_LDFLAGS += $(LDFLAGS) $(subst ?, ,$(patsubst %,$(LDIR)%,$(LD_PATHS_MIC))) $(patsubst %,$(LINC)%$(LEXT),$(LD_LIBS_MIC))
+			CXXFLAGS += -offload-build -offload-copts:"$(MIC_CXXFLAGS)"
+			LDFLAGS += -offload-build -offload-ldopts:"$(MIC_LDFLAGS)"
+		else
+			CXXFLAGS += -no-offload
+			LDFLAGS += -no-offload
+			FCFLAGS += -no-offload
+		endif
+		ifneq (0,$(HOST))
+			CXXFLAGS += -xHost
+			LDFLAGS += -xHost
+			FCFLAGS += -xHost
+		else
+			ifneq (1,$(PGO))
+				CXXFLAGS += -mavx -axSSE3
+				LDFLAGS += -mavx -axSSE3
+				FCFLAGS += -mavx -axSSE3
+			endif
+		endif
+	endif
+	ifeq ($(IA),ia32)
+		INCLUDE_PATHS += /usr/include/i386-linux-gnu
+	endif
+else ifneq (0,$(IS_ICL))
+	ifneq (0,$(MPI))
+		CXX := cmd //C "mpicc.bat -cxx=icl.exe"
+		LNK := $(CXX)
+	endif
+	FCFLAGS += $(IFW) -$(OPT)
+	CXXFLAGS += $(ICL) -$(OPT)
+	LDFLAGS += $(ICL) -$(OPT)
+	ifneq (0,$(SSA))
+		LDFLAGS := -Qdiag-enable:sc$(SSA) -Qdiag-sc-dir:$(SSA-DIR)
+	endif
+	ifneq (,$(KMP))
+		LDFLAGS += -Qpar-affinity:$(KMP)
+	endif
+	ifeq (2,$(MIC))
+		# TODO
+	else
+		ifeq (1,$(MIC))
+			# TODO
+		else
+			CXXFLAGS += -Qoffload-
+			LDFLAGS += -Qoffload-
+			FCFLAGS += -Qoffload-
+		endif
+		ifneq (0,$(HOST))
+			CXXFLAGS += -QxHost
+			LDFLAGS += -QxHost
+			FCFLAGS += -QxHost
+		else
+			ifneq (1,$(PGO))
+				CXXFLAGS += -arch:AVX -QaxSSE3
+				LDFLAGS += -arch:AVX -QaxSSE3
+				FCFLAGS += -arch:AVX -QaxSSE3
+			endif
+		endif
+	endif
+	ifneq (0,$(DBG))
+		LDFLAGS += -DEBUG
+	endif
+	LDFLAGS += -link \
+		-NODEFAULTLIB:"libcmt.lib" \
+		-LARGEADDRESSAWARE -DYNAMICBASE -NXCOMPAT \
+		-MACHINE:$(XA) -OPT:REF -OPT:ICF \
+		$(NULL)
+	LD_PATHS := $(LD_PATHS_WIN)
+	LD_LIBS := $(LD_LIBS_WIN)
+else ifneq (0,$(IS_LCC))
+	CXXFLAGS += $(LCC) -$(OPT)
+	#LDFLAGS += $(LCC) -$(OPT)
+	LDFLAGS += -$(OPT)
+	ifneq (0,$(OMP))
+		LD_LIBS := gomp $(LD_LIBS)
+	endif
+	ifneq (0,$(EXT))
+		LD_PATHS += $(dir $(shell ls $(CXX) 2> /dev/null))../lib
+		LD_LIBS += irc intlc imf cilkrtsvw cilkrts dl svml
+	endif
+	ifneq (0,$(HOST))
+		CXXFLAGS += -march=native
+		LDFLAGS += -march=native
+		FCFLAGS += -march=native
+	else
+		ifneq (1,$(PGO))
+			CXXFLAGS += -msse3
+			LDFLAGS += -msse3
+			FCFLAGS += -msse3
+		endif
+	endif
+else ifneq (0,$(IS_VCC))
+	ifneq (0,$(MPI))
+		CXX := cmd //C "mpicc.bat -cxx=cl.exe"
+		LNK := cmd //C "mpicc.bat -cxx=link.exe"
+	else
+		LNK := link
+	endif
+	ifeq ($(OPT),O3)
+		OPT := Ox
+	endif
+	CXXFLAGS += $(VCC) -$(OPT)
+	LDFLAGS += \
+		-NODEFAULTLIB:"libcmt.lib" \
+		-LARGEADDRESSAWARE -DYNAMICBASE -NXCOMPAT \
+		-MACHINE:$(XA) -OPT:REF -OPT:ICF \
+		$(NULL)
+	ifneq (0,$(DBG))
+		LDFLAGS += -DEBUG
+	endif
+	ifneq (0,$(IPO))
+		LDFLAGS += -LTCG
+	endif
+	ifneq (0,$(OMP))
+		LD_LIBS_WIN := vcomp $(LD_LIBS_WIN)
+		INCLUDE_PATHS := $(call path,$(VCINSTALLDIR)/include) $(INCLUDE_PATHS)
+	endif
+	ifneq (0,$(SSA))
+		CXXFLAGS += -analyze:WX-
+	endif
+	ifneq (0,$(HOST))
+		# HOST=2: Intel64
+		ifneq (2,$(HOST))
+			CXXFLAGS += -favor:INTEL64 -arch:AVX
+		endif
+	else
+		ifneq (1,$(PGO))
+			ifneq ($(IA),intel64)
+				CXXFLAGS += -arch:SSE2
+			endif
+		endif
+	endif
+	LD_PATHS := $(LD_PATHS_WIN)
+	LD_LIBS := $(LD_LIBS_WIN)
+else ifeq (0,$(IS_PGC))
+	FCFLAGS += $(PGF) -$(OPT)
+	CXXFLAGS += $(PGC) -$(OPT)
+	LDFLAGS += $(PGC) -$(OPT)
+	ifneq (0,$(OMP))
+		FCFLAGS += -pgf90libs
+		CXXFLAGS += -pgf90libs
+		LDFLAGS += -pgf90libs
+	endif
+	ifneq (0,$(HOST))
+		# implicitly applied
+	else
+		ifneq (1,$(PGO))
+			# issue: multiple targets lead to mult. def. symbols!
+			CXXFLAGS += -tp px
+			LDFLAGS += -tp px
+			FCFLAGS += -tp px
+		endif
+	endif
+	LD_PATHS := $(LD_PATHS_WIN)
+	LD_LIBS := $(LD_LIBS_WIN)
+endif
+
+OBJS := $(patsubst %,$(BLD)/%.$(OBJ),$(basename $(notdir $(SOURCES))))
+ifeq ($(SOURCES_FORTRAN),)
+	FORTRAN := 0
+endif
+ifeq ($(shell which $(FC) 2> /dev/null),)
+	FORTRAN := 0
+endif
+ifneq (0,$(FORTRAN))
+	SOURCES += $(SOURCES_FORTRAN)
+	LD_LIBS += $(LDLIBS_FORTRAN)
+	OBJS += $(patsubst %,$(BLD)/%.$(OBJ),$(notdir $(SOURCES_FORTRAN)))
+else
+	DEFINES += USE_NO_FORTRAN
+endif
+
+ifneq ($(RPT-FILE),)
+	RPT-GENERATION := 2>> $(RPT-FILE)
+endif
+
+DEFS := $(patsubst %,-D%,$(DEFINES))
+LIBS := $(patsubst %,$(LINC)%$(LEXT),$(LD_LIBS))
+
+INCS := $(subst ?, ,$(patsubst %,-I"%",$(INCLUDE_PATHS)))
+LIBD := $(subst ?, ,$(patsubst %,$(LDIR)"%",$(LD_PATHS)))
+
+default: $(DEFAULT)
+
+$(RPT-FILE): Makefile Makefile.inc Makefile.rules $(HEADERS) $(SOURCES)
+	@-$(TRUNC) $(RPT-FILE)
+	@-$(RM) $(OBJS)
+
+$(BLD)/%.$(OBJ): %.cpp Makefile Makefile.inc Makefile.rules $(HEADERS)
+	@-$(MD) $(BLD)
+	$(CXX) $(CXXFLAGS) $(OPTX) $(DEFS) $(INCS) $(CXOUT) $(COMPILE) $< $(RPT-GENERATION)
+
+$(BLD)/%.$(OBJ): %.cxx Makefile Makefile.inc Makefile.rules $(HEADERS)
+	@-$(MD) $(BLD)
+	$(CXX) $(CXXFLAGS) $(OPTX) $(DEFS) $(INCS) $(CXOUT) $(COMPILE) $< $(RPT-GENERATION)
+
+$(BLD)/%.$(OBJ): %.cc Makefile Makefile.inc Makefile.rules $(HEADERS)
+	@-$(MD) $(BLD)
+	$(CXX) $(CXXFLAGS) $(OPTX) $(DEFS) $(INCS) $(CXOUT) $(COMPILE) $< $(RPT-GENERATION)
+
+$(BLD)/%.$(OBJ): %.c Makefile Makefile.inc Makefile.rules $(HEADERS)
+	@-$(MD) $(BLD)
+	$(CXX) $(CXXFLAGS) $(OPTX) $(DEFS) $(INCS) $(CXOUT) $(COMPILE) $< $(RPT-GENERATION)
+
+$(BLD)/%.$(OBJ): % Makefile Makefile.inc Makefile.rules $(HEADERS)
+	@-$(MD) $(BLD)
+	$(FC) $(FCFLAGS) $(OPTX) $(DEFS) $(CXOUT) $(COMPILE) $< $(RPT-GENERATION)
+
+$(BIN)/$(NAME)$(BINX)$(EXE): $(RPT-FILE) $(OBJS)
+	@-$(MD) $(BIN)
+	@-$(TOUCH) $(RPT-FILE) $(BIN)
+	$(LNK) $(LDOUT) $(OBJS) $(LDFLAGS) $(LIBD) $(LIBS) $(RPT-GENERATION)
+
+all: default
+
+.PHONY: run
+run: $(BIN)/$(NAME)$(BINX)$(EXE)
+	-$(BIN)/$(NAME)$(BINX)$(EXE) $(ARGS)
+
+.PHONY: clean
+clean:
+	-$(RM) $(CLEAN)
+
+.PHONY: pgoclean
+pgoclean: clean
+	-$(RM) $(PGOCLEAN)
+
+.PHONY: realclean
+realclean: clean
+	-$(RM) $(REALCLEAN)
+
+distclean: realclean
