@@ -495,7 +495,7 @@ Figure 5.Start Survey Target Analysis.
 
 The Survey Target report shows basic profiling information, such as the time spent in each line of the code. This information is useful to identify the parallel opportunities (Figure 5).
  
-![infieri02_pic08](img/infieri02_pic08.png)
+![infieri02_pic08](img/infieri02_pic08.JPG)
 Figure 6. Survey Target Report
 
 **1.4.4** In some cases, the code presents several parallel opportunities. In our example there are four points in the code that spends too much time: main function and the three loops of function multiply0 that performs the matrix multiplication. In this scenario, we will use the Suitability Analysis to estimate for each loop identified in survey target analysis the performance gains after parallelizing those loops.
@@ -551,7 +551,7 @@ make icc
 
 Check your annotations on “view annotations” options;
 
-![infieri02_pic09](img/infieri02_pic09.png)
+![infieri02_pic09](img/infieri02_pic09.JPG)
 
 Start Check Suitability
 
@@ -559,7 +559,7 @@ The Check Suitability Expected Results
  
 Notice that considering OpenMP the two first loops presents similar time but the scalability of outer loop is higher. Considering OpenMP or cilk plus on CPU.  
 
-![infieri02_pic10](img/infieri02_pic10.png)
+![infieri02_pic10](img/infieri02_pic10.JPG)
 
 What loop presents higher scalability?
 
