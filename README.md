@@ -542,7 +542,7 @@ make clean
 make icc
 ```
 
-Check your annotations on “view annotations” options (Figure 7);
+Check your annotations on “view annotations” options (Figure 7):
 
 ![infieri02_pic09](img/infieri02_pic09.JPG)  
 **Figure 7. An example of annotations included in the code.**
