@@ -425,6 +425,7 @@ The next set of exercises will show how to identify parallel opportunities on th
 Intel® Advisor XE is a shared memory threading designing and prototyping tool for C, C++, C# and Fortran. This tool supports basic profiling to identify time spent in each line of code and also provides a mechanism to estimate performance gains on sequential code. Such estimate is done using a mechanism called annotation, that is used to mark loops which could be parallelized for profiling. Based on such annotations a model is built in order to compare the performance scaling of different threading designs without the cost and disruption of implementation. 
 
 In this set of exercises, you will execute the following steps in order to perform threading prototyping:
+
 - 	Create new advisor project to evaluate a code that performs matrix multiplication;
 - 	Discover opportunities for parallelization, using “Survey Data” Analysis;
 - 	Include annotations on source code to check scalability;
