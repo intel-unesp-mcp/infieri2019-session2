@@ -433,7 +433,7 @@ In this set of exercises, you will execute the following steps in order to perfo
 
 **1.4.1** The main part of application that we are going to profile is a basic matrix multiplication serial application: 
 
-```
+```c
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
 { 
   int i,j,k;
@@ -450,13 +450,13 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 ```
 
 
-This code is on the directory
+This code is on the directory:
 
 ```
 <git_dir>/matrix/src
 ```
 
-In order to compile the application execute 
+In order to compile the application execute: 
 
 ```
 cd <git_dir>/matrix/linux
@@ -473,43 +473,43 @@ advixe-gui
 **1.4.3** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
 
 - name: matrix
-- application: <git_dir>/matrix/linux/matrix.icc
-- Source Folder: <git_dir>/matrix/src
+- application: `<git_dir>/matrix/linux/matrix.icc`
+- Source Folder: `<git_dir>/matrix/src`
  
-![infieri02_pic03](img/infieri02_pic03.png)
-Figure 1. Create New Project
+![infieri02_pic03](img/infieri02_pic03.png)  
+**Figure 1. Create New Project**  
 
-![infieri02_pic04](img/infieri02_pic04.jpg) 
-Figure 2. Setup Project Name
+![infieri02_pic04](img/infieri02_pic04.jpg)   
+**Figure 2. Setup Project Name**  
  
-![infieri02_pic05](img/infieri02_pic05.png)
-Figure 3. Setup Application binary and parameters.
+![infieri02_pic05](img/infieri02_pic05.png)  
+**Figure 3. Setup Application binary and parameters.**  
  
-![infieri02_pic06](img/infieri02_pic06.png)
-Figure 4. Setup Source Directory.
+![infieri02_pic06](img/infieri02_pic06.png)  
+**Figure 4. Setup Source Directory.**
 
 **1.4.4** Start the Survey target analysis (Figure 5).
 
-![infieri02_pic07](img/infieri02_pic07.png) 
-Figure 5.Starting Survey Target Analysis.
+![infieri02_pic07](img/infieri02_pic07.png)  
+**Figure 5. Starting Survey Target Analysis.**  
 
 The Survey Target report shows basic profiling information, such as the time spent in each line of the code. This information is useful to identify the parallel opportunities (Figure 6).
  
-![infieri02_pic08](img/infieri02_pic08.JPG)
-Figure 6. Survey Target Report
+![infieri02_pic08](img/infieri02_pic08.JPG)  
+**Figure 6. Survey Target Report**  
 
 **1.4.5** One application can have more than one loop that presents high computationl cost, so several parallel opportunities can be explored. The profiling of Matrix Multiplication shows that three loops of function multiply0 has high computational cost. In this sense, we will use annotations to mark the loops that presents parallel opportunities to evaluate the potencial performance gains paralelizing those loops.
 
 The annotations have to be included in the following way:
 
-- 	#include "advisor-annotate.h“: include header file
-- 	ANNOTATE_SITE_BEGIN(id): before beginning of loop;
-- 	ANNOTATE_ITERATION_TASK(id): first line inside the loop;
-- 	ANNOTATE_SITE_END(): after end of loop;
+- 	`#include "advisor-annotate.h“`: include header file
+- 	`ANNOTATE_SITE_BEGIN(id)`: before beginning of loop;
+- 	`ANNOTATE_ITERATION_TASK(id)`: first line inside the loop;
+- 	`ANNOTATE_SITE_END()`: after end of loop;
 
 The code below show how to include the annotation directives in the original code:
 
-```
+```c
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
 { 
   int i,j,k;
@@ -544,15 +544,15 @@ make icc
 
 Check your annotations on “view annotations” options (Figure 7);
 
-![infieri02_pic09](img/infieri02_pic09.JPG)
-Figure 7. An example of annotations included in the code.
+![infieri02_pic09](img/infieri02_pic09.JPG)  
+**Figure 7. An example of annotations included in the code.**
 
 **1.4.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model (Figure 8). 
 
-![infieri02_pic10](img/infieri02_pic10.JPG)
-Figure 8. An example of suitability report.
+![infieri02_pic10](img/infieri02_pic10.JPG)  
+**Figure 8. An example of suitability report.**  
 
-What loop presents higher scalability?
+> What loop presents higher scalability?
 
 ______
 
