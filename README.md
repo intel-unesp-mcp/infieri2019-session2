@@ -558,7 +558,7 @@ Figure 7. An example of annotations included in the code.
 **1.4.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model. 
 
 ![infieri02_pic10](img/infieri02_pic10.JPG)
-Figure 7. An example of suitability report.
+Figure 8. An example of suitability report.
 
 What loop presents higher scalability?
 
