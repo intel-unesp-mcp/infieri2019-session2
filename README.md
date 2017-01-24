@@ -113,7 +113,6 @@ as several Intel software development tools. To simplify nomenclature,
 we will refer to this server as “the host” (or “the host
 system”), and the Xeon Phi™ coprocessors installed in the host system as
 “mic0”, “mic1”, ..., “mic4”.
-The second one is a KNL server - with one KNL processors (68 cores, 4 threads/core). we will refer to this server as “the KNL host”. 
 
 Participants should work alone or in pairs on a workstation - preferably
 running Linux or Mac - with Internet access. All the exercises are
@@ -132,14 +131,6 @@ $ ssh –X SERVER –l traineeN
 **(N is a number assigned to each participant)**
 
 **The -X toggle allows to run GUI programs remotly**
-
-Use the following command to log in to the KNL host system.
-
-```bash
-$ ssh –X KNL-SERVER –l traineeN 
-```
-**(N is a number assigned to each participant)**
-
 
 Please refer to the teaching assistant(s) for more details.
 
@@ -177,11 +168,6 @@ for the Intel development tools by running the following command:
 [SERVER]$ source /opt/intel/parallel_studio_xe_2017.1.043/psxevars.sh intel64
 ```
 
-Or
-
-```bash
-[KNL-SERVER]$ source /opt/intel/parallel_studio_xe_2017.1.043/psxevars.sh intel64
-```
 ______
 
 ### Quick Navigation ###
@@ -687,7 +673,7 @@ the Intel Xeon Phi coprocessor. Compile the source file with the Intel
 compiler for the host with the usual Intel MPI wrapper:
 
 ```
-[phi02]$ mpiicc -o test test.c
+[SERVER]$ mpiicc -o test test.c
 ```
 
 Now compile the source file for Intel Xeon Phi coprocessor using the
@@ -696,7 +682,7 @@ provide the Intel MPI libraries for Intel Xeon Phi coprocessor to the
 linker (add the verbose flag `-v` to see it):
 
 ```
-[phi02]$ mpiicc -mmic -o test.mic test.c
+[SERVER]$ mpiicc -mmic -o test.mic test.c
 ```
 
 The ".mic" suffix is added to distinguish the coprocessor binary from
@@ -704,7 +690,7 @@ the host one (it could be any suffix). As a starter run the Xeon binary
 with 4 MPI processes alone:
 
 ```
-[phi02]$ mpirun -n 4 ./test
+[SERVER]$ mpirun -n 4 ./test
 ```
 
 Copy the binary file `test.mic` to the three coprocessors and run the
@@ -715,7 +701,7 @@ Intel MPI test program on each of them in coprocessor-only mode.
 host and coprocessors; please review exercise 2.2.8 in session 1).
 
 ```
-[phi02]$ mpirun -host mic0 –n 4 ./test.mic
+[SERVER]$ mpirun -host mic0 –n 4 ./test.mic
 ```
 
 An alternative would be to login onto the coprocessor and run the test
@@ -727,7 +713,7 @@ symmetric mode by defining each argument set independently (with command
 line sections separated by a colon):
 
 ```
-[phi02]$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic
+[SERVER]$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic
 ```
 
 Notice that in the symmetric mode you must provide the `-host` flag for
@@ -739,7 +725,7 @@ step. Set the environment variable `I_MPI_DEBUG` equal or larger than 4
 to see the mapping information:
 
 ```
-[phi02]$ export I_MPI_DEBUG=4
+[SERVER]$ export I_MPI_DEBUG=4
 ```
 
 For pure (non-hybrid) MPI programs the environment variable
@@ -753,9 +739,9 @@ the amount of output use the flag "-prepend-rank", which puts the MPI
 rank number in front of each output line:
 
 ```
-[phi02]$ mpirun -prepend-rank -n 4 ./test
-[phi02]$ mpirun -prepend-rank -host mic0 -n 4 \~/test.mic
-[phi02]$ mpirun -prepend-rank -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic
+[SERVER]$ mpirun -prepend-rank -n 4 ./test
+[SERVER]$ mpirun -prepend-rank -host mic0 -n 4 \~/test.mic
+[SERVER]$ mpirun -prepend-rank -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic
 ```
 
 Sorting of the output can be beneficial for the mapping analysis,
@@ -770,9 +756,9 @@ and to the Xeon Phi coprocessors. Typically this is not beneficial and
 an architecture adapted setting using `-env` is recommended:
 
 ```
-[phi02]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -n 4 ./test
-[phi02]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -host mic0 -n 4 ./test.mic
-[phi02]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test : -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test.mic
+[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -n 4 ./test
+[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -host mic0 -n 4 ./test.mic
+[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test : -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test.mic
 ```
 
 Experiment with pure Intel MPI mapping by setting
@@ -786,15 +772,15 @@ added to the previous Intel MPI test code. You can compare the
 difference between the two files by means of the diff utility:
 
 ```
-[phi02]$ diff test.c test_openmp.c
+[SERVER]$ diff test.c test_openmp.c
 ```
 
 Compile with the `-openmp` compiler flag and upload to the Intel Xeon
 Phi coprocessor as usual:
 
 ```
-[phi02]$ mpiicc -openmp test_openmp.c -o test_openmp
-[phi02]$ mpiicc -openmp -mmic test_openmp.c -o test_openmp.mic
+[SERVER]$ mpiicc -openmp test_openmp.c -o test_openmp
+[SERVER]$ mpiicc -openmp -mmic test_openmp.c -o test_openmp.mic
 ```
 
 Because of the `-openmp` flag, Intel MPI will link the code with the
@@ -802,10 +788,10 @@ thread-safe version of the Intel MPI library `libmpi_mt.so` by default.
 Run the Intel MPI tests from before:
 
 ```
-[phi02]$ unset I_MPI_DEBUG
-[phi02]$ mpirun -prepend-rank -n 2 ./test_openmp
-[phi02]$ mpirun -prepend-rank -host mic0 -n 2 \~/test_openmp.mic
-[phi02]$ mpirun -prepend-rank -host localhost -n 2 ./test_openmp : -host mic0 -n 4 \~/test_openmp.mic
+[SERVER]$ unset I_MPI_DEBUG
+[SERVER]$ mpirun -prepend-rank -n 2 ./test_openmp
+[SERVER]$ mpirun -prepend-rank -host mic0 -n 2 \~/test_openmp.mic
+[SERVER]$ mpirun -prepend-rank -host localhost -n 2 ./test_openmp : -host mic0 -n 4 \~/test_openmp.mic
 ```
   
 The execution generates a lot of output! The default for the OpenMP
@@ -820,9 +806,9 @@ time we also use `I_MPI_PIN_DOMAIN=omp`, see how it depends on the
 `OMP_NUM_THREADS` setting:
 
 ```
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp 2&gt;&1 | sort
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2>&1 | sort
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp 2&gt;&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2>&1 | sort
 ```
 
 Remember that it is usually beneficial to avoid splitting of logical
@@ -835,9 +821,9 @@ Use `scatter`, `compact`, or `balanced` (Intel Xeon Phi coprocessor
 specific) to modify the default OpenMP affinity.
 
 ```
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2>&1 | sort
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2>&1 | sort
 ```
 
 Notice that, as well as other options, the OpenMP affinity can be set
@@ -851,7 +837,7 @@ is now offloaded to the coprocessor. Compare the difference between the
 two files using the diff utility:
 
 ```
-[phi02]$ diff test.c test_offload.c
+[SERVER]$ diff test.c test_offload.c
 ```
 
 Compile for the Xeon host with the `-openmp` compiler flag as before.
@@ -859,7 +845,7 @@ The Intel compiler will automatically recognize the offload pragma and
 create the binary for it.
 
 ```
-[phi02]$ mpiicc -openmp test_offload.c -o test_offload
+[SERVER]$ mpiicc -openmp test_offload.c -o test_offload
 ```
 
 (Note that, if necessary, offloading could be switched off with the
@@ -868,14 +854,14 @@ create the binary for it.
 Execute the binary on the host:
 
 ```
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload
 ```  
 
 Now repeat the execution, but ‘grep’ and ‘sort’ the output to focus on
 the essential information:
 
 ```
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload 2>&1 | grep bound | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload 2>&1 | grep bound | sort
 ```
 
 All OpenMP threads are mapped onto identical Intel Xeon Phi coprocessor
@@ -886,14 +872,14 @@ processors on the Xeon host!
 The solution is to specify explicit proclists per MPI process:
 
 ```
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload
 ```
 
 Repeat the execution, but `grep` and `sort` the output to focus on the
 essential information:
 
 ```
-[phi02]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 - n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload 2>&1 | grep bound | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 - n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload 2>&1 | grep bound | sort
 ```
 ______
 
@@ -1042,19 +1028,19 @@ DGEMM calls. We will compile this code by using the supplied Makefile.
 Type `make` to build the default exercise:
 
 ```
-[phi02]$ make
+[SERVER]$ make
 ```
 
 Go to directory `bin/intel64`: 
 
 ```
-[phi02]$ cd bin/intel64
+[SERVER]$ cd bin/intel64
 ```
 
 Run the executable using the value 2000 as the input parameter:
 
 ```
-[phi02]$ ./00_getting_started 2000
+[SERVER]$ ./00_getting_started 2000
 ```
 
 Let us now run the application with 16 threads and with thread affinity
@@ -1063,9 +1049,9 @@ optimized for fine grain parallelization. Set the number of threads to
 using the `OpenMP KMP_AFFINITY` environment variable:
 
 ```
-[phi02]$ export OMP_NUM_THREADS=16
-[phi02]$ export KMP_AFFINITY=granularity=fine,compact,1,0
-[phi02]$ ./00_getting_started 2000
+[SERVER]$ export OMP_NUM_THREADS=16
+[SERVER]$ export KMP_AFFINITY=granularity=fine,compact,1,0
+[SERVER]$ ./00_getting_started 2000
 ```
 
 Compare the execution speed with the previous execution.
@@ -1082,7 +1068,7 @@ requesting that the entire baseline code target the Intel Xeon Phi
 coprocessor (`flag -mmic`):
 
 ```
-[phi02]$ icc -openmp -mkl -mmic 00_getting_started.cpp -o 00_getting_started_native
+[SERVER]$ icc -openmp -mkl -mmic 00_getting_started.cpp -o 00_getting_started_native
 ```
 
 Copy the generated executable to one of the the coprocessors, log in
@@ -1102,8 +1088,8 @@ Alternatively, you can set the environment variable `MKL_MIC_ENABLE=1`.
 Compile and execute the program on the host:
 
 ```
-[phi02]$ icc -openmp -mkl 00_getting_started.cpp -o 00_getting_started_offload
-[phi02]$ ./00getting_started_offload 2000
+[SERVER]$ icc -openmp -mkl 00_getting_started.cpp -o 00_getting_started_offload
+[SERVER]$ ./00getting_started_offload 2000
 ```
 
 Now some of the work will automatically be offloaded to the coprocessor.
@@ -1124,7 +1110,7 @@ a look at file `01_offload_solution.cpp`, with the implemented
 solution. Compile using the syntax below:
 
 ```
-[phi02]$ icpc -openmp -mkl 01_offload.cpp -o 01_offload_solution -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3
+[SERVER]$ icpc -openmp -mkl 01_offload.cpp -o 01_offload_solution -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3
 ```
 
 Now execute the program. The Intel compiler does not require an option
@@ -1281,7 +1267,7 @@ show the result. Use the following command to compile the code to run
 natively on the Intel Xeon Phi coprocessor:
 
 ```
-[phi02]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
+[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
 ```
 
 Upload the executable program `diffusion_base` to the coprocessor as
@@ -1290,7 +1276,7 @@ just typing (you do not need to do that because execution will take an
 excessively long time):
 
 ```
-[phi02]$ ./diffusion_base
+[SERVER]$ ./diffusion_base
 ```
 
 On the Xeon Phi card we are using the output is:
@@ -1329,7 +1315,7 @@ Now, compile and run the code to see what performance you get; use the
 following command:
 
 ```
-[phi02]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp
+[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp
 ```
 
 Upload the file to one of the coprocessors, issue and ssh to it and
@@ -1337,9 +1323,9 @@ then, on the coprocessor command prompt, set the number of threads and
 affinity and run the program:
 
 ```
-[phi02-mic]$ export OMP_NUM_THREADS=228 
-[phi02-mic]$ export KMP_AFFINITY=scatter
-[phi02-mic]$ ./diffusion_omp
+[SERVER-MIC]$ export OMP_NUM_THREADS=228 
+[SERVER-MIC]$ export KMP_AFFINITY=scatter
+[SERVER-MIC]$ ./diffusion_omp
 ```
 **Note:** `OMP_NUM_THREADS=228` is the 4x the number of cores.
 
@@ -1354,12 +1340,12 @@ change of the parameter `OMP_NUM_THREADS`, and take note of the result
 of each execution:
 
 ```
-[phi02-mic]$ export OMP_NUM_THREADS=171
-[phi02-mic]$ ./diffusion_omp
-[phi02-mic]$ export OMP_NUM_THREADS=114
-[phi02-mic]$ ./diffusion_omp
-[phi02-mic]$ export OMP_NUM_THREADS=57
-[phi02-mic]$ ./diffusion_omp
+[SERVER-MIC]$ export OMP_NUM_THREADS=171
+[SERVER-MIC]$ ./diffusion_omp
+[SERVER-MIC]$ export OMP_NUM_THREADS=114
+[SERVER-MIC]$ ./diffusion_omp
+[SERVER-MIC]$ export OMP_NUM_THREADS=57
+[SERVER-MIC]$ ./diffusion_omp
 ```
 
 Compare the outputs and assess which gives the best result. How many
@@ -1374,7 +1360,7 @@ pretty simple one line change but should provide an extra improvement.
 Compile it using the following command:
 
 ```
-[phi02]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvec
+[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvec
 ```
 
 Note that now you should see that the vector report indicates the inner
@@ -1384,21 +1370,21 @@ per core based on the number of cores for the coprocessor on each run as
 indicated below:
 
 ```
-[phi02-mic]$ export KMP_AFFINITY=scatter
-[phi02-mic]$ export OMP_NUM_THREADS=228
-[phi02-mic]$ ./diffusion_ompvect
+[SERVER-MIC]$ export KMP_AFFINITY=scatter
+[SERVER-MIC]$ export OMP_NUM_THREADS=228
+[SERVER-MIC]$ ./diffusion_ompvect
 ```
 
 As in the previous exercise, set for three, two, and one thread(s) per
 core and run again, and take note of the results:
 
 ```
-[phi02-mic]$ export OMP_NUM_THREADS=171
-[phi02-mic]$ ./diffusion_ompvect
-[phi02-mic]$ export OMP_NUM_THREADS=114
-[phi02-mic]$ ./diffusion_ompvect
-[phi02-mic]$ export OMP_NUM_THREADS=57
-[phi02-mic]$ ./diffusion_ompvect
+[SERVER-MIC]$ export OMP_NUM_THREADS=171
+[SERVER-MIC]$ ./diffusion_ompvect
+[SERVER-MIC]$ export OMP_NUM_THREADS=114
+[SERVER-MIC]$ ./diffusion_ompvect
+[SERVER-MIC]$ export OMP_NUM_THREADS=57
+[SERVER-MIC]$ ./diffusion_ompvect
 ```
 
 Compare with previous results. How many times the scaled code runs
@@ -1431,7 +1417,7 @@ contains the code with the modifications. Compile and run it to see if
 we achieved any improvement:
 
 ```
-[phi02]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel
+[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel
 ```
 
 Upload the file to one of the coprocessors, set the affinity and number
@@ -1491,7 +1477,7 @@ let us compile, upload and run the code on one of the coprocessors. Use
 the following command:
 
 ```
-[phi02]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled
+[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled
 ```
 
 Upload the code and go to the processor command prompt, set the affinity
