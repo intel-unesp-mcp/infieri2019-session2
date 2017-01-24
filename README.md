@@ -104,38 +104,84 @@ ______
 
 ## Remote access to the testing platform
 
-This document assumes that the testing platform has been setup and is
-ready to use. We will be using a state-of-the-art server - loaned by
-Intel - with two Intel Xeon processors (16 cores, 2 threads/core) and
-three Intel Xeon Phi coprocessors (171 cores, 4 threads/core), as well
+This document assumes that the testing platforms have been setup and are
+ready to use. We will be tow server.
+The first one is a state-of-the-art server - loaned by
+Intel - with two high-end Intel Xeon processors (each with 18 cores, 2 threads/core)
+and five Intel Xeon Phi coprocessors (each with 60 cores, 4 threads/core), as well
 as several Intel software development tools. To simplify nomenclature,
-we will refer to the testing platform as “the host” (or “the host
-system”), and the Xeon Phi coprocessors installed in the host system as
-“mic0”, “mic1”, and “mic2”.
+we will refer to this server as “the host” (or “the host
+system”), and the Xeon Phi™ coprocessors installed in the host system as
+“mic0”, “mic1”, ..., “mic4”.
+The second one is a KNL server - with one KNL processors (68 cores, 4 threads/core). we will refer to this server as “the KNL host”. 
 
 Participants should work alone or in pairs on a workstation - preferably
 running Linux or Mac - with Internet access. All the exercises are
 command-line based and should be executed on the host system by means of
-a secure shell (SSH) connection. Ideally the participant workstation
-should be able to run X11.
+a secure shell (SSH) connection. Ideally, the participant workstation
+should be able to open X11 connections with the server.
 
-Use the syntax below to log in to the host system.
+<a name="remote_access"></a>
 
-```
-$ ssh –X phi02.ncc.unesp.br –l traineeN
+Use the following command to log in to the host system.
+
+```bash
+$ ssh –X SERVER –l traineeN 
 ```
 
 **(N is a number assigned to each participant)**
 
-**Note:** Before starting the lab exercises make sure that the Xeon Phi
-coprocessors are up and running `status = ‘online’`:
+**The -X toggle allows to run GUI programs remotly**
 
-```
-[phi02]$ micctrl --status
-```
-this command shows the status of all MIC cards installed on the host system. 
+Use the following command to log in to the KNL host system.
 
-Please refer to the teaching assistant(s) if you have any question.
+```bash
+$ ssh –X KNL-SERVER –l traineeN 
+```
+**(N is a number assigned to each participant)**
+
+
+Please refer to the teaching assistant(s) for more details.
+
+<a name="get_repo"></a>
+
+## GIT repository - getting the source files
+
+**Git** is a free and open source distributed version control system (DVCS)
+designed to track changes in source files or other content and coordinate work
+on them among multiple people with flexibility, security, and efficiency.
+
+**GitHub** is a web-based Git repository hosting service.
+
+The files used during these activities are stored at GitHub and in order to
+obtain them, you have to perform a copy (clone) of the remote repository to
+your user directory, in order to do so, you should run the following command in
+the host system console:
+
+```bash
+$ git clone https://github.com/intel-unesp-mcp/infieri-2017-basic.git
+```
+
+The source files will be available at the `infieri-2017-basic/src` directory.
+
+From now on, the full path for these files will be referred as **SOURCE-DIR**.
+
+Please refer to the teaching assistant(s) for more details.
+
+## Intel's environment variables
+
+After you connect to the remote server, set the environment variables necessary
+for the Intel development tools by running the following command:
+
+```bash
+[SERVER]$ source /opt/intel/parallel_studio_xe_2017.1.043/psxevars.sh intel64
+```
+
+Or
+
+```bash
+[KNL-SERVER]$ source /opt/intel/parallel_studio_xe_2017.1.043/psxevars.sh intel64
+```
 ______
 
 ### Quick Navigation ###
