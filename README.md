@@ -242,7 +242,7 @@ Without this argument, the code will still compile, but all code will be
 executed with only one thread. In order to make certain functions and
 variables of the OpenMP library available, the directive `#include <omp.h>` must be used at the beginning of the code.
 
-### 1.2 Overview of Cilk Plus
+### 1.3 Overview of Cilk Plus
 
 Cilk Plus is an extension to the C and C++ programming languages,
 designed for multithreaded parallel computing, making it easier to write
@@ -296,7 +296,7 @@ In order to make certain functions of Intel Cilk Plus available, the
 preprocessing directive `#include <cilk/cilk.h>` must be used at
 the beginning of the code.
 
-### 1.3 Hands-on Activities
+### 1.4 Hands-on Activities
 
 **Notes:**  
 
@@ -304,7 +304,7 @@ the beginning of the code.
 
 * All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
 
-**1.3.1** To help you recall how to compile and execute an OpenMP code,
+**1.4.1** To help you recall how to compile and execute an OpenMP code,
 have a look at the source code `openmp.c`, located at
 **SOURCE-DIR**, which prints out the total number
 of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` for the Xeon processor and
@@ -332,7 +332,7 @@ Test yourself by answering these trivial questions:
 
 -   What OpenMP function returns the current thread number?
 
-**1.3.2** Modify the source code `openmp.c` by inserting a parallel for
+**1.4.2** Modify the source code `openmp.c` by inserting a parallel for
 loop that prints out the current thread number and the number of
 iteration. Use the directive `#pragma omp for` (**hint:** `#pragma omp parallel` spawns a group of threads, while `#pragma omp for` divides
 loop iterations between the spawned threads; you can do both things at
@@ -342,7 +342,7 @@ host system, checking the result. Recompile the source using the `-mmic`
 flag, upload the corresponding binary to one of the coprocessors,
 connect to it using ssh and execute it there.
 
-**1.3.3** Have a look at source file `openmp_v2.c`. In this slightly
+**1.4.3** Have a look at source file `openmp_v2.c`. In this slightly
 modified version, constant variable `nthreads` is initialized with the
 maximum value of OpenMP threads and is made available for all threads.
 Notice that a private integer has been defined, which should be
@@ -353,7 +353,7 @@ Compile and execute the code on the host system, and check the result.
 Recompile the source using the `-mmic` flag, upload the binary to one of
 the coprocessors, connect to it using ssh and execute there.
 
-**1.3.4** Control over the variables scope can also be done with OpenMP
+**1.4.4** Control over the variables scope can also be done with OpenMP
 parallel clauses `private`, `shared`, and `firstprivate`. Have a look at the
 source file `openmp_v3.c`, which uses these three variables. Check what
 values will be assigned to them within the parallel region and how they
@@ -364,7 +364,7 @@ coprocessors, connect to it using ssh and execute there a few times.
 Notice that the value of `varShared` is different at each execution; in
 fact, its value is unpredictable. Why does this happen?
 
-**1.3.5** A common mistake when implementing parallel algorithms is
+**1.4.5** A common mistake when implementing parallel algorithms is
 creating racing conditions, which occur when shared variables are
 accessed for reading and writing by different threads at the same time.
 Have a look at the source file `openmp_v4.c`, which uses a parallel for
@@ -376,7 +376,7 @@ of the coprocessors, connect to it using ssh and execute the binary
 several times, comparing the results. Why the result is different at
 each execution?
 
-**1.3.6** There are several ways to fix racing conditions in OpenMP
+**1.4.6** There are several ways to fix racing conditions in OpenMP
 parallel codes. One of them is applying `#pragma omp critical` to the
 region where the racing conditions occur. Take a look at file
 `openmp_v5.c`, which is an example that uses this solution to fix the
@@ -387,13 +387,13 @@ only one thread will be executing it at a time. As always, compile the
 source for the MIC architecture, upload and execute it several times on
 one of the coprocessors, and check the results.
 
-**1.3.7** `Reduction` is a clause of OpenMP for loop, which indicates
+**1.4.7** `Reduction` is a clause of OpenMP for loop, which indicates
 what operation will be used on what reduction variable. OpenMP will
 automatically take care of avoiding racing conditions and receiving
 correct result. Have a look at example `openmp_v6.c`, which implements
 the proposed solution. Compile it, execute and check the result.
 
-**1.3.8** In this exercise you will be introduced to a source code that
+**1.4.8** In this exercise you will be introduced to a source code that
 uses Intel Cilk Plus parallelism model. Have a look at source file
 `cilk_v0.cpp`. It prints out the total number of Intel Cilk Plus
 workers available on the system. The keyword `_Cilk_for` is used to
@@ -410,7 +410,7 @@ coprocessors, execute them on the host and analyze the output. Recompile
 the source using the `-mmic` flag, upload the binary to one of the
 coprocessors, connect to it using ssh and run the executable there.
 
-**1.3.9** In the previous exercise we used the `_Cilk_for` loop to to
+**1.4.9** In the previous exercise we used the `_Cilk_for` loop to to
 iterate through the number of available workers and to print out the
 current worker number. If the workload was significant for each worker,
 than each of them should have been involved in the calculations only
@@ -421,7 +421,7 @@ worker. Have a look at source file `cilk_v1.cpp`, compile it for host
 and coprocessors and execute the binaries on the host and on one of the
 coprocessors, and analyze the outputs.
 
-**1.3.10** Using the keyword `_Cilk_spawn` for asynchronous parallelism
+**1.4.10** Using the keyword `_Cilk_spawn` for asynchronous parallelism
 we can run recursive tasks in parallel. Have a look at source
 `cilk_v2.cpp`, which recursively calls function Recurse(const int task)
 and prints out the number of current worker, doing some calculations
@@ -429,7 +429,7 @@ within the function. Like in the previous exercises, compile (host and
 coprocessor) and execute the binaries on the host and on one of the
 coprocessors, and analyze the outputs.
 
-**1.3.11** Quite often we need synchronization between the parallel
+**1.4.11** Quite often we need synchronization between the parallel
 tasks. Intel Cilk Plus has `_Cilk_sync` keyword for this. In source code
 `cilk_v3.cpp`, a thousand dynamically allocated consecutive integer
 elements of an array are summed up by two parallel (`_Cilk_spawn`)
@@ -440,7 +440,7 @@ execute the binaries on the host and on one of the coprocessors, and
 analyze the outputs. Modify the code in such a way that the array is
 divided in four parts.
 
-**1.3.12** A more elegant way to organize parallelism is to avoid
+**1.4.12** A more elegant way to organize parallelism is to avoid
 hardwiring the number of parallel tasks and let Intel Cilk Plus take
 care of this automatically. To prevent racing conditions we will use one
 of the Intel Cilk Plus reducers named `reducer_opadd`, a math operator
@@ -461,7 +461,7 @@ functions. Compile the source code for host and coprocessors, execute
 the binaries on the host and on one of the coprocessors, and analyze the
 corresponding outputs.
 
-### 1.4 Hands-on Activities about Profiling 
+### 1.5 Hands-on Activities about Profiling 
 
 The next set of exercises will show how to identify parallel opportunities on the code and perform estimates about performance gains before parallelizing, using a profiler tool called Intel® Advisor XE.
 
@@ -474,7 +474,7 @@ In this set of exercises, you will execute the following steps in order to perfo
 - 	Include annotations on source code to check scalability;
 - 	Evaluate the performance of annotated loops in different architectures and frameworks, using “Check Suitability” analysis.
 
-**1.4.1** The main part of application that we are going to profile is a basic matrix multiplication serial application: 
+**1.5.1** The main part of application that we are going to profile is a basic matrix multiplication serial application: 
 
 ```c
 void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
@@ -508,13 +508,13 @@ In order to compile the application execute:
 [SERVER]$ make icc
 ```
 
-**1.4.2** Execute Intel Advisor on terminal: 
+**1.5.2** Execute Intel Advisor on terminal: 
 
 ```bash
 [SERVER]$ advixe-gui
 ```
 
-**1.4.3** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
+**1.5.3** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
 
 - name: matrix
 - application: `SOURCE-DIR/matrix/linux/matrix.icc`
@@ -532,7 +532,7 @@ In order to compile the application execute:
 ![infieri02_pic06](img/infieri02_pic06.png)  
 **Figure 4. Setup Source Directory.**
 
-**1.4.4** Start the Survey target analysis (Figure 5).
+**1.5.4** Start the Survey target analysis (Figure 5).
 
 ![infieri02_pic07](img/infieri02_pic07.png)  
 **Figure 5. Starting Survey Target Analysis.**  
@@ -542,7 +542,7 @@ The Survey Target report shows basic profiling information, such as the time spe
 ![infieri02_pic08](img/infieri02_pic08.JPG)  
 **Figure 6. Survey Target Report**  
 
-**1.4.5** One application can have more than one loop that presents high computationl cost, so several parallel opportunities can be explored. The profiling of Matrix Multiplication shows that three loops of function multiply0 has high computational cost. In this sense, we will use annotations to mark the loops that presents parallel opportunities to evaluate the potencial performance gains paralelizing those loops.
+**1.5.5** One application can have more than one loop that presents high computationl cost, so several parallel opportunities can be explored. The profiling of Matrix Multiplication shows that three loops of function multiply0 has high computational cost. In this sense, we will use annotations to mark the loops that presents parallel opportunities to evaluate the potencial performance gains paralelizing those loops.
 
 The annotations have to be included in the following way:
 
@@ -591,7 +591,7 @@ Check your annotations on “view annotations” options (Figure 7):
 ![infieri02_pic09](img/infieri02_pic09.JPG)  
 **Figure 7. An example of annotations included in the code.**
 
-**1.4.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model (Figure 8). 
+**1.5.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model (Figure 8). 
 
 ![infieri02_pic10](img/infieri02_pic10.JPG)  
 **Figure 8. An example of suitability report.**  
