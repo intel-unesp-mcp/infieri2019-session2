@@ -484,13 +484,13 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 
 Enter on code directory:
 
-```
+```bash
 [SERVER]$ SOURCE-DIR/matrix/src
 ```
 
 In order to compile the application execute: 
 
-```
+```bash
 [SERVER]$ cd SOURCE-DR/matrix/linux
 [SERVER]$ make clean 
 [SERVER]$ make icc
@@ -498,7 +498,7 @@ In order to compile the application execute:
 
 **1.4.2** Execute Intel Advisor on terminal: 
 
-```
+```bash
 [SERVER]$ advixe-gui
 ```
 
@@ -568,7 +568,7 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 
 After include these lines recompile application:
 
-```
+```bash
 [SERVER]$ cd SOURCE-DIR/matrix/linux
 [SERVER]$ make clean
 [SERVER]$ make icc
