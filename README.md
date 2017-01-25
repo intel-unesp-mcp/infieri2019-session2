@@ -1057,7 +1057,7 @@ using the `OpenMP KMP_AFFINITY` environment variable:
 Compare the execution speed with the previous execution.
 
 **Note:** for a refresh on the meaning of `KMP_AFFINITY` review exercise
-[3.2.3 of Session 1 (Basic)](https://intel-unesp-mcp.github.io/infieri-2017-basic/#3-2-3).
+[3.2.3 of Session 1 (Basic)](https://intel-unesp-mcp.github.io/infieri-2017-basic/#3-2-3){:target="_blank"}.
 
 **Bonus:** Take notes about the variation of the execution speed with
 the number of threads and with and without affinity settings.
