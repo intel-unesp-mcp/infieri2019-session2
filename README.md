@@ -207,7 +207,7 @@ parallelism in existing sequential programs, providing the programmer
 with a mostly declarative style of programming where all the
 parallelization is handled at the compiler level.
 
-## 1.2 Overview of OpenMP
+### 1.2 Overview of OpenMP
 
 OpenMP is a traditional, well-established cross-platform standard with
 which many high performance application developers are familiar. It
@@ -302,7 +302,7 @@ the beginning of the code.
 
 * The following set of activities is mainly based on exercises extracted from this excellent book: _"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colfax International, 2013, pp. 285-290).  
 
-* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
+* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
 **1.4.1** To help you recall how to compile and execute an OpenMP code,
 have a look at the source code `openmp.c`, located at
@@ -492,7 +492,7 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 }
 ```
 
-**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
+**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
 Enter on code directory:
 
@@ -612,7 +612,7 @@ ______
 
 ## Intel MPI programming models
 
-#### 2.1 Goals
+### 2.1 Goals
 
 This set of exercises will show you practical aspects of heterogeneous
 execution of parallel application in distributed memory with MPI, widely
@@ -679,7 +679,7 @@ executable is launched using the `mpirun` script.
 contains a simple MPI program coded in C, C++, or Fortran. In directory
 **SOURCE-DIR** you will find a copy of the source file `test.c` from the Intel MPI distribution.
 
-**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
+**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
 Let us start working on this code as a quick remind on how to run an MPI program on
 the Intel Xeon Phi coprocessor. Compile the source file with the Intel
@@ -1034,7 +1034,7 @@ following topics are introduced:
  
 * The majority of the code does not change from activity to activity.  
 
-* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.  
+* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.  
 
 **3.3.1** Go to directory `SOURCE-DIR/Intel_mkl_mic_lab_C`. Have a
 look at the source code `00_getting_started.cpp` as well as
@@ -1161,7 +1161,7 @@ performance.
 
 * The following activities (and corresponding source codes) have been extracted from chapter 4 of this outstanding and *highly recommended* book: “*Intel Xeon Phi Coprocessor High-Performance Programming*”, by Jim Jeffers and James Reinders (Elsevier, 2013).  
 
-* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
+* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
 ### 4.2 Overview of the diffusion simulation algorithm
 
