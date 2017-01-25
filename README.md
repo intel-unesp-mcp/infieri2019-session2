@@ -1294,7 +1294,7 @@ to 95 minutes using just one core and one thread of the coprocessor. Our
 next step is to exploit the available parallelism through scaling the
 code across the many cores of the coprocessor.
 
-<a name="part4"></a>
+<a name="4-3-2"></a>
 
 **4.3.2** To start off, we will look at scaling the code using OpenMP.
 Source file `diffusion_omp.c` is an updated version of the code that
@@ -1356,7 +1356,7 @@ times the scaled code runs compared to the baseline?
 
 **4.3.4** Our next goal is speed up the code by vectoring it. Look back
 at the output of the vector report after compilation finishes [(exercise
-4.3.2)](#part4). Now have a look at source file `diffusion_ompvect.c`. The line
+4.3.2)](#4-3-2). Now have a look at source file `diffusion_ompvect.c`. The line
 `#pragma simd` requests the compiler to vectorize the loop regardless
 of potential dependencies or other potential constraints. That was a
 pretty simple one line change but should provide an extra improvement.
