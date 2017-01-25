@@ -481,6 +481,7 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 }
 ```
 
+**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
 
 Enter on code directory:
 
@@ -666,9 +667,11 @@ executable is launched using the `mpirun` script.
 
 **2.3.2** Intel MPI distribution includes a test directory, which
 contains a simple MPI program coded in C, C++, or Fortran. In directory
-**SOURCE-DIR** you will find a copy of the
-source file `test.c` from the Intel MPI distribution. Let us start
-working on this code as a quick remind on how to run an MPI program on
+**SOURCE-DIR** you will find a copy of the source file `test.c` from the Intel MPI distribution.
+
+**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
+
+Let us start working on this code as a quick remind on how to run an MPI program on
 the Intel Xeon Phi coprocessor. Compile the source file with the Intel
 compiler for the host with the usual Intel MPI wrapper:
 
@@ -1016,8 +1019,9 @@ following topics are introduced:
 -  Generate console output that is trigged by offloaded code (`printf`)
 -  Offload C/C++ code that calls FORTRAN code
 
-**Note:** The majority of the code does not change from activity to
-activity.
+**Notes:** 
+* The majority of the code does not change from activity to activity.  
+* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
 
 **3.3.1** Go to directory `SOURCE-DIR/Intel_mkl_mic_lab_C`. Have a
 look at the source code `00_getting_started.cpp` as well as
@@ -1140,10 +1144,9 @@ a solute through a volume of liquid. We will start with a baseline C
 code and implement successive optimizations on it, aiming to improve
 performance.
 
-**Note:** The following activities (and corresponding source codes) have
-been extracted from chapter 4 of this outstanding and *highly
-recommended* book: “*Intel Xeon Phi Coprocessor High-Performance
-Programming*”, by Jim Jeffers and James Reinders (Elsevier, 2013).
+**Notes:** 
+* The following activities (and corresponding source codes) have been extracted from chapter 4 of this outstanding and *highly recommended* book: “*Intel Xeon Phi Coprocessor High-Performance Programming*”, by Jim Jeffers and James Reinders (Elsevier, 2013).  
+* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
 
 ### 4.2 Overview of the diffusion simulation algorithm
 
