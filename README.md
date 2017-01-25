@@ -1021,9 +1021,11 @@ following topics are introduced:
 -  Generate console output that is trigged by offloaded code (`printf`)
 -  Offload C/C++ code that calls FORTRAN code
 
-**Notes:** 
+**Notes:**  
+ 
 * The majority of the code does not change from activity to activity.  
-* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
+
+* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.  
 
 **3.3.1** Go to directory `SOURCE-DIR/Intel_mkl_mic_lab_C`. Have a
 look at the source code `00_getting_started.cpp` as well as
@@ -1146,8 +1148,10 @@ a solute through a volume of liquid. We will start with a baseline C
 code and implement successive optimizations on it, aiming to improve
 performance.
 
-**Notes:** 
+**Notes:**  
+
 * The following activities (and corresponding source codes) have been extracted from chapter 4 of this outstanding and *highly recommended* book: “*Intel Xeon Phi Coprocessor High-Performance Programming*”, by Jim Jeffers and James Reinders (Elsevier, 2013).  
+
 * All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
 
 ### 4.2 Overview of the diffusion simulation algorithm
