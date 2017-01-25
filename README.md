@@ -17,26 +17,35 @@ ______
 
 ## Overview
 
-The Intel Xeon Phi Coprocessor, the first product of Intel’s Many
-Integrated Core (MIC) Architecture, is a new accelerator technology
-developed by Intel to enable performance gains for highly parallel
-computing workloads. It possesses several interesting and appealing
-features, including the ability to use familiar programming models such
-as OpenMP and MPI. This hands-on training session is a comprehensive,
-practical introduction to the Xeon Phi architecture and programming
-models, aiming to demonstrate the processing power of the Intel Xeon Phi
-product family.
+Intel® Xeon Phi™ is a brand name for all Intel Many Integrated Core (MIC)
+architecture of processors and coprocessors developed by Intel to enable
+performance gains for highly parallel computing workloads. Intel MIC architecture
+combines many Intel processor cores onto a single chip and provides interesting
+and appealing features, including the ability to use familiar programming models
+such as OpenMP and MPI in much the same manner that they are used on
+multi-core / multi-socket systems, like the widely used Intel Xeon processors.
+
+This hands-on training has been designed to be a comprehensive, practical
+introduction to parallel programming based on the Xeon Phi architecture
+and programming models, aiming to demonstrate the processing power of the
+Intel Xeon Phi product family. Attendants of these training activities
+will start issuing simple command-line tools to get basic information
+about the Intel Xeon Phi coprocessors, then learn how to monitor what
+resources are being used and access their operating systems by connecting
+to them using ssh protocol. They will be able to verify that the Intel
+Xeon Phi coprocessor is an IP-addressable PCIe device - managed by an
+independent environment provided by the MIC Platform Software Stack
+(MPSS) - that runs a Linux-based operating system.
 
 Participants will have access to a heterogeneous computing system
 equipped with Intel Xeon processors and Intel Xeon Phi coprocessors, as
-well as Intel software development tools. The computing system, a
-state-of-the-art server with two Intel Xeon processors (16 cores, 2
-threads/core) and three Intel Xeon Phi coprocessors (171 cores, 4
-threads/core), is hosted at the Center for Scientific Computing of the
-São Paulo State University (UNESP), in Brazil. The step-by-step hands-on
-activities have been planned to provide easy to follow instructions in
-order to allow the participants to have a real - though very
-introductory - experience on using a powerful manycore system.
+well as the latest Intel software development tools. The computing systems
+are hosted at the Center for Scientific Computing of the São Paulo State
+University (UNESP), in Brazil, an official member of the Intel Modern
+Code training program. The step-by-step hands-on activities have been
+planned to provide easy to follow instructions in order to allow the
+participants to have a real experience on using a powerful manycore
+computing system.
 
 ## Learning Goals
 
@@ -130,7 +139,7 @@ $ ssh –X SERVER –l traineeN
 
 **(N is a number assigned to each participant)**
 
-**The -X toggle allows to run GUI programs remotly**
+**ssh -X allows you to log into a remote computer and have its graphical user interface X displayed on your local machine**
 
 Please refer to the teaching assistant(s) for more details.
 
