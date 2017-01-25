@@ -340,7 +340,12 @@ once with the fused `#pragma omp parallel for` directive). Save the
 modified source as `openmp_v1.c`, compile and execute the binary on the
 host system, checking the result. Recompile the source using the `-mmic`
 flag, upload the corresponding binary to one of the coprocessors,
-connect to it using ssh and execute it there.
+connect to it using ssh and execute it there. 
+When you connect to any **MIC**, don't you forget to export the **LD_LIBRARY_PATH**:
+
+```bash
+export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
+```
 
 **1.4.3** Have a look at source file `openmp_v2.c`. In this slightly
 modified version, constant variable `nthreads` is initialized with the
@@ -1344,6 +1349,7 @@ then, on the coprocessor command prompt, set the number of threads and
 affinity and run the program:
 
 ```bash
+[SERVER-MIC]$ export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
 [SERVER-MIC]$ export OMP_NUM_THREADS=228 
 [SERVER-MIC]$ export KMP_AFFINITY=scatter
 [SERVER-MIC]$ ./diffusion_omp
