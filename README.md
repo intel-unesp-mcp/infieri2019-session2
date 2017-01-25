@@ -290,8 +290,8 @@ the beginning of the code.
 ### 1.3 Hands-on Activities
 
 **Notes:**  
-* The following set of activities is mainly based on exercises extracted from this excellent book: _"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colfax International, 2013, pp. 285-290).  
-* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
+	- The following set of activities is mainly based on exercises extracted from this excellent book: _"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colfax International, 2013, pp. 285-290).  
+	- All the source codes we will be using in this section are located in **SOURCE-DIR**. For more informations, check [**"getting the source files"**](#get_repo) section.
 
 **1.3.1** To help you recall how to compile and execute an OpenMP code,
 have a look at the source code `openmp.c`, located at
