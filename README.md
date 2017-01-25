@@ -1057,7 +1057,7 @@ using the `OpenMP KMP_AFFINITY` environment variable:
 Compare the execution speed with the previous execution.
 
 **Note:** for a refresh on the meaning of `KMP_AFFINITY` review exercise
-3.2.3 of Session 1.
+[3.2.3 of Session 1 (Basic)](#part3 "https://intel-unesp-mcp.github.io/infieri-2017-basic/#3-2-3").
 
 **Bonus:** Take notes about the variation of the execution speed with
 the number of threads and with and without affinity settings.
@@ -1445,7 +1445,7 @@ available immediately when needed. Since memory accesses are
 significantly longer than cache accesses, a goal is to find techniques
 and usage patterns that can help reduce memory accesses by reusing
 cached data. To most successful, reusing data in cache lines have been
-used very recently – or local to current code sequence – is really
+used very recently or local to current code sequence is really
 important.
 
 Tiling the access pattern can exploit data that remains in the cache
