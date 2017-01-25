@@ -1116,6 +1116,7 @@ solution. Compile using the syntax below:
 Now execute the program. The Intel compiler does not require an option
 in order to enable compiler-assisted offload. LEO can be disabled even
 when an offload directive/pragma is found, using `-no-offload`.
+
 ______
 
 ### Quick Navigation ###
