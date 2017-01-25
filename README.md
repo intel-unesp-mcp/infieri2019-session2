@@ -2,7 +2,7 @@
 
 # 4rd International Summer School on INtelligent Signal Processing for FrontIEr Research and Industry
 
-## Lab Workbook - Session 2 (CL6)
+## Lab Workbook - Session 2
 
 **January 2017**
 
@@ -150,7 +150,7 @@ your user directory, in order to do so, you should run the following command in
 the host system console:
 
 ```bash
-$ git clone https://github.com/intel-unesp-mcp/infieri-2017-basic.git
+$ git clone https://github.com/intel-unesp-mcp/infieri-2017-advanced.git
 ```
 
 The source files will be available at the `infieri-2017-basic/src` directory.
@@ -295,7 +295,7 @@ extracted from this excellent book: _"Parallel Programming and Optimization with
 
 **1.3.1** To help you recall how to compile and execute an OpenMP code,
 have a look at the source code `openmp.c`, located at
-`/home/traineeN/source-files/session2`, which prints out the total number
+**SOURCE-DIR**, which prints out the total number
 of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` for the Xeon processor and
 for the Xeon coprocessor, using the appropriate flag `-openmp` to enable
 OpenMP. Before running it, set the environment variable
@@ -485,13 +485,13 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 This code is on the directory:
 
 ```
-<git_dir>/matrix/src
+SOURCE-DIR/matrix/src
 ```
 
 In order to compile the application execute: 
 
 ```
-cd <git_dir>/matrix/linux
+cd SOURCE-DR/matrix/linux
 make clean 
 make icc
 ```
@@ -505,8 +505,8 @@ advixe-gui
 **1.4.3** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
 
 - name: matrix
-- application: `<git_dir>/matrix/linux/matrix.icc`
-- Source Folder: `<git_dir>/matrix/src`
+- application: `SOURCE-DIR/matrix/linux/matrix.icc`
+- Source Folder: `SOURCE-DIRmatrix/src`
  
 ![infieri02_pic03](img/infieri02_pic03.png)  
 **Figure 1. Create New Project**  
@@ -569,7 +569,7 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 After include these lines recompile application:
 
 ```
-cd <git_dir>/matrix/linux
+cd SOURCE-DIR/matrix/linux
 make clean
 make icc
 ```
@@ -666,7 +666,7 @@ executable is launched using the `mpirun` script.
 
 **2.3.2** Intel MPI distribution includes a test directory, which
 contains a simple MPI program coded in C, C++, or Fortran. In directory
-`/home/traineeN/source-files/session2` you will find a copy of the
+**SOURCE-DIR** you will find a copy of the
 source file `test.c` from the Intel MPI distribution. Let us start
 working on this code as a quick remind on how to run an MPI program on
 the Intel Xeon Phi coprocessor. Compile the source file with the Intel
@@ -1019,7 +1019,7 @@ following topics are introduced:
 **Note:** The majority of the code does not change from activity to
 activity.
 
-**3.3.1** Go to directory `/home/traineeN/source-files/session2/Intel_mkl_mic_lab_C`. Have a
+**3.3.1** Go to directory `SOURCE-DIR/Intel_mkl_mic_lab_C`. Have a
 look at the source code `00_getting_started.cpp` as well as
 `00_gemm_mkl.hpp`. Locate the main function, and follow the anticipated
 flow of the execution into the run function. Understand how
@@ -1062,7 +1062,7 @@ Compare the execution speed with the previous execution.
 **Bonus:** Take notes about the variation of the execution speed with
 the number of threads and with and without affinity settings.
 
-**3.3.2** Go back to directory `/home/rogerio/session2/intel_mkl_mic_lab_C` (`cd ../..`) and
+**3.3.2** Go back to directory `SOURCE-DIR/intel_mkl_mic_lab_C` (`cd ../..`) and
 recompile `00_getting_started.cpp` for coprocessor execution, by
 requesting that the entire baseline code target the Intel Xeon Phi
 coprocessor (`flag -mmic`):
@@ -1240,7 +1240,7 @@ real-world algorithm; it will provide the correct results when run.
 
 **4.3.1** Take a careful look at the complete code listing,
 `diffusion_base.c`, that can be found at
-`/home/traineeN/source-files/session2`. The function
+**SOURCE-DIR**. The function
 `diffusion_baseline()` implements the key computational processing.
 Find the `main()` function, and see that two arrays of equal size, f1\[ \]
 and f2\[ \], are allocated to support the double buffering used in the
