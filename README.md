@@ -1355,8 +1355,8 @@ Compare the outputs and assess which gives the best result. How many
 times the scaled code runs compared to the baseline?
 
 **4.3.4** Our next goal is speed up the code by vectoring it. Look back
-at the output of the vector report after compilation finishes [exercise
-4.3.2](#part4). Now have a look at source file `diffusion_ompvect.c`. The line
+at the output of the vector report after compilation finishes [(exercise
+4.3.2)](#part4). Now have a look at source file `diffusion_ompvect.c`. The line
 `#pragma simd` requests the compiler to vectorize the loop regardless
 of potential dependencies or other potential constraints. That was a
 pretty simple one line change but should provide an extra improvement.
