@@ -139,7 +139,7 @@ $ ssh –X SERVER –l traineeN
 
 **(N is a number assigned to each participant)**
 
-**ssh -X allows you to log into a remote computer and have its graphical user interface X displayed on your local machine**
+**Note:** ssh -X allows you to log into a remote computer and have its graphical user interface X displayed on your local machine.
 
 Please refer to the teaching assistant(s) for more details.
 
