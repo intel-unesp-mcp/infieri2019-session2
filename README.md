@@ -482,31 +482,31 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 ```
 
 
-This code is on the directory:
+Enter on code directory:
 
 ```
-SOURCE-DIR/matrix/src
+[SERVER]$ SOURCE-DIR/matrix/src
 ```
 
 In order to compile the application execute: 
 
 ```
-cd SOURCE-DR/matrix/linux
-make clean 
-make icc
+[SERVER]$ cd SOURCE-DR/matrix/linux
+[SERVER]$ make clean 
+[SERVER]$ make icc
 ```
 
 **1.4.2** Execute Intel Advisor on terminal: 
 
 ```
-advixe-gui
+[SERVER]$ advixe-gui
 ```
 
 **1.4.3** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
 
 - name: matrix
 - application: `SOURCE-DIR/matrix/linux/matrix.icc`
-- Source Folder: `SOURCE-DIRmatrix/src`
+- Source Folder: `SOURCE-DIR/matrix/src`
  
 ![infieri02_pic03](img/infieri02_pic03.png)  
 **Figure 1. Create New Project**  
@@ -569,9 +569,9 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 After include these lines recompile application:
 
 ```
-cd SOURCE-DIR/matrix/linux
-make clean
-make icc
+[SERVER]$ cd SOURCE-DIR/matrix/linux
+[SERVER]$ make clean
+[SERVER]$ make icc
 ```
 
 Check your annotations on “view annotations” options (Figure 7):
