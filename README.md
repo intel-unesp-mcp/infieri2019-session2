@@ -671,8 +671,7 @@ and performing offload to coprocessors.
 
 ### 2.3 Hands-on Activities
 
-**2.3.1** Please review exercises 2.2.6 to 2.2.8 from Session 1. As we
-have seen, MPI applications must be compiled with special wrapper
+**2.3.1** Please review exercises [2.2.9 to 2.2.11 from Session 1](https://intel-unesp-mcp.github.io/infieri-2017-basic/#2-2-9){:target="_blank"}. As we have seen, MPI applications must be compiled with special wrapper
 applications – `mpiicc` for C and `mpiicpc` for C++, and the resulting
 executable is launched using the `mpirun` script.
 
@@ -712,7 +711,8 @@ Intel MPI test program on each of them in coprocessor-only mode.
 
 **Note:** before launching the command below, we need to set the
 `I_MPI_MIC` environment variable to enable the MPI communication between
-host and coprocessors; please review exercise 2.2.8 in session 1).
+host and coprocessors.  
+Please review exercise [2.2.11 in session 1](https://intel-unesp-mcp.github.io/infieri-2017-basic/#2-2-11){:target="_blank"}.
 
 ```bash
 [SERVER]$ mpirun -host mic0 –n 4 ./test.mic
