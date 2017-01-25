@@ -303,7 +303,7 @@ OpenMP. Before running it, set the environment variable
 threads available either on the host or on the coprocessor, using the
 command:
 
-```
+```bash
 [SERVER]$ export OMP_NUM_THREADS=N 
 ```
 
