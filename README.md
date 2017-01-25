@@ -1367,6 +1367,7 @@ change of the parameter `OMP_NUM_THREADS`, and take note of the result
 of each execution:
 
 ```bash
+[SERVER-MIC]$ export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
 [SERVER-MIC]$ export OMP_NUM_THREADS=171
 [SERVER-MIC]$ ./diffusion_omp
 [SERVER-MIC]$ export OMP_NUM_THREADS=114
@@ -1397,6 +1398,7 @@ per core based on the number of cores for the coprocessor on each run as
 indicated below:
 
 ```bash
+[SERVER-MIC]$ export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
 [SERVER-MIC]$ export KMP_AFFINITY=scatter
 [SERVER-MIC]$ export OMP_NUM_THREADS=228
 [SERVER-MIC]$ ./diffusion_ompvect
