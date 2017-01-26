@@ -304,14 +304,7 @@ the beginning of the code.
 
 * All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
-**1.4.1** To help you recall how to compile and execute an OpenMP code,
-have a look at the source code `openmp.c`, located at
-**SOURCE-DIR**, which prints out the total number
-of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` for the Xeon processor and
-for the Xeon coprocessor, using the appropriate flag `-qopenmp` to enable
-OpenMP. Before running it, set the environment variable
-`OMP_NUM_THREADS` to a number N between 1 and the maximum number of
-threads available either on the host or on the coprocessor, using the
+**1.4.1** To help you recall how to compile and execute an OpenMP code, have a look at the source code `openmp.c`, located at **SOURCE-DIR**, which prints out the total number of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` for the Xeon processor and for the Xeon coprocessor, using the appropriate flag `-qopenmp` to enable OpenMP. Before running it, set the environment variable `OMP_NUM_THREADS` to a number N between 1 and the maximum number of threads available either on the host or on the coprocessor, using the
 command:
 
 ```bash
@@ -320,11 +313,14 @@ command:
 
 **(you need to assign a value to N!)**
 
-Execute the binary code and make sure that you understand how it works.
-Recompile the source using the -mmic flag, upload the binary to one of
-the coprocessors, connect to it using ssh and run the executable there
-(do not forget to define `OMP_NUM_THREADS=N` on the Xeon Phi command
-shell before launching the executable).
+Execute the binary code and make sure that you understand how it works. Recompile the source using the -mmic flag, upload the binary to one of
+the coprocessors, connect to it using ssh and run the executable there (do not forget to define `OMP_NUM_THREADS=N` on the Xeon Phi command shell before launching the executable).
+
+When you connect to any **MIC**, don't you forget to export the **LD_LIBRARY_PATH**:
+
+```bash
+export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
+```
 
 Test yourself by answering these trivial questions:
 
@@ -341,11 +337,7 @@ modified source as `openmp_v1.c`, compile and execute the binary on the
 host system, checking the result. Recompile the source using the `-mmic`
 flag, upload the corresponding binary to one of the coprocessors,
 connect to it using ssh and execute it there. 
-When you connect to any **MIC**, don't you forget to export the **LD_LIBRARY_PATH**:
 
-```bash
-export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
-```
 
 **1.4.3** Have a look at source file `openmp_v2.c`. In this slightly
 modified version, constant variable `nthreads` is initialized with the
