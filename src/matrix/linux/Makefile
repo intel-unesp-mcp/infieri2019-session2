@@ -34,8 +34,8 @@
 
 SHELL = /bin/sh
 
-PARAMODEL = -DUSE_THR	# Default parallelism using pthreads/Win threads
-#PARAMODEL = -DUSE_OMP -fopenmp	# Use OpenMP for multithreading
+#PARAMODEL = -DUSE_THR	# Default parallelism using pthreads/Win threads
+PARAMODEL = -DUSE_OMP -fopenmp	# Use OpenMP for multithreading
 
 GCC     = gcc
 ICC     = icc
@@ -44,7 +44,7 @@ CFLAGS  = -g -O3
 OPTFLAGS = -xSSE3 
 # OPTFLAGS = -xHost -fno-alias
 # add -DALIGNED to the multiply.c and matrix.c
-LDFLAGS = -lpthread -lm -static
+LDFLAGS = -lpthread -lm #-static
 
 GCFLAGS = $(CFLAGS) $(PARAMODEL)
 ICFLAGS = $(CFLAGS) $(PARAMODEL)-DICC -debug inline-debug-info #-vec-report3 -qopt-report -qopt-report-phase=vec
