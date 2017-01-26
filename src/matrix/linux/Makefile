@@ -41,7 +41,7 @@ GCC     = gcc
 ICC     = icc
 #ICC     = mpiicc
 CFLAGS  = -g -O3
-OPTFLAGS = -xSSE3 
+OPTFLAGS = -xSSE3 -I/opt/intel/advisor/include/
 # OPTFLAGS = -xHost -fno-alias
 # add -DALIGNED to the multiply.c and matrix.c
 LDFLAGS = -lpthread -lm #-static
