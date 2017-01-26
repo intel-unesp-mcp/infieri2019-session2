@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-# 4rd International Summer School on INtelligent Signal Processing for FrontIEr Research and Industry
+# 4rd International Summer School on INtelligent signal processing for FrontIEr Research and Industry
 
 ## Lab Workbook - Session 2
 
