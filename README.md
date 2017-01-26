@@ -769,7 +769,7 @@ an architecture adapted setting using `-env` is recommended:
 ```bash
 [SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -n 4 ./test
 [SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test.mic
-[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test : -env I_MPI_PIN_DOMAIN 12 -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 \~/test.mic
+[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test : -env I_MPI_PIN_DOMAIN 12 -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test.mic
 ```
 
 Experiment with pure Intel MPI mapping by setting
