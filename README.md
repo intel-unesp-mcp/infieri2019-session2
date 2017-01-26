@@ -316,7 +316,7 @@ command:
 Execute the binary code and make sure that you understand how it works. Recompile the source using the -mmic flag, upload the binary to one of
 the coprocessors, connect to it using ssh and run the executable there (do not forget to define `OMP_NUM_THREADS=N` on the Xeon Phi command shell before launching the executable).
 
-When you connect to any **MIC**, don't you forget to export the **LD_LIBRARY_PATH**:
+When you connect to any **MIC**, do not forget to export the **LD_LIBRARY_PATH**:
 
 ```bash
 export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
