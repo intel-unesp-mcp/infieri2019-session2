@@ -543,7 +543,7 @@ The Survey Target report shows basic profiling information, such as the time spe
 
 The annotations have to be included in the following way:
 
-- 	`#include "advisor-annotate.h“`: include header file
+- 	`#include "advisor-annotate.h"`: include header file
 - 	`ANNOTATE_SITE_BEGIN(id)`: before beginning of loop;
 - 	`ANNOTATE_ITERATION_TASK(id)`: first line inside the loop;
 - 	`ANNOTATE_SITE_END()`: after end of loop;
@@ -556,22 +556,22 @@ void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
   int i,j,k;
 
   // Basic serial implementation
-  ANNOTATE_SITE_BEGIN(id1):
+  ANNOTATE_SITE_BEGIN(id1);
   for(i=0; i<msize; i++) {
-    ANNOTATE_ITERATION_TASK(tid1)
-    ANNOTATE_SITE_BEGIN(id2):
+    ANNOTATE_ITERATION_TASK(tid1);
+    ANNOTATE_SITE_BEGIN(id2);
     for(j=0; j<msize; j++) {
-      ANNOTATE_ITERATION_TASK(tid2)
-      ANNOTATE_SITE_BEGIN(id3):
+      ANNOTATE_ITERATION_TASK(tid2);
+      ANNOTATE_SITE_BEGIN(id3);
       for(k=0; k<msize; k++) {
-	ANNOTATE_ITERATION_TASK(tid3)
+	ANNOTATE_ITERATION_TASK(tid3);
 	c[i][j] = c[i][j] + a[i][k] * b[k][j];
       }
-      ANNOTATE_SITE_END()
+      ANNOTATE_SITE_END();
     }
-    ANNOTATE_SITE_END()
+    ANNOTATE_SITE_END();
   }
-  ANNOTATE_SITE_END()
+  ANNOTATE_SITE_END();
 }
 ```
 
@@ -712,7 +712,7 @@ host and coprocessors.
 Please review exercise [2.2.11 in session 1](https://intel-unesp-mcp.github.io/infieri-2017-basic/#2-2-11){:target="_blank"}.
 
 ```bash
-[SERVER]$ mpirun -host mic0 –n 4 ./test.mic
+[SERVER]$ mpirun -host mic0 -n 4 ./test.mic
 ```
 
 An alternative would be to login onto the coprocessor and run the test
@@ -724,7 +724,7 @@ symmetric mode by defining each argument set independently (with command
 line sections separated by a colon):
 
 ```bash
-[SERVER]$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic
+[SERVER]$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 ./test.mic
 ```
 
 Notice that in the symmetric mode you must provide the `-host` flag for
@@ -751,8 +751,8 @@ rank number in front of each output line:
 
 ```bash
 [SERVER]$ mpirun -prepend-rank -n 4 ./test
-[SERVER]$ mpirun -prepend-rank -host mic0 -n 4 \~/test.mic
-[SERVER]$ mpirun -prepend-rank -host localhost -n 4 ./test : -host mic0 -n 8 \~/test.mic
+[SERVER]$ mpirun -prepend-rank -host mic0 -n 4 ./test.mic
+[SERVER]$ mpirun -prepend-rank -host localhost -n 4 ./test : -host mic0 -n 8 ./test.mic
 ```
 
 Sorting of the output can be beneficial for the mapping analysis,
@@ -768,8 +768,8 @@ an architecture adapted setting using `-env` is recommended:
 
 ```bash
 [SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -n 4 ./test
-[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -host mic0 -n 4 ./test.mic
-[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test : -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test.mic
+[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test.mic
+[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test : -env I_MPI_PIN_DOMAIN 12 -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 \~/test.mic
 ```
 
 Experiment with pure Intel MPI mapping by setting
@@ -801,8 +801,8 @@ Run the Intel MPI tests from before:
 ```bash
 [SERVER]$ unset I_MPI_DEBUG
 [SERVER]$ mpirun -prepend-rank -n 2 ./test_openmp
-[SERVER]$ mpirun -prepend-rank -host mic0 -n 2 \~/test_openmp.mic
-[SERVER]$ mpirun -prepend-rank -host localhost -n 2 ./test_openmp : -host mic0 -n 4 \~/test_openmp.mic
+[SERVER]$ mpirun -prepend-rank -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 2 ./test_openmp.mic
+[SERVER]$ mpirun -prepend-rank -host localhost -n 2 ./test_openmp : -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp.mic
 ```
   
 The execution generates a lot of output! The default for the OpenMP
@@ -817,9 +817,9 @@ time we also use `I_MPI_PIN_DOMAIN=omp`, see how it depends on the
 `OMP_NUM_THREADS` setting:
 
 ```bash
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp 2&gt;&1 | sort
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2>&1 | sort
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 2 ./test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp.mic 2>&1 | sort
 ```
 
 Remember that it is usually beneficial to avoid splitting of logical
@@ -833,8 +833,8 @@ specific) to modify the default OpenMP affinity.
 
 ```bash
 [SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -n 2 \~/test_openmp.mic 2>&1 | sort
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -n 4 \~/test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 2 ./test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp.mic 2>&1 | sort
 ```
 
 Notice that, as well as other options, the OpenMP affinity can be set
