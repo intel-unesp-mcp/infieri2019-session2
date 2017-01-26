@@ -308,7 +308,7 @@ the beginning of the code.
 have a look at the source code `openmp.c`, located at
 **SOURCE-DIR**, which prints out the total number
 of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` for the Xeon processor and
-for the Xeon coprocessor, using the appropriate flag `-openmp` to enable
+for the Xeon coprocessor, using the appropriate flag `-qopenmp` to enable
 OpenMP. Before running it, set the environment variable
 `OMP_NUM_THREADS` to a number N between 1 and the maximum number of
 threads available either on the host or on the coprocessor, using the
@@ -794,15 +794,15 @@ difference between the two files by means of the diff utility:
 [SERVER]$ diff test.c test_openmp.c
 ```
 
-Compile with the `-openmp` compiler flag and upload to the Intel Xeon
+Compile with the `-qopenmp` compiler flag and upload to the Intel Xeon
 Phi coprocessor as usual:
 
 ```bash
-[SERVER]$ mpiicc -openmp test_openmp.c -o test_openmp
-[SERVER]$ mpiicc -openmp -mmic test_openmp.c -o test_openmp.mic
+[SERVER]$ mpiicc -qopenmp test_openmp.c -o test_openmp
+[SERVER]$ mpiicc -qopenmp -mmic test_openmp.c -o test_openmp.mic
 ```
 
-Because of the `-openmp` flag, Intel MPI will link the code with the
+Because of the `-qopenmp` flag, Intel MPI will link the code with the
 thread-safe version of the Intel MPI library `libmpi_mt.so` by default.
 Run the Intel MPI tests from before:
 
@@ -859,12 +859,12 @@ two files using the diff utility:
 [SERVER]$ diff test.c test_offload.c
 ```
 
-Compile for the Xeon host with the `-openmp` compiler flag as before.
+Compile for the Xeon host with the `-qopenmp` compiler flag as before.
 The Intel compiler will automatically recognize the offload pragma and
 create the binary for it.
 
 ```bash
-[SERVER]$ mpiicc -openmp test_offload.c -o test_offload
+[SERVER]$ mpiicc -qopenmp test_offload.c -o test_offload
 ```
 
 (Note that, if necessary, offloading could be switched off with the
@@ -1090,7 +1090,7 @@ requesting that the entire baseline code target the Intel Xeon Phi
 coprocessor (`flag -mmic`):
 
 ```bash
-[SERVER]$ icc -openmp -mkl -mmic 00_getting_started.cpp -o 00_getting_started_native
+[SERVER]$ icc -qopenmp -mkl -mmic 00_getting_started.cpp -o 00_getting_started_native
 ```
 
 Copy the generated executable to one of the the coprocessors, log in
@@ -1110,7 +1110,7 @@ Alternatively, you can set the environment variable `MKL_MIC_ENABLE=1`.
 Compile and execute the program on the host:
 
 ```bash
-[SERVER]$ icc -openmp -mkl 00_getting_started.cpp -o 00_getting_started_offload
+[SERVER]$ icc -qopenmp -mkl 00_getting_started.cpp -o 00_getting_started_offload
 [SERVER]$ ./00getting_started_offload 2000
 ```
 
@@ -1132,7 +1132,7 @@ a look at file `01_offload_solution.cpp`, with the implemented
 solution. Compile using the syntax below:
 
 ```bash
-[SERVER]$ icpc -openmp -mkl 01_offload.cpp -o 01_offload_solution -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3
+[SERVER]$ icpc -qopenmp -mkl 01_offload.cpp -o 01_offload_solution -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3
 ```
 
 Now execute the program. The Intel compiler does not require an option
@@ -1291,7 +1291,7 @@ show the result. Use the following command to compile the code to run
 natively on the Intel Xeon Phi coprocessor:
 
 ```bash
-[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
+[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
 ```
 
 Upload the executable program `diffusion_base` to the coprocessor as
@@ -1341,7 +1341,7 @@ Now, compile and run the code to see what performance you get; use the
 following command:
 
 ```bash
-[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp
+[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp
 ```
 
 Upload the file to one of the coprocessors, issue and ssh to it and
@@ -1388,7 +1388,7 @@ pretty simple one line change but should provide an extra improvement.
 Compile it using the following command:
 
 ```bash
-[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvec
+[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvec
 ```
 
 Note that now you should see that the vector report indicates the inner
@@ -1446,7 +1446,7 @@ contains the code with the modifications. Compile and run it to see if
 we achieved any improvement:
 
 ```bash
-[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel
+[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel
 ```
 
 Upload the file to one of the coprocessors, set the affinity and number
@@ -1506,7 +1506,7 @@ let us compile, upload and run the code on one of the coprocessors. Use
 the following command:
 
 ```bash
-[SERVER]$ icc -openmp -mmic -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled
+[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled
 ```
 
 Upload the code and go to the processor command prompt, set the affinity
