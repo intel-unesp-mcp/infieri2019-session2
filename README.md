@@ -865,14 +865,14 @@ create the binary for it.
 Execute the binary on the host:
 
 ```bash
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload
 ```  
 
 Now repeat the execution, but ‘grep’ and ‘sort’ the output to focus on
 the essential information:
 
 ```bash
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload 2>&1 | grep bound | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -n 2 ./test_offload 2>&1 | grep bound | sort
 ```
 
 All OpenMP threads are mapped onto identical Intel Xeon Phi coprocessor
@@ -883,14 +883,14 @@ processors on the Xeon host!
 The solution is to specify explicit proclists per MPI process:
 
 ```bash
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload
 ```
 
 Repeat the execution, but `grep` and `sort` the output to focus on the
 essential information:
 
 ```bash
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 - n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload 2>&1 | grep bound | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,proclist=\[1-16:4\],explicit -env OMP_NUM_THREADS 4 - n 1 ./test_offload : -env KMP_AFFINITY granularity=thread,proclist=\[17-32:4\],explicit -env OMP_NUM_THREADS 4 -n 1 ./test_offload 2>&1 | grep bound | sort
 ```
 ______
 
