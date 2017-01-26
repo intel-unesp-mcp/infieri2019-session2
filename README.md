@@ -237,7 +237,7 @@ other threads in the team enter a wait state until they are needed to
 form another team.
 
 In order to compile a C/C++ program with OpenMP pragmas using the Intel
-C++ Compiler the programmer must specify the compiler argument -openmp.
+C++ Compiler the programmer must specify the compiler argument -qopenmp.
 Without this argument, the code will still compile, but all code will be
 executed with only one thread. In order to make certain functions and
 variables of the OpenMP library available, the directive `#include <omp.h>` must be used at the beginning of the code.
