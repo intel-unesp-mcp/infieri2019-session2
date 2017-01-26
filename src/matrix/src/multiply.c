@@ -26,19 +26,6 @@
 #endif //USE_MKL
 
 #ifdef USE_THR
-void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
-{ 
-	int i,j,k;
-
-// Basic serial implementation
-    for(i=0; i<msize; i++) {
-        for(j=0; j<msize; j++) {
-    	    for(k=0; k<msize; k++) {
-				c[i][j] = c[i][j] + a[i][k] * b[k][j];
-			}
-		}
-	} 
-}
 
 void multiply1(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
 {
@@ -235,7 +222,7 @@ void multiply4(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE
 #ifdef USE_MKL
 // DGEMM way of matrix multiply using Intel MKL
 // Link with Intel MKL library: With MSFT VS and Intel Composer integration: Select build components in the Project context menu.
-// For command line - check out the Intel® Math Kernel Library Link Line Advisor 
+// For command line - check out the IntelÂ® Math Kernel Library Link Line Advisor 
 void multiply5(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
 {
 
