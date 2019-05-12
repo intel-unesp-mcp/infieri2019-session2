@@ -19,54 +19,51 @@ ______
 
 Intel® Xeon Phi™ is a brand name for all Intel Many Integrated Core (MIC)
 architecture of processors and coprocessors developed by Intel to enable
-performance gains for highly parallel computing workloads. Intel MIC architecture
-combines many Intel processor cores onto a single chip and provides interesting
-and appealing features, including the ability to use familiar programming models
-such as OpenMP and MPI in much the same manner that they are used on
-multi-core / multi-socket systems, like the widely used Intel Xeon processors.
+performance gains for highly parallel computing workloads. Intel MIC
+architecture combines many Intel processor cores onto a single chip and
+provides interesting and appealing features, including the ability to use
+familiar programming models such as OpenMP and MPI in much the same manner that
+they are used on multi-core / multi-socket systems, like the widely used Intel
+Xeon processors.
 
-This hands-on training has been designed to be a comprehensive, practical
-introduction to parallel programming based on the Xeon Phi architecture
-and programming models, aiming to demonstrate the processing power of the
-Intel Xeon Phi product family. Attendants of these training activities
-will start issuing simple command-line tools to get basic information
-about the Intel Xeon Phi coprocessors, then learn how to monitor what
-resources are being used and access their operating systems by connecting
-to them using ssh protocol. They will be able to verify that the Intel
-Xeon Phi coprocessor is an IP-addressable PCIe device - managed by an
-independent environment provided by the MIC Platform Software Stack
-(MPSS) - that runs a Linux-based operating system.
+This hands-on, self-paced training has been designed to be a comprehensive, practical
+introduction to parallel programming based on the Xeon Phi architecture and
+programming models, aiming to demonstrate the processing power of the Intel
+Xeon Phi product family. Attendants of these training activities will start
+issuing simple command-line tools to get basic information about the second-generation
+Intel Xeon Phi processors, by connecting to the servers using the ssh protocol.
+They will verify that the second-generation Intel Xeon Phi processor is a
+self-booting processor capable of running a usual Linux-based operating system.
 
-Participants will have access to a heterogeneous computing system
-equipped with Intel Xeon processors and Intel Xeon Phi coprocessors, as
-well as the latest Intel software development tools. The computing systems
-are hosted at the Center for Scientific Computing of the São Paulo State
-University (UNESP), in Brazil, an official member of the Intel Modern
-Code training program. The step-by-step hands-on activities have been
-planned to provide easy to follow instructions in order to allow the
-participants to have a real experience on using a powerful manycore
-computing system.
+During the training activities, participants will learn how to compile and
+run simple C/C++ applications, and then compile and run example codes based on
+shared-memory parallelism with OpenMP and Cilk Plus and distributed-memory
+parallelism with MPI. They will also work on MPI application examples that
+should be executed simultaneously on distinct servers with Xeon Phi processors,
+explore the use of Intel MKL library, and develop insights on tuning parallel applications.
+
+Participants will have access to a set of dedicated servers equipped
+with Intel Xeon Phi processors running a usual Linux-based operating system, as well as the
+latest Intel software development tools. The servers are hosted at
+the Center for Scientific Computing of the São Paulo State University (UNESP), in
+São Paulo, Brazil. The step-by-step hands-on activities have been planned to provide easy to
+follow instructions in order to allow the participants to have a real experience on using
+a powerful manycore computing system.
 
 ## Learning Goals
 
-Attendants of these hands-on labs will start issuing simple command-line
-tools to get basic information about the Intel Xeon Phi coprocessors,
-then will learn how to monitor what resources are being used and access
-their operating systems by establishing ssh sessions with them. Trainees
-will thus verify that the Intel Xeon Phi coprocessor is an
-IP-addressable PCIe device - managed by an independent environment
-provided by the MIC Platform Software Stack (MPSS) - that runs the Linux
-operating system.
-
-Following the introductory part, participants will learn how to compile
-and run simple C/C++ applications directly into the coprocessors, and
-then compile and run example codes based on shared-memory parallelism
-with OpenMP and Cilk Plus and distributed-memory parallelism with MPI.
+Attendants of these hands-on labs will work on predefined sets of exercises
+that progressively help them get familiar with the Intel Xeon Phi processor
+hardware, programming models, and development tools. Exercises have been
+developed in such a way that the learners proceed from one topic to the next at
+their own speed. Participants will start issuing simple commands to get basic
+information about the Intel Xeon Phi processors, then will learn how to compile
+and run simple C/C++ applications, including example codes based on shared-memory
+parallelism with OpenMP and distributed-memory parallelism with MPI.
 They will also work on MPI application examples that should be executed
-simultaneously on the Xeon processors and the Xeon Phi coprocessors,
-explore the use of Intel Math Kernel Library (MKL), and develop insights
+simultaneously on distinct servers also based on Xeon Phi processors,
+explore the use of the Intel Math Kernel Library (MKL), and develop insights
 on tuning parallel applications.
-
 ______
 
 ## Navigation ##
@@ -81,6 +78,36 @@ This course is divided into four parts:
 ______
 
 ## Useful References
+
+-   _Intel® Xeon Phi™ Processor High Performance Programming - Knights Landing Edition (2016)_  
+    <https://www.elsevier.com/books/intel-xeon-phi-processor-high-performance-programming/jeffers/978-0-12-809194-4/>
+
+-   _High Performance Parallelism Pearls - Vol. I (2014)_  
+    <https://www.elsevier.com/books/high-performance-parallelism-pearls-volume-one/reinders/978-0-12-802118-7/>
+
+-   _High Performance Parallelism Pearls - Vol. II (2015)_  
+    <https://www.elsevier.com/books/high-performance-parallelism-pearls-volume-two/jeffers/978-0-12-803819-2/>
+    
+-   _Books on Programming Multicore and Many-core by James Reinders and Jim Jeffers_  
+    <http://www.lotsofcores.com/>
+    
+-   _Knights Landing - An Overview for Developers (webinar)_  
+    <https://software.intel.com/en-us/videos/knights-landing-an-overview-for-developers/>
+    
+-   _Best Practice Guide - Knights Landing (2017)_  
+    http://www.prace-ri.eu/IMG/pdf/Best-Practice-Guide-Knights-Landing.pdf/>    
+    
+-   _Get Ready for Intel’s Knights Landing (KNL) – 3 papers: AVX-512, Clustering Modes, MCDRAM_  
+    https://colfaxresearch.com/get-ready-for-intel-knights-landing-3-papers/>        
+    
+-   _Parallel Programming and Optimization with Intel® Xeon Phi™ Coprocessors, 2nd Edition (Colfax, 2015)_  
+    <https://colfaxresearch.com/second-edition-of-parallel-programming-and-optimization-with-intel-xeon-phi-coprocessors/>
+    
+-   _Intel® C++ Compiler 19.0 Developer Guide and Reference_  
+    <https://software.intel.com/en-us/cpp-compiler-developer-guide-and-reference>
+
+-   _Intel® Xeon Phi™ x200 Product Family_  
+    <https://ark.intel.com/content/www/us/en/ark/products/series/92650/intel-xeon-phi-x200-product-family.html>
 
 - _Intel Xeon Phi Coprocessor High-Performance Programming, by Jim Jeffers and James Reinders (Elsevier, 2013)_  
 <http://www.lotsofcores.com/>
@@ -110,20 +137,16 @@ ______
 - _Tutorial on MPI - Lawrence Livermore National Laboratory_  
 <https://computing.llnl.gov/tutorials/mpi/>
 
-
 ## Remote access to the testing platform
 
 This document assumes that the testing platforms have been setup and are
-ready to use. We will be tow server.
-The first one is a state-of-the-art server - loaned by
-Intel - with two high-end Intel Xeon processors (each with 18 cores, 2 threads/core)
-and five Intel Xeon Phi coprocessors (each with 60 cores, 4 threads/core), as well
+ready to use. We will use a total of six servers, each with one second-generation
+Intel Xeon Phi processor (68 cores, 4 threads/core), as well
 as several Intel software development tools. To simplify nomenclature,
-we will refer to this server as “the host” (or “the host
-system”), and the Xeon Phi™ coprocessors installed in the host system as
-“mic0”, “mic1”, ..., “mic4”.
+we will refer to each server as “the host” (or “the host
+system”).
 
-Participants should work alone or in pairs on a workstation - preferably
+Participants should work alone on a workstation (desktop PC or laptop) - preferably
 running Linux or Mac - with Internet access. All the exercises are
 command-line based and should be executed on the host system by means of
 a secure shell (SSH) connection. Ideally, the participant workstation
@@ -134,7 +157,7 @@ should be able to open X11 connections with the server.
 Use the following command to log in to the host system.
 
 ```bash
-$ ssh –X SERVER –l traineeN 
+$ ssh –X KNL-SERVER –l traineeN 
 ```
 
 **(N is a number assigned to each participant)**
@@ -174,9 +197,12 @@ After you connect to the remote server, set the environment variables necessary
 for the Intel development tools by running the following command:
 
 ```bash
-[SERVER]$ source /opt/intel/parallel_studio_xe_2017.1.043/psxevars.sh intel64
+[KNL-SERVER]$ source /opt/tools/intel/parallel_studio_xe_2018/psxevars.sh intel64
 ```
 
+```bash
+[KNL-SERVER]$ source /opt/tools/intel/parallel_studio_xe_2018/compilers_and_libraries_2018/linux/mpi/intel64/bin/mpivars.sh
+```
 ______
 
 ### Quick Navigation ###
@@ -240,72 +266,20 @@ In order to compile a C/C++ program with OpenMP pragmas using the Intel
 C++ Compiler the programmer must specify the compiler argument -qopenmp.
 Without this argument, the code will still compile, but all code will be
 executed with only one thread. In order to make certain functions and
-variables of the OpenMP library available, the directive `#include <omp.h>` must be used at the beginning of the code.
+variables of the OpenMP library available, the directive `#include <omp.h>`
+must be used at the beginning of the code.
 
-### 1.3 Overview of Cilk Plus
-
-Cilk Plus is an extension to the C and C++ programming languages,
-designed for multithreaded parallel computing, making it easier to write
-parallel programs that exploit the multiple processors and vector
-instructions available on modern processors[^3]. It is an emerging
-standard currently supported by gcc 4.7 or above and the Intel C++
-Compiler. Its functionality and scope of application are similar to
-those of OpenMP; however, it is distinguished by its focus on minimal
-but sufficient support for parallelism in C and C++. The three main
-keywords in the Cilk Plus standard are `_Cilk_for`, `_Cilk_spawn` and
-`_Cilk_sync`. They allow for the implementation of a variety of parallel
-algorithms. Programming for Intel Xeon Phi coprocessors may also require
-the keywords `_Cilk_shared` and `_Cilk_offload`. Language extensions
-such as array notation, hyperobjects, elemental function and `#pragma simd` are also part of Intel Cilk Plus.
-
-Unlike OpenMP, the Cilk Plus standard guarantees that serialized code
-will produce the same results as parallel code, if the program has a
-deterministic behavior. It is designed to seamlessly integrate
-vectorization and thread-parallelism in applications using this
-framework. The nature of Intel Cilk Plus keywords and semantics
-preserves the serial nature of codes. With this framework, the
-programmer should focus on exposing the parallelism in the application
-rather than optimizing low-level aspects such as thread creation, work
-distribution and data sharing. Cilk Plus uses an efficient scheduling
-algorithm based on “work stealing”, which may be more efficient than
-OpenMP in complex multi-program applications.
-
-Cilk Plus also implements array notation, a method for specifying slices
-of arrays or whole arrays in a simple way, and applying element-wise
-operations to arrays of the same shape. The Intel C++ Compiler
-implements these operations using vector code, mapping data-parallel
-constructs to the SIMD hardware.
-
-OpenMP and Cilk Plus have the same scope of application to parallel
-algorithms and similar functionality. The choice between OpenMP and Cilk
-Plus as the parallelization method may be dictated either by
-convenience, or by performance considerations. It is often easy enough
-to implement the code with both frameworks and compare the performance.
-In general, trivial and highly parallel algorithms should run equally
-well in any of these two parallel frameworks. For complex algorithms
-with nested parallelism and heterogeneous tasks, Cilk Plus generally
-provides good performance, but offers little freedom for fine-tuning; in
-contrast, OpenMP may require more tuning to perform well; however, it
-allows more control over scheduling and work distribution. Additionally,
-Intel OpenMP and Intel Cilk Plus libraries can be used side by side in
-the same code without conflicts. In case of nested parallelism, it is
-preferable to use Cilk Plus parallel regions inside OpenMP parallel
-regions, and not the other way around.
-
-In order to make certain functions of Intel Cilk Plus available, the
-preprocessing directive `#include <cilk/cilk.h>` must be used at
-the beginning of the code.
-
-### 1.4 Hands-on Activities
+### 1.3 Hands-on Activities
 
 **Notes:**  
 
-* The following set of activities is mainly based on exercises extracted from this excellent book: _"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colfax International, 2013, pp. 285-290).  
+* The following set of activities is mainly based on exercises extracted from the book:
+
+_"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colfax International, 2013, pp. 285-290).  
 
 * All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
-**1.4.1** To help you recall how to compile and execute an OpenMP code, have a look at the source code `openmp.c`, located at **SOURCE-DIR**, which prints out the total number of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` for the Xeon processor and for the Xeon coprocessor, using the appropriate flag `-qopenmp` to enable OpenMP. Before running it, set the environment variable `OMP_NUM_THREADS` to a number N between 1 and the maximum number of threads available either on the host or on the coprocessor, using the
-command:
+**1.3.1** To help you recall how to compile and execute an OpenMP code, have a look at the source code `openmp.c`, located at **SOURCE-DIR**, which prints out the total number of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` for the Xeon processor and for the Xeon coprocessor, using the appropriate flag `-qopenmp` to enable OpenMP. Before running it, set the environment variable `OMP_NUM_THREADS` to a number N between 1 and the maximum number of threads available on the host, using the command:
 
 ```bash
 [SERVER]$ export OMP_NUM_THREADS=N 
@@ -313,16 +287,9 @@ command:
 
 **(you need to assign a value to N!)**
 
-Execute the binary code and make sure that you understand how it works. Recompile the source using the -mmic flag, upload the binary to one of
-the coprocessors, connect to it using ssh and run the executable there (do not forget to define `OMP_NUM_THREADS=N` on the Xeon Phi command shell before launching the executable).
+Execute the binary code and make sure that you understand how it works. 
 
-When you connect to any **MIC**, do not forget to export the **LD_LIBRARY_PATH**:
-
-```bash
-export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
-```
-
-Test yourself by answering these trivial questions:
+Test yourself by answering these simple questions:
 
 -   What OpenMP function returns the total number of available threads?
 
@@ -330,14 +297,14 @@ Test yourself by answering these trivial questions:
 
 **1.4.2** Modify the source code `openmp.c` by inserting a parallel for
 loop that prints out the current thread number and the number of
-iteration. Use the directive `#pragma omp for` (**hint:** `#pragma omp parallel` spawns a group of threads, while `#pragma omp for` divides
+iteration. Use the directive `#pragma omp for` (**hint:** `#pragma omp parallel`
+spawns a group of threads, while `#pragma omp for` divides
 loop iterations between the spawned threads; you can do both things at
 once with the fused `#pragma omp parallel for` directive). Save the
 modified source as `openmp_v1.c`, compile and execute the binary on the
 host system, checking the result. Recompile the source using the `-mmic`
 flag, upload the corresponding binary to one of the coprocessors,
 connect to it using ssh and execute it there. 
-
 
 **1.4.3** Have a look at source file `openmp_v2.c`. In this slightly
 modified version, constant variable `nthreads` is initialized with the
@@ -368,8 +335,7 @@ Have a look at the source file `openmp_v4.c`, which uses a parallel for
 loop over the sequence of N = 10000 numbers added together in a shared
 variable sum. Correct value should be equal to `(N−1)*N/2` (note: lower
 and upper boundaries of the loop are, respectively, 0 and N–1). Compile
-the source code using the `-mmic` flag, upload the executable file to one
-of the coprocessors, connect to it using ssh and execute the binary
+the source code using the `-qopenmp` flag and execute the binary
 several times, comparing the results. Why the result is different at
 each execution?
 
@@ -381,125 +347,15 @@ summation problem. It should be noted, however, that only one thread
 will execute the critical region marked with the critical pragma at a
 time. Therefore, the parallel code technically becomes serial, since
 only one thread will be executing it at a time. As always, compile the
-source for the MIC architecture, upload and execute it several times on
-one of the coprocessors, and check the results.
+source code, execute it several times, and check the results.
 
 **1.4.7** `Reduction` is a clause of OpenMP for loop, which indicates
 what operation will be used on what reduction variable. OpenMP will
 automatically take care of avoiding racing conditions and receiving
 correct result. Have a look at example `openmp_v6.c`, which implements
-the proposed solution. Compile it, execute and check the result.
+the proposed solution. Compile the source code, execute it several times,
+and check the results.
 
-**1.4.8** In this exercise you will be introduced to a source code that
-uses Intel Cilk Plus parallelism model. Have a look at source file
-`cilk_v0.cpp`. It prints out the total number of Intel Cilk Plus
-workers available on the system. The keyword `_Cilk_for` is used to
-iterate through the number of available workers and to print out the
-current worker number. Since the workload is very light, all iteration
-should be done by only one worker (this ‘for loop’ gets serialized).
-Therefore, we need to add extra workload to the ‘for loop’ to see Intel
-Cilk Plus parallelism. For this reason, within the ‘for loop’ there is
-an additional ‘while loop’ that multiplies some numbers to the private
-variable. At the end the code prints out the current worker number
-responsible for the previous calculation. Compile `cilk_v0.cpp` using
-either `icc` or `icpc` generating binaries for the host and the
-coprocessors, execute them on the host and analyze the output. Recompile
-the source using the `-mmic` flag, upload the binary to one of the
-coprocessors, connect to it using ssh and run the executable there.
-
-**1.4.9** In the previous exercise we used the `_Cilk_for` loop to to
-iterate through the number of available workers and to print out the
-current worker number. If the workload was significant for each worker,
-than each of them should have been involved in the calculations only
-once. The number of iterations distributed among the workers can be
-controlled by the clause `#pragma cilk grainsize`. In this exercise the
-original code has been modified to grant 4 iteration steps for each
-worker. Have a look at source file `cilk_v1.cpp`, compile it for host
-and coprocessors and execute the binaries on the host and on one of the
-coprocessors, and analyze the outputs.
-
-**1.4.10** Using the keyword `_Cilk_spawn` for asynchronous parallelism
-we can run recursive tasks in parallel. Have a look at source
-`cilk_v2.cpp`, which recursively calls function Recurse(const int task)
-and prints out the number of current worker, doing some calculations
-within the function. Like in the previous exercises, compile (host and
-coprocessor) and execute the binaries on the host and on one of the
-coprocessors, and analyze the outputs.
-
-**1.4.11** Quite often we need synchronization between the parallel
-tasks. Intel Cilk Plus has `_Cilk_sync` keyword for this. In source code
-`cilk_v3.cpp`, a thousand dynamically allocated consecutive integer
-elements of an array are summed up by two parallel (`_Cilk_spawn`)
-function calls named `Sum()`, each operating over one half of the array. A
-synchronization keyword is then used to wait for sums to complete, and
-the final result is printed out. Compile (host and coprocessor) and
-execute the binaries on the host and on one of the coprocessors, and
-analyze the outputs. Modify the code in such a way that the array is
-divided in four parts.
-
-**1.4.12** A more elegant way to organize parallelism is to avoid
-hardwiring the number of parallel tasks and let Intel Cilk Plus take
-care of this automatically. To prevent racing conditions we will use one
-of the Intel Cilk Plus reducers named `reducer_opadd`, a math operator
-that calculates the sum of a set of values. By definition, a reducer is
-a variable that can be safely used by multiple threads running in
-parallel. Intel Cilk Plus ships with a library of reducers you can use
-in your C and C++ code. The `reducer_opadd` is defined as:
-
-```
-cilk::reducer_opadd<int> sum
-```
-
-Have a look at source code cilk_v4.c, which uses reducer `sum` to
-store the result of adding 20 consecutive integers iterated over with
-`_Cilk_for` loop, which is then printed out. Access to the reducer sum
-is done through calls to `sum.set_value(N)` and `sum.get_value()`
-functions. Compile the source code for host and coprocessors, execute
-the binaries on the host and on one of the coprocessors, and analyze the
-corresponding outputs.
-
-### 1.5 Hands-on Activities about Profiling 
-
-The next set of exercises will show how to identify parallel opportunities on the code and perform estimates about performance gains before parallelizing, using a profiler tool called Intel® Advisor XE.
-
-Intel® Advisor XE is a shared memory threading designing and prototyping tool for C, C++, C# and Fortran. This tool supports basic profiling to identify time spent in each line of code and also provides a mechanism to estimate performance gains on sequential code. Such estimate is done using a mechanism called annotation, that is used to mark loops for profiling. Based on such annotations a model is built in order to compare the performance scaling of different threading designs without the cost and disruption of implementation. 
-
-In this set of exercises, you will execute the following steps in order to perform threading prototyping:
-
-- 	Create new advisor project to profile a matrix multiplication application;
-- 	Discover opportunities for parallelization, using “Survey Data” Analysis;
-- 	Include annotations on source code to check scalability;
-- 	Evaluate the performance of annotated loops in different architectures and frameworks, using “Check Suitability” analysis.
-
-**1.5.1** The main part of application that we are going to profile is a basic matrix multiplication serial application: 
-
-```c
-void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
-{ 
-  int i,j,k;
-
-  // Basic serial implementation
-  for(i=0; i<msize; i++) {
-    for(j=0; j<msize; j++) {
-      for(k=0; k<msize; k++) {
-	c[i][j] = c[i][j] + a[i][k] * b[k][j];
-      }
-    }
-  } 
-}
-```
-
-**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
-
-Enter on code directory:
-
-```bash
-[SERVER]$ SOURCE-DIR/matrix/src
-```
-
-In order to compile the application execute: 
-
-```bash
 [SERVER]$ cd SOURCE-DR/matrix/linux
 [SERVER]$ make clean 
 [SERVER]$ make icc
@@ -510,91 +366,6 @@ In order to compile the application execute:
 ```bash
 [SERVER]$ advixe-gui
 ```
-
-**1.5.3** Choose “Create New Project” (Figure 1) and use the following parameters (Figure 2, Figure 3 and Figure 4):
-
-- name: matrix
-- application: `SOURCE-DIR/matrix/linux/matrix.icc`
-- Source Folder: `SOURCE-DIR/matrix/src`
- 
-![infieri02_pic03](img/infieri02_pic03.png)  
-**Figure 1. Create New Project**  
-
-![infieri02_pic04](img/infieri02_pic04.jpg)   
-**Figure 2. Setup Project Name**  
- 
-![infieri02_pic05](img/infieri02_pic05.png)  
-**Figure 3. Setup Application binary and parameters.**  
- 
-![infieri02_pic06](img/infieri02_pic06.png)  
-**Figure 4. Setup Source Directory.**
-
-**1.5.4** Start the Survey target analysis (Figure 5).
-
-![infieri02_pic07](img/infieri02_pic07.png)  
-**Figure 5. Starting Survey Target Analysis.**  
-
-The Survey Target report shows basic profiling information, such as the time spent in each line of the code. This information is useful to identify the parallel opportunities (Figure 6).
- 
-![infieri02_pic08](img/infieri02_pic08.JPG)  
-**Figure 6. Survey Target Report**  
-
-**1.5.5** One application can have more than one loop that presents high computationl cost, so several parallel opportunities can be explored. The profiling of Matrix Multiplication shows that three loops of function multiply0 has high computational cost. In this sense, we will use annotations to mark the loops that presents parallel opportunities to evaluate the potencial performance gains paralelizing those loops.
-
-The annotations have to be included in the following way:
-
-- 	`#include "advisor-annotate.h"`: include header file
-- 	`ANNOTATE_SITE_BEGIN(id)`: before beginning of loop;
-- 	`ANNOTATE_ITERATION_TASK(id)`: first line inside the loop;
-- 	`ANNOTATE_SITE_END()`: after end of loop;
-
-The code below show how to include the annotation directives in the original code:
-
-```c
-void multiply0(int msize, int tidx, int numt, TYPE a[][NUM], TYPE b[][NUM], TYPE c[][NUM], TYPE t[][NUM])
-{ 
-  int i,j,k;
-
-  // Basic serial implementation
-  ANNOTATE_SITE_BEGIN(id1);
-  for(i=0; i<msize; i++) {
-    ANNOTATE_ITERATION_TASK(tid1);
-    ANNOTATE_SITE_BEGIN(id2);
-    for(j=0; j<msize; j++) {
-      ANNOTATE_ITERATION_TASK(tid2);
-      ANNOTATE_SITE_BEGIN(id3);
-      for(k=0; k<msize; k++) {
-	ANNOTATE_ITERATION_TASK(tid3);
-	c[i][j] = c[i][j] + a[i][k] * b[k][j];
-      }
-      ANNOTATE_SITE_END();
-    }
-    ANNOTATE_SITE_END();
-  }
-  ANNOTATE_SITE_END();
-}
-```
-
-After include these lines recompile application:
-
-```bash
-[SERVER]$ cd SOURCE-DIR/matrix/linux
-[SERVER]$ make clean
-[SERVER]$ make icc
-```
-
-Check your annotations on “view annotations” options (Figure 7):
-
-![infieri02_pic09](img/infieri02_pic09.JPG)  
-**Figure 7. An example of annotations included in the code.**
-
-**1.5.6** Start Check Suitability. After it finishes the results shows the scalability of each loop considering several aspects such as, target system and threading model (Figure 8). 
-
-![infieri02_pic10](img/infieri02_pic10.JPG)  
-**Figure 8. An example of suitability report.**  
-
-> What loop presents higher scalability?
-
 ______
 
 ### Quick Navigation ###
@@ -686,42 +457,12 @@ compiler for the host with the usual Intel MPI wrapper:
 [SERVER]$ mpiicc -o test test.c
 ```
 
-Now compile the source file for Intel Xeon Phi coprocessor using the
-`-mmic` compiler flag. Because of this flag the Intel MPI script will
-provide the Intel MPI libraries for Intel Xeon Phi coprocessor to the
-linker (add the verbose flag `-v` to see it):
-
-```bash
-[SERVER]$ mpiicc -mmic -o test.mic test.c
-```
-
-The ".mic" suffix is added to distinguish the coprocessor binary from
-the host one (it could be any suffix). As a starter run the Xeon binary
-with 4 MPI processes alone:
+As a starter run the binary file with 4 MPI processes alone:
 
 ```bash
 [SERVER]$ mpirun -n 4 ./test
 ```
 
-Copy the binary file `test.mic` to the three coprocessors and run the
-Intel MPI test program on each of them in coprocessor-only mode.
-
-**Note:** before launching the command below, we need to set the
-`I_MPI_MIC` environment variable to enable the MPI communication between
-host and coprocessors.  
-Please review exercise [2.2.11 in session 1](https://intel-unesp-mcp.github.io/infieri-2017-basic/#2-2-11){:target="_blank"}.
-
-```bash
-[SERVER]$ mpirun -host mic0 -n 4 ./test.mic
-```
-
-An alternative would be to login onto the coprocessor and run the test
-from there in a straightforward manner. Try it if you like.
-
-Pulling it together: you can run the test code on both the host
-processor and on one of the Xeon Phi coprocessor as one MPI program in
-symmetric mode by defining each argument set independently (with command
-line sections separated by a colon):
 
 ```bash
 [SERVER]$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 ./test.mic
