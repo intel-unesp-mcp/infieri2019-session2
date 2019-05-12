@@ -70,7 +70,7 @@ ______
 
 This course is divided into four parts:
 
-* [Practical Exercises - **Part 1**: Task parallelism using OpenMP and Cilk Plus](#part1)
+* [Practical Exercises - **Part 1**: Task parallelism using OpenMP](#part1)
 * [Practical Exercices - **Part 2**: Intel MPI programming models](#part2)
 * [Practical Exercices - **Part 3**: Using Intel Math Kernel Library (MKL)](#part3)
 * [Practical Exercices - **Part 4**: Optimizing a real-world code example](#part4)
@@ -215,7 +215,7 @@ ______
 
 # Practical Exercises - Part 1
 
-## Task parallelism using OpenMP and Cilk Plus
+## Task parallelism using OpenMP
 
 ### 1.1 Goals
 
