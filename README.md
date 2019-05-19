@@ -1011,15 +1011,23 @@ ______
 
 ### 4.1 Goals ###
 
-This is an optional, more challenging activity. You are invited to follow Part 1 of the N-body simulation
-example developed by Intel® Software Innovator 'Johnny Chan', which describes a step by step code optimization
+This is an optional, more challenging activity. You are invited to follow the N-body simulation
+example developed by Dr. Fabio Baruffa, which describes a step by step code optimization
 journey to boost performance of a toy N-body simulation algorithm on a single KNL server.
+
+Dr. Fabio Baruffa is a software technical consulting engineer in the Developer Products Division (DPD) at Intel. 
+He is working in the compiler team and provides customer support in the high performance computing (HPC) area.
+Prior at Intel, he has been working as HPC application specialist and developer in the largest supercomputing
+centers in Europe, mainly the Leibniz Supercomputing Center and the Max-Plank Computing and Data Facility in Munich,
+as well as Cineca in Italy. He has been involved in software development, analysis of scientific code and optimization
+for HPC systems. He holds a PhD in Physics from University of Regensburg for his research in the area of spintronics
+device and quantum computing.
 
 ### 4.2 Hands-on Activities ###
 
 Please access the link below ,read carefully and try to reproduce the optimization steps described by the author
 of the article. There are some specific topics that we need to adapt to our environment, so pleasse
-refer to the teaching assistant before you start.
+refer to the instructor or a teaching assistant before you start.
 
 <https://mathalope.co.uk/2017/09/07/high-performance-computing-hpc-on-intel-xeon-phi-n-body-simulation-example/>
 
