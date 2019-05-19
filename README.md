@@ -1011,9 +1011,9 @@ ______
 
 ### 4.1 Goals ###
 
-This is an optional, more challenging activity. You are invited to follow the N-body simulation
-example developed by Dr. Fabio Baruffa, which describes a step by step code optimization
-journey to boost performance of a toy N-body simulation algorithm on a single KNL server.
+You are invited to follow the N-body simulation example developed by Dr. Fabio Baruffa, which describes
+a step by step code optimization journey to boost performance of a simple N-body simulation algorithm on
+a single KNL server, using data and task parallelism.
 
 Dr. Fabio Baruffa is a software technical consulting engineer in the Developer Products Division (DPD) at Intel. 
 He is working in the compiler team and provides customer support in the high performance computing (HPC) area.
