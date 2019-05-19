@@ -400,13 +400,29 @@ and performing offload to coprocessors.
 
 ### 2.3 Hands-on Activities
 
+**Notes:**  
+
+* The sequence of exercises 2.3.3 to 2.3.10, have been extracted from a collection of tutorial
+presentations developed by William Gropp and Ewing Lusk from the Mathematics and Computer Science Division
+of the Argonne National Laboratory. William Gropp, Ewing Lusk and two collaborators were the authors of
+an important paper entitled “A high-performance, portable implementation of the MPI message passing
+interface standard”, that described the first full implementation of the MPI standard, known as MPICH.
+The complete set of exercises are available here:
+
+-   _Tutorial material on MPI, by William Gropp and Ewing Lusk_  
+    <https://www.mcs.anl.gov/research/projects/mpi/tutorial/mpiexmpl/>        
+
 **2.3.1** Please review exercises [2.2.5 and 2.2.6 from Session 1](https://intel-unesp-mcp.github.io/infieri2019-session1/#part2{:target="_blank"}. As we have seen, MPI applications must be compiled with special wrapper
 applications – `mpiicc` for C and `mpiicpc` for C++, and the resulting
 executable is launched using the `mpirun` script.
 
-**2.3.2** Intel MPI distribution includes a test directory, which
-contains a simple MPI program coded in C, C++, or Fortran. In directory
-**SOURCE-DIR** you will find a copy of the source file `test.c` from the Intel MPI distribution.
+**2.3.2** Intel MPI distribution includes a test directory, which contains a simple MPI program coded
+in C, C++, or Fortran. In directory **SOURCE-DIR** you will find a copy of the source file `test.c` from
+the Intel MPI distribution. You can also retrieve this file from its original folder:
+
+```bash
+[KNL-SERVER]$ cp /opt/tools/intel/parallel_studio_xe_2018/compilers_and_libraries_2018/linux/mpi/test/test.c .
+```
 
 **Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
@@ -418,12 +434,13 @@ compiler for the host with the usual Intel MPI wrapper:
 [KNL-SERVER]$ mpiicc -o test test.c
 ```
 
-As a starter run the binary file with 4 MPI processes alone:
+Execute the binary file with 4 MPI processes on your server:
 
 ```bash
 [KNL-SERVER]$ mpirun -n 4 ./test
 ```
 
+Now let us execute the same code simultaneously on the other servers.
 
 ```bash
 [KNL-SERVER]$ mpirun -host knl01 -n 4 ./test : -host knl02 -n 4 ./test.mic
