@@ -72,7 +72,7 @@ This course is divided into four parts:
 
 * [Practical Exercises - **Part 1**: Task parallelism using OpenMP](#part1)
 * [Practical Exercices - **Part 2**: Intel MPI programming models](#part2)
-* [Practical Exercices - **Part 3**: Using Intel Math Kernel Library (MKL)](#part3)
+* [Practical Exercices - **Part 3**: Optimizing a real-world code example](#part3)
 * [Practical Exercices - **Part 4**: Optimizing a real-world code example](#part4)
 
 ______
@@ -627,8 +627,6 @@ ______
 <a name="part3"></a>
 
 
-
-
 # Practical Exercises - Part 3
 
 ## Optimizing a real-world code example
@@ -640,12 +638,11 @@ code example that comes from Naoya Maruyama of Riken Advanced Institute
 for Computational Science, in Japan[^5]. The code simulates diffusion of
 a solute through a volume of liquid. We will start with a baseline C
 code and implement successive optimizations on it, aiming to improve
-performance. The sequence of exercises has been extracted from the excellent book
-""
+performance.
 
-**Notes:**  
+**Note:**  
 
-* The following activities (and corresponding source codes) have been extracted from chapter 4 of this outstanding and *highly recommended* book: “*Intel Xeon Phi Coprocessor High-Performance Programming*”, by Jim Jeffers and James Reinders (Elsevier, 2013).  
+* The following activities (and corresponding source codes) have been extracted from chapter 4 of this outstanding book: “*Intel Xeon Phi Coprocessor High-Performance Programming*”, by Jim Jeffers and James Reinders (Elsevier, 2013).  
 
 * All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
