@@ -436,7 +436,7 @@ test application on distinct hosts. To do this we need to copy the executable fi
 ```
 
 ```bash
-[KNL-SERVER]$ mpirun -host knl01 -n 4 ./test : -host knl02 -n 4 ./test : -host knl03 -n 4 ./test : -host knl04 -n 4 ./test : -host knl05 -n 4 ./test : -host knl06 -n 4 ./test
+[KNL-SERVER]$ mpirun -host knl01 -n 4 ~/test : -host knl02 -n 4 ~/test : -host knl03 -n 4 ~/test : -host knl04 -n 4 ~/test : -host knl05 -n 4 ~/test : -host knl06 -n 4 ~/test
 ```
 
 There is an easier way of doing this, by using the parameter `-machinefile`, but we need to create a new file that
@@ -456,12 +456,14 @@ knl06
 Now run again the test application using the following syntax:
 
 ```bash
-[KNL-SERVER]$ mpirun -n 12 -machinefile hosts ./test
+[KNL-SERVER]$ mpirun -n 24 -machinefile hosts ~/test
 ```
+
+Do you see any difference in the output, compared to the previous mpirun execution?
 
 **Note:**  
 
-* The sequence of exercises 2.3.3 to 2.3.10, have been extracted from a collection of tutorial
+* The following eight exercises, from 2.3.3 to 2.3.10, have been extracted from a collection of tutorial
 presentations developed by William Gropp and Ewing Lusk from the Mathematics and Computer Science Division
 of the Argonne National Laboratory. William Gropp, Ewing Lusk and two collaborators were the authors of
 an important paper entitled “A high-performance, portable implementation of the MPI message passing
@@ -474,10 +476,11 @@ The complete set of exercises are available here:
 
 **2.3.3** In this exercise we are going to address a common need in most MPI programs, which is for one
 process to get data from the user, either by reading from the terminal or command line arguments, and then
-to distribute this information to all other processors. Have a look at source code <> , which reads an integer
-value from the terminal and distributes the value to all of the MPI processes. Each process the print out its
+to distribute this information to all other processes. Have a look at source code <> , which reads an integer
+value from the terminal and distributes the value to all of the MPI processes. Each process then prints out its
 rank and the value it received. Values are received until a negative integer is given as input. Compile the source
-file with the Intel compiler using the usual Intel MPI wrapper, execute it and check the results.
+file with the Intel compiler using the usual Intel MPI wrapper (mpiicc), execute it (mpirun) on a few nodes and
+check the results.
 
 **Note:**
 
@@ -487,19 +490,20 @@ output may not appear when we expect it.
 **2.3.4** Now we will analyse a program that takes data from process zero and sends it to all of the
 other processes by sending it as in a ring. That is, process with rank i should receive the data and send it
 to process with rank i+1, until the last process is reached. Process zero reads the data from the user. Have
-a look at source code <>, compile it using the Intel MPI wrapper, execute it and check the results.
+a look at source code <>, compile it using mpiicc, execute it (mpirun) on a few nodes and check the results.
 
-**2.3.5** This exercise presents a simple program to determine the value of pi. The algorithm suggested
-here is chosen for its simplicity. The method evaluates the integral of 4/(1+x*x) between 0 and 1. The
-method is simple: the integral is approximated by a sum of n intervals; the approximation to the integral
-in each interval is (1/n)*4/(1+x*x). The master process (rank 0) asks the user for the number of intervals;
-the master should then broadcast this number to all of the other processes. Each process then adds up every
-n'th interval (x = rank/n, rank/n+size/n,...). Finally, the sums computed by each process are added together
-using a reduction.
+**2.3.5** This exercise presents a simple program to determine the value of pi. The method used evaluates the
+integral of 4/(1+x*x) between 0 and 1. The method is simple: the integral is approximated by a sum of
+n intervals; the approximation to the integral in each interval is (1/n)*4/(1+x*x). The master process
+(rank 0) asks the user for the number of intervals; the master should then broadcast this number to all of
+the other processes. Each process then adds up every n'th interval (x = rank/n, rank/n+size/n,...). Finally,
+the sums computed by each process are added together using a reduction. Have a look at source code <> , compile
+it using mpicc, execute it (mpirun) on a few nodes and check the results.
 
-**2.3.6** In this exercise we are going to test the fairness of the Intel message passing implementation.
-To do this, we are going to have all processes, except process 0, send 100 messages to process 0. Process 0
-will then print out the messages as it receives them, using MPI_ANY_SOURCE and MPI_ANY_TAG in MPI_Recv.
+**2.3.6** In this exercise we are going to have all processes, from 1 to N, send 100 messages to process 0.
+Process 0 will then print out the messages as it receives them, using MPI_ANY_SOURCE and MPI_ANY_TAG in MPI_Recv.
+As usual, Have a look at source code <> , compile it using mpicc, execute it (mpirun) on a few nodes and
+check the results.
 
 **2.3.7** This assignment implements a simple parallel data structure. This structure is a two dimension
 regular mesh of points, divided into slabs, with each slab allocated to a different processor. In the
@@ -547,7 +551,7 @@ while (not converged) {
     xnew[i][j] = (x[i+1][j] + x[i-1][j] + x[i][j+1] + x[i][j-1])/4;
   for (i,j)
     x[i][j] = xnew[i][j];
-  }
+}
 
 will compute an approximation for the solution of Laplace's equation. There is one last detail; this
 replacement of xnew with the average of the values around it is applied only in the interior; the boundary
@@ -562,25 +566,24 @@ are left unchanged. Of course, these refer to the complete mesh; you'll have to 
 for the decomposed data structures (xlocal). Because the values are replaced by averaging around them, these
 techniques are called relaxation methods.
 
-We wish to compute this approximation in parallel. Write a program to apply this approximation. For convergence
-testing, compute
+We wish to compute this approximation in parallel. Have a look at <>, which is a program that computes an
+approximation for the solution of Laplace's equation. For the convergence testing, the program calculates:
 
 diffnorm = 0;
 for (i,j)
     diffnorm += (xnew[i][j] - x[i][j]) * (xnew[i][j] - x[i][j]);
 diffnorm = sqrt(diffnorm);
 
+
+
 **2.3.9** Once a parallel program computes a solution, it it often necessary to write the solution out to disk
-or display it on the user's terminal. This often means collecting the data onto a single processor that handles
-performing the output (since there are few parallel file systems around). This exercise shows one way in which
-this may be performed. Take your Jacobi iteration example and modify it so that the computed solution is collected
-onto process 0, which then writes the solution out (to standard output). You might want to write the results out
-in a form that can be used for display with tools like gnuplot or matlab, but this is not required. You may assume
-that process zero can store the entire solution. Also, assume that each process contributes exactly the same amount
-of data (see the related problems for the general case).
+or display it on the user's terminal. This often means collecting the resultant data onto a single processor that
+handles performing the output. In this exercise we learn one possible way in which this may be performed. We take
+the previous Jacobi iteration example and modify it so that the computed solution is collected onto process 0,
+which then writes the solution to standard output (display).
 
 
-**2.3.10** In this exercise, you will put together parts from the previous exercise to provide a simple linear
+**2.3.10** In this exercise, we put together parts from the previous exercise to provide a simple linear
 equation solver. To make this a complete parallel program, we must handle the issue of input and output. Rather
 than specify the values of the boundary conditions of the distributed array, these values should be read in from
 a file. Assume that the file is in the same format as the output data from the Collecting data exercise.
