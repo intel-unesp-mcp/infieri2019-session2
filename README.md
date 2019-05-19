@@ -221,17 +221,13 @@ ______
 
 In the first part of Session 2 we set focus on multi-threaded
 programming, or task parallelism, using the Intel Open Multi-Processing
-(OpenMP) and Intel Cilk Plus parallel libraries. While POSIX threads[^1]
-- also known as Pthreads - can be used to implement parallelism in
-shared memory multiprocessor architectures, this programming interface
-does not contain HPC-specific features such as workload balancing,
-processor affinity, reducers, etc. Computationally intensive algorithms
-in general perform better when implemented using one of the specialized
-standards for building thread-parallel applications, such as OpenMP or
-Cilk Plus. Moreover, OpenMP and Cilk Plus are a good way of introducing
-parallelism in existing sequential programs, providing the programmer
-with a mostly declarative style of programming where all the
-parallelization is handled at the compiler level.
+(OpenMP). While POSIX threads[^1] - also known as Pthreads - can be used to implement parallelism in
+shared memory multiprocessor architectures, this programming interface does not contain HPC-specific
+features such as workload balancing, processor affinity, reducers, etc. Computationally intensive algorithms
+in general perform better when implemented using one of the specialized standards for building thread-parallel
+applications such as OpenMP. Moreover, OpenMP provides a simple way of introducing parallelism in existing sequential
+programs, providing the programmer with a mostly declarative style of programming where all the parallelization
+is handled at the compiler level.
 
 ### 1.2 Overview of OpenMP
 
@@ -273,7 +269,7 @@ must be used at the beginning of the code.
 
 **Notes:**  
 
-* The following set of activities is mainly based on exercises extracted from the book:
+* The following set of activities are mainly based on exercises extracted from the book:
 
 _"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colfax International, 2013, pp. 285-290).  
 
