@@ -428,10 +428,34 @@ Execute the binary file with 4 MPI processes on your server:
 [KNL-SERVER]$ mpirun -n 4 ./test
 ```
 
-Now let us execute the same code simultaneously on the other servers.
+Now let us execute the same code simultaneously on all six servers. Now we are going to execute the
+test application on distinct hosts. To do this we need to copy the executable file to the other servers:
 
 ```bash
-[KNL-SERVER]$ mpirun -host knl01 -n 4 ./test : -host knl02 -n 4 ./test.mic
+[KNL-SERVER]$ for i in {01..06}; do scp test knl$i:~; done
+```
+
+```bash
+[KNL-SERVER]$ mpirun -host knl01 -n 4 ./test : -host knl02 -n 4 ./test : -host knl03 -n 4 ./test
+: -host knl04 -n 4 ./test : -host knl05 -n 4 ./test : -host knl06 -n 4 ./test
+```
+
+There is an easier way of doing this, by using the parameter `-machinefile`. Create a new file and name it hosts,
+containing the following lines:
+
+```bash
+knl01
+knl02
+knl03
+knl04
+knl05
+knl06
+```
+
+Now run again the test application using the following syntax:
+
+```bash
+[KNL-SERVER]$ mpirun -machinefile ./test
 ```
 
 **Note:**  
@@ -443,8 +467,8 @@ an important paper entitled “A high-performance, portable implementation of th
 interface standard”, that described the first full implementation of the MPI standard, known as MPICH.
 The complete set of exercises are available here:
 
-_Tutorial material on MPI, by William Gropp and Ewing Lusk_  
-<https://www.mcs.anl.gov/research/projects/mpi/tutorial/mpiexmpl/>        
+	_Tutorial material on MPI, by William Gropp and Ewing Lusk_  
+	<https://www.mcs.anl.gov/research/projects/mpi/tutorial/mpiexmpl/>        
 
 
 **2.3.3** In this exercise we are going to address a common need in most MPI programs, which is for one
