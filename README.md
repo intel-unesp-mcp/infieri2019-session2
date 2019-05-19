@@ -400,18 +400,6 @@ and performing offload to coprocessors.
 
 ### 2.3 Hands-on Activities
 
-**Notes:**  
-
-* The sequence of exercises 2.3.3 to 2.3.10, have been extracted from a collection of tutorial
-presentations developed by William Gropp and Ewing Lusk from the Mathematics and Computer Science Division
-of the Argonne National Laboratory. William Gropp, Ewing Lusk and two collaborators were the authors of
-an important paper entitled “A high-performance, portable implementation of the MPI message passing
-interface standard”, that described the first full implementation of the MPI standard, known as MPICH.
-The complete set of exercises are available here:
-
--   _Tutorial material on MPI, by William Gropp and Ewing Lusk_  
-    <https://www.mcs.anl.gov/research/projects/mpi/tutorial/mpiexmpl/>        
-
 **2.3.1** Please review exercises [2.2.5 and 2.2.6 from Session 1](https://intel-unesp-mcp.github.io/infieri2019-session1/#part2{:target="_blank"}. As we have seen, MPI applications must be compiled with special wrapper
 applications – `mpiicc` for C and `mpiicpc` for C++, and the resulting
 executable is launched using the `mpirun` script.
@@ -446,23 +434,35 @@ Now let us execute the same code simultaneously on the other servers.
 [KNL-SERVER]$ mpirun -host knl01 -n 4 ./test : -host knl02 -n 4 ./test.mic
 ```
 
-**2.3.3** A common need is for one process to get data from the user, either by reading from the terminal
-or command line arguments, and then to distribute this information to all other processors. Write a program
-that reads an integer value from the terminal and distributes the value to all of the MPI processes. Each
-process should print out its rank and the value it received. Values should be read until a negative integer
-is given as input.
+**Note:**  
 
-You may find it helpful to include a fflush( stdout ); after the printf calls in your program. Without this,
-output may not appear when you expect it.
+* The sequence of exercises 2.3.3 to 2.3.10, have been extracted from a collection of tutorial
+presentations developed by William Gropp and Ewing Lusk from the Mathematics and Computer Science Division
+of the Argonne National Laboratory. William Gropp, Ewing Lusk and two collaborators were the authors of
+an important paper entitled “A high-performance, portable implementation of the MPI message passing
+interface standard”, that described the first full implementation of the MPI standard, known as MPICH.
+The complete set of exercises are available here:
 
-
-
-**2.3.4** Write a program that takes data from process zero and sends it to all of the other processes
-by sending it in a ring. That is, process i should receive the data and send it to process i+1, until
-the last process is reached. Assume that the data consists of a single integer. Process zero reads the
-data from the user.
+_Tutorial material on MPI, by William Gropp and Ewing Lusk_  
+<https://www.mcs.anl.gov/research/projects/mpi/tutorial/mpiexmpl/>        
 
 
+**2.3.3** In this exercise we are going to address a common need in most MPI programs, which is for one
+process to get data from the user, either by reading from the terminal or command line arguments, and then
+to distribute this information to all other processors. Have a look at source code <> , which reads an integer
+value from the terminal and distributes the value to all of the MPI processes. Each process the print out its
+rank and the value it received. Values are received until a negative integer is given as input. Compile the source
+file with the Intel compiler using the usual Intel MPI wrapper, execute it and check the results.
+
+**Note:**
+
+* The `fflush(stdout)` after the printf calls are commonly used on MPI programs; if we do not insert it,
+output may not appear when we expect it.
+
+**2.3.4** Now we will analyse a program that takes data from process zero and sends it to all of the
+other processes by sending it as in a ring. That is, process with rank i should receive the data and send it
+to process with rank i+1, until the last process is reached. Process zero reads the data from the user. Have
+a look at source code <>, compile it using the Intel MPI wrapper, execute it and check the results.
 
 **2.3.5** This exercise presents a simple program to determine the value of pi. The algorithm suggested
 here is chosen for its simplicity. The method evaluates the integral of 4/(1+x*x) between 0 and 1. The
@@ -472,13 +472,9 @@ the master should then broadcast this number to all of the other processes. Each
 n'th interval (x = rank/n, rank/n+size/n,...). Finally, the sums computed by each process are added together
 using a reduction.
 
-
-
-**2.3.6** Write a program to test how fair the message passing implementation is. To do this, have all
-processes except process 0 send 100 messages to process 0. Have process 0 print out the messages as it
-receives them, using MPI_ANY_SOURCE and MPI_ANY_TAG in MPI_Recv. Is the MPI implementation fair?
-
-
+**2.3.6** In this exercise we are going to test the fairness of the Intel message passing implementation.
+To do this, we are going to have all processes, except process 0, send 100 messages to process 0. Process 0
+will then print out the messages as it receives them, using MPI_ANY_SOURCE and MPI_ANY_TAG in MPI_Recv.
 
 **2.3.7** This assignment implements a simple parallel data structure. This structure is a two dimension
 regular mesh of points, divided into slabs, with each slab allocated to a different processor. In the
