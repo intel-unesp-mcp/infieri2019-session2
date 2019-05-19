@@ -159,13 +159,13 @@ your user directory, in order to do so, you should run the following command in
 the host system console:
 
 ```bash
-$ git clone https://github.com/intel-unesp-mcp/infieri-2017-advanced.git
+[KNL-SERVER]$ git clone https://github.com/intel-unesp-mcp/infieri-2017-advanced.git
 ```
 
 The source files will be available at the `infieri-2017-advanced/src` directory:
 
 ```bash
-$ cd infieri-2017-advanced/src
+[KNL-SERVER]$ cd infieri-2017-advanced/src
 ```
 
 From now on, the full path for these files will be referred as **SOURCE-DIR**.
