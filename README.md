@@ -1006,7 +1006,7 @@ show the result. Use the following command to compile the code to run
 natively on the Intel Xeon Phi coprocessor:
 
 ```bash
-[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
+[SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
 ```
 
 Upload the executable program `diffusion_base` to the coprocessor as
@@ -1056,7 +1056,7 @@ Now, compile and run the code to see what performance you get; use the
 following command:
 
 ```bash
-[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp
+[SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp
 ```
 
 Upload the file to one of the coprocessors, issue and ssh to it and
@@ -1064,12 +1064,11 @@ then, on the coprocessor command prompt, set the number of threads and
 affinity and run the program:
 
 ```bash
-[SERVER-MIC]$ export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
-[SERVER-MIC]$ export OMP_NUM_THREADS=228 
-[SERVER-MIC]$ export KMP_AFFINITY=scatter
-[SERVER-MIC]$ ./diffusion_omp
+[KNL-SERVER]$ export OMP_NUM_THREADS=272 
+[KNL-SERVER]$ export KMP_AFFINITY=scatter
+[KNL-SERVER]$ ./diffusion_omp
 ```
-**Note:** `OMP_NUM_THREADS=228` is the 4x the number of cores.
+**Note:** Remember that `OMP_NUM_THREADS=272` means that we are using four threads per core.
 
 Take note of the output and compare with the result for the baseline
 code shown before.
@@ -1082,28 +1081,27 @@ change of the parameter `OMP_NUM_THREADS`, and take note of the result
 of each execution:
 
 ```bash
-[SERVER-MIC]$ export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
-[SERVER-MIC]$ export OMP_NUM_THREADS=171
+[SERVER-MIC]$ export OMP_NUM_THREADS=204
 [SERVER-MIC]$ ./diffusion_omp
-[SERVER-MIC]$ export OMP_NUM_THREADS=114
+[SERVER-MIC]$ export OMP_NUM_THREADS=136
 [SERVER-MIC]$ ./diffusion_omp
-[SERVER-MIC]$ export OMP_NUM_THREADS=57
+[SERVER-MIC]$ export OMP_NUM_THREADS=68
 [SERVER-MIC]$ ./diffusion_omp
 ```
 
 Compare the outputs and assess which gives the best result. How many
 times the scaled code runs compared to the baseline?
 
-**4.3.4** Our next goal is speed up the code by vectoring it. Look back
+**4.3.4** Our next goal is speed up the code by vectorizing it. Look back
 at the output of the vector report after compilation finishes [(exercise
 4.3.2)](#4-3-2). Now have a look at source file `diffusion_ompvect.c`. The line
-`#pragma simd` requests the compiler to vectorize the loop regardless
+`#pragma omp simd` requests the compiler to vectorize the loop regardless
 of potential dependencies or other potential constraints. That was a
 pretty simple one line change but should provide an extra improvement.
 Compile it using the following command:
 
 ```bash
-[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvec
+[SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvec
 ```
 
 Note that now you should see that the vector report indicates the inner
@@ -1113,27 +1111,25 @@ per core based on the number of cores for the coprocessor on each run as
 indicated below:
 
 ```bash
-[SERVER-MIC]$ export LD_LIBRARY_PATH=/opt/intel/lib/mic:$LD_LIBRARY_PATH
-[SERVER-MIC]$ export KMP_AFFINITY=scatter
-[SERVER-MIC]$ export OMP_NUM_THREADS=228
-[SERVER-MIC]$ ./diffusion_ompvect
+[KNL-SERVER]$ export KMP_AFFINITY=scatter
+[KNL-SERVER]$ export OMP_NUM_THREADS=272
+[KNL-SERVER]$ ./diffusion_ompvect
 ```
 
 As in the previous exercise, set for three, two, and one thread(s) per
 core and run again, and take note of the results:
 
 ```bash
-[SERVER-MIC]$ export OMP_NUM_THREADS=171
+[SERVER-MIC]$ export OMP_NUM_THREADS=204
 [SERVER-MIC]$ ./diffusion_ompvect
-[SERVER-MIC]$ export OMP_NUM_THREADS=114
+[SERVER-MIC]$ export OMP_NUM_THREADS=136
 [SERVER-MIC]$ ./diffusion_ompvect
-[SERVER-MIC]$ export OMP_NUM_THREADS=57
+[SERVER-MIC]$ export OMP_NUM_THREADS=68
 [SERVER-MIC]$ ./diffusion_ompvect
 ```
 
-Compare with previous results. How many times the scaled code runs
-compared to the baseline? We can see the significant impact of
-vectorization.
+Take note of each result and compare with previous results. How many times the scaled code runs
+compared to the baseline? We can see the significant impact of vectorization.
 
 **4.3.5** We have both scaled and vectorized our code, and we have seen
 very significant performance improvement over the baseline. Now we will
@@ -1161,7 +1157,7 @@ contains the code with the modifications. Compile and run it to see if
 we achieved any improvement:
 
 ```bash
-[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel
+[SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel
 ```
 
 Upload the file to one of the coprocessors, set the affinity and number
@@ -1169,7 +1165,7 @@ of threads at the coprocessor prompt iterating through the number of
 threads needed (based on core count) to perform one to four threads per
 core in the same way you have done in the previous two exercises. Take
 note of the results, choose the best one and compare it with the result
-of the previous exercise. Did you get a measurable improvement?
+of the previous exercises. Did you get a measurable improvement?
 
 **4.3.6** In many circumstances, improvements can be found by analyzing
 the data access patterns to take advantage of data locality. We want to
@@ -1221,7 +1217,7 @@ let us compile, upload and run the code on one of the coprocessors. Use
 the following command:
 
 ```bash
-[SERVER]$ icc -qopenmp -mmic -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled
+[KNL-SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled
 ```
 
 Upload the code and go to the processor command prompt, set the affinity
