@@ -626,256 +626,22 @@ ______
 
 <a name="part3"></a>
 
+
+
+
 # Practical Exercises - Part 3
-
-## Using Intel Math Kernel Library (MKL)
-
-### 3.1 Goals
-
-This set of activities aims to familiarize you with the Intel Math
-Kernel Library (MKL). You will learn how to compile a simple program for
-coprocessor only execution, and how to make use of automatic offload and
-compiler-assisted offload.
-
-### 3.2 Overview of Intel MKL
-
-Intel Math Kernel Library (Intel MKL), first introduced to the public in
-2003, is a collection of general-purpose mathematical functions for
-science, engineering, and financial applications. Core functionality
-includes Basic Linear Algebra Subprograms (BLAS), Linear Algebra Package
-(LAPACK), Scalable Linear Algebra Package (ScaLAPACK), sparse solvers,
-Fast Fourier transform, and vector math. The routines in MKL are hand
-optimized by exploiting Intel's multi-/many-core processors. Intel MKL
-has the following functional categories:
-
-- **Linear Algebra**
-
-Intel MKL BLAS provides optimized vector-vector (Level 1), matrix-vector
-(Level 2) and matrix-matrix (Level 3) operations for single and double
-precision real and complex types. Level 1 BLAS routines operate on
-individual vectors, e.g., compute scalar product, norm, or the sum of
-vectors. Level 2 BLAS routines provide matrix-vector products, rank 1
-and 2 updates of a matrix, and triangular system solvers. Level 3 BLAS
-level 3 routines include matrix-matrix products, rank k matrix updates,
-and triangular solvers with multiple right-hand sides. Intel MKL LAPACK
-provides extremely well-tuned LU, Cholesky, and QR factorization and
-driver routines that can be used to solve linear systems of equations.
-Eigenvalue and least-squares solvers are also included, as are the
-latest LAPACK 3.4.1 interfaces and enhancements.
-
-- **Fast Fourier Transforms**
-
-Intel MKL FFTs include many optimizations and should provide significant
-performance gains over other libraries for medium and large transform
-sizes. The library supports a broad variety of FFTs, from single and
-double precision 1D to multi-dimensional, complex-to-complex,
-real-to-complex, and real-to-real transforms of arbitrary length.
-
-- **Vector Math**
-
-Intel MKL provides optimized vector implementations of computationally
-intensive core mathematical operations and functions for single and
-double precision real and complex types. The basic vector arithmetic
-operations include element-by-element summation, subtraction,
-multiplication, division, and conjugation as well as rounding operations
-such as floor, ceil, and round to the nearest integer. Additional
-functions include power, square root, inverse, logarithm, trigonometric,
-hyperbolic, (inverse) error and cumulative normal distribution, and
-pack/unpack. Enhanced capabilities include accuracy, denormalized number
-handling, and error mode controls, allowing users to customize the
-behavior to meet their individual needs.
-
-- **Statistics**
-
-Intel MKL includes random number generators and probability
-distributions that can deliver significant application performance. The
-functions provide the user the ability to pair Random-Number Generators
-such as Mersenne Twister and, Niederreiter with a variety of Probability
-Distributions including Uniform, Gaussian and Exponential. Intel MKL
-also provides computationally intensive core/building blocks for
-statistical analysis both in and out-of-core. This enables users to
-compute basic statistics, estimation of dependencies, data outlier
-detection, and missing value replacements. These features can be used to
-speed-up applications in computational finance, life sciences,
-engineering/simulations, databases, and other areas.
-
-- **Data Fitting**
-
-Intel MKL includes a rich set of splines functions for 1-dimensional
-interpolation. These are useful in a variety of application domains
-including data analytics (e.g. histograms), geometric modeling and
-surface approximation. Splines included are linear, quadratic, cubic,
-look-up, stepwise constant and user-defined.
-
-The library supports Intel and compatible processors and is available
-for Windows, Linux and OS X operating systems. MKL functions are
-optimized with each new processor releases from Intel. MKL can
-automatically make use of the Intel Xeon Phi coprocessors, if they are
-available in the system, by offloading the compute intensive linear
-algebra functions. Many of the functions are also optimized to take
-advantage of the wider vector units (512 bit) available on the MIC
-architecture.
-
-MKL supports computation on Intel Xeon Phi coprocessors in three
-distinct operation modes, which take advantage of both the multi-core
-host system and the many-core Xeon Phi coprocessors:
-
--  Native Execution
-  -  uses an Intel Xeon Phi coprocessor as an independent computer node;
-  -  data is initialized and processed on the coprocessor or communicated via MPI.
--  Automatic Offload (AO)
-  -  no need to modify the code in order to offload calculations to an Intel Xeon Phi coprocessor;
-  -  automatically uses both the host and the Intel Xeon Phi coprocessor;
-  -  the library takes care of data transfer and execution management.
--  Compiler Assisted Offload (CAO)
-  -  programmer maintains explicit control of data transfer and remote execution, using compiler offload pragmas and directives;
-  -  can be used together with Automatic Offload.
-
-In order to compile applications using the Intel MKL with the Intel C++
-Compiler, the command line argument `-mkl` must be specified, and MKL
-header files must be included in the source code in order to declare the
-functions and data types used in the application.
-
-## 3.3 Hands-on Activities
-
-The example used throughout this set of activities[^4] is a dense
-matrix-matrix multiplication (`gemm` with α = 1, and β = 0). The
-following topics are introduced:
-
--  Reuse and share existing code across Intel architectures including the Intel Xeon Phi coprocessor
--  Use the Intel Math Kernel Library (MKL) with the Xeon Phi coprocessor for:
-  -  Automatic offload (hybrid between host and coprocessor)
-  -  Compiler-assisted offload using Language Extensions for Offload (LEO)
-  -  Coprocessor only execution
--  Generate console output that is trigged by offloaded code (`printf`)
--  Offload C/C++ code that calls FORTRAN code
-
-**Notes:**  
- 
-* The majority of the code does not change from activity to activity.  
-
-* All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.  
-
-**3.3.1** Go to directory `SOURCE-DIR/Intel_mkl_mic_lab_C`. Have a
-look at the source code `00_getting_started.cpp` as well as
-`00_gemm_mkl.hpp`. Locate the main function, and follow the anticipated
-flow of the execution into the run function. Understand how
-single-precision and double-precision are mapped to either SGEMM or
-DGEMM calls. We will compile this code by using the supplied Makefile.
-Type `make` to build the default exercise:
-
-```bash
-[SERVER]$ make
-```
-
-Go to directory `bin/intel64`: 
-
-```bash
-[SERVER]$ cd bin/intel64
-```
-
-Run the executable using the value 2000 as the input parameter:
-
-```bash
-[SERVER]$ ./00_getting_started 2000
-```
-
-Let us now run the application with 16 threads and with thread affinity
-optimized for fine grain parallelization. Set the number of threads to
-16 using `OMP_NUM_THREADS` environment variable and pin the threads by
-using the `OpenMP KMP_AFFINITY` environment variable:
-
-```bash
-[SERVER]$ export OMP_NUM_THREADS=16
-[SERVER]$ export KMP_AFFINITY=granularity=fine,compact,1,0
-[SERVER]$ ./00_getting_started 2000
-```
-
-Compare the execution speed with the previous execution.
-
-**Note:** for a refresh on the meaning of `KMP_AFFINITY` review exercise
-[3.2.3 of Session 1 (Basic)](https://intel-unesp-mcp.github.io/infieri-2017-basic/#3-2-3){:target="_blank"}.
-
-**Bonus:** Take notes about the variation of the execution speed with
-the number of threads and with and without affinity settings.
-
-**3.3.2** Go back to directory `SOURCE-DIR/intel_mkl_mic_lab_C` (`cd ../..`) and
-recompile `00_getting_started.cpp` for coprocessor execution, by
-requesting that the entire baseline code target the Intel Xeon Phi
-coprocessor (`flag -mmic`):
-
-```bash
-[SERVER]$ icc -qopenmp -mkl -mmic 00_getting_started.cpp -o 00_getting_started_native
-```
-
-Copy the generated executable to one of the the coprocessors, log in
-onto the corresponding coprocessor and run the executable using the same
-value 2000 as the input parameter.
-
-**3.3.3** Recompile `00_getting_started.cpp` to use automatic offload.
-On the host, open `00_getting_started.cpp` with an editor (e.g. nano,
-vi, emacs) and add the line below near the beginning of the main
-function, before the execution proceeds to SGEMM or DGEMM:
-
-```
-mkl_mic_enable();
-```
-
-Alternatively, you can set the environment variable `MKL_MIC_ENABLE=1`.
-Compile and execute the program on the host:
-
-```bash
-[SERVER]$ icc -qopenmp -mkl 00_getting_started.cpp -o 00_getting_started_offload
-[SERVER]$ ./00getting_started_offload 2000
-```
-
-Now some of the work will automatically be offloaded to the coprocessor.
-
-**3.3.4** Let us now compile file `01_offload.cpp` using the Language
-Extensions for Offload (LEO) to offload the entire `run()` function to
-the coprocessor. Open `01_offload.cpp` with an editor and add a
-`#pragma offload` directive before each call to the `run()` function.
-Specify which data is going into the offload section and which is coming
-out. For example, the line
-
-```
-#pragma offload target(mic) in(a:length(n))
-```
-
-in front of a section or function copies in n elements of array a. Have
-a look at file `01_offload_solution.cpp`, with the implemented
-solution. Compile using the syntax below:
-
-```bash
-[SERVER]$ icpc -qopenmp -mkl 01_offload.cpp -o 01_offload_solution -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lrt -lcilkrts -lifcore -limf -lintlc -restrict -ansi-alias -O3
-```
-
-Now execute the program. The Intel compiler does not require an option
-in order to enable compiler-assisted offload. LEO can be disabled even
-when an offload directive/pragma is found, using `-no-offload`.
-
-______
-
-### Quick Navigation ###
-
-[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
-
-______
-
-<a name="part4"></a>
-
-# Practical Exercises - Part 4
 
 ## Optimizing a real-world code example
 
-### 4.1 Goals
+### 3.1 Goals
 
 In this final set of activities we will make use of a real scientific
 code example that comes from Naoya Maruyama of Riken Advanced Institute
 for Computational Science, in Japan[^5]. The code simulates diffusion of
 a solute through a volume of liquid. We will start with a baseline C
 code and implement successive optimizations on it, aiming to improve
-performance.
+performance. The sequence of exercises has been extracted from the excellent book
+""
 
 **Notes:**  
 
@@ -883,7 +649,7 @@ performance.
 
 * All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
-### 4.2 Overview of the diffusion simulation algorithm
+### 3.2 Overview of the diffusion simulation algorithm
 
 The purpose of the code is to simulate the diffusion of a solute through
 a volume of liquid over time within a 3D fluid container, such as a
@@ -975,9 +741,9 @@ value to get a reasonable approximation of the diffusion at that point.
 Now, we have reached the first important stage of implementing a
 real-world algorithm; it will provide the correct results when run.
 
-### 4.3 Hands-on Activities
+### 3.3 Hands-on Activities
 
-**4.3.1** Take a careful look at the complete code listing,
+**3.3.1** Take a careful look at the complete code listing,
 `diffusion_base.c`, that can be found at
 **SOURCE-DIR**. The function
 `diffusion_baseline()` implements the key computational processing.
@@ -1034,7 +800,7 @@ code across the many cores of the coprocessor.
 
 <a name="4-3-2"></a>
 
-**4.3.2** To start off, we will look at scaling the code using OpenMP.
+**3.3.2** To start off, we will look at scaling the code using OpenMP.
 Source file `diffusion_omp.c` is an updated version of the code that
 adds OpenMP directives to distribute and scale the work across the
 available cores and threads. The key OpenMP clause is the `#pragma omp for collapse(2)` before the z loop, which tells the compiler to collapse
@@ -1073,7 +839,7 @@ affinity and run the program:
 Take note of the output and compare with the result for the baseline
 code shown before.
 
-**4.3.3** Now we can experiment with the number of threads per core to
+**3.3.3** Now we can experiment with the number of threads per core to
 ensure that we consider balancing the access to resources to avoid
 conflicts and resource saturation, particularly with respect to memory.
 Set for three, two, and one thread(s) per core and run again for each
@@ -1092,7 +858,7 @@ of each execution:
 Compare the outputs and assess which gives the best result. How many
 times the scaled code runs compared to the baseline?
 
-**4.3.4** Our next goal is speed up the code by vectorizing it. Look back
+**3.3.4** Our next goal is speed up the code by vectorizing it. Look back
 at the output of the vector report after compilation finishes [(exercise
 4.3.2)](#4-3-2). Now have a look at source file `diffusion_ompvect.c`. The line
 `#pragma omp simd` requests the compiler to vectorize the loop regardless
@@ -1131,7 +897,7 @@ core and run again, and take note of the results:
 Take note of each result and compare with previous results. How many times the scaled code runs
 compared to the baseline? We can see the significant impact of vectorization.
 
-**4.3.5** We have both scaled and vectorized our code, and we have seen
+**3.3.5** We have both scaled and vectorized our code, and we have seen
 very significant performance improvement over the baseline. Now we will
 start looking towards finer-grained tuning to see if we can gain a bit
 more performance. The idea is to remove unneeded code from the inner
@@ -1167,7 +933,7 @@ core in the same way you have done in the previous two exercises. Take
 note of the results, choose the best one and compare it with the result
 of the previous exercises. Did you get a measurable improvement?
 
-**4.3.6** In many circumstances, improvements can be found by analyzing
+**3.3.6** In many circumstances, improvements can be found by analyzing
 the data access patterns to take advantage of data locality. We want to
 create a more optimal pattern of data reuse within our innermost loops
 to maintain data in the L1 and L2 caches for much faster access. Stencil
@@ -1228,6 +994,22 @@ compare it with the result of the previous exercise. Did you get a
 measurable improvement? Now compare this result with the original
 single-threaded baseline. How many times faster does this tuned code run
 compared to the baseline code?
+
+
+
+______
+
+### Quick Navigation ###
+
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
+
+______
+
+<a name="part4"></a>
+
+
+
+
 
 
 ______
