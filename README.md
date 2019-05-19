@@ -275,7 +275,7 @@ _"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colf
 
 * All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
-**1.3.1** To help you recall how to compile and execute an OpenMP code, have a look at the source code `openmp.c`, located at **SOURCE-DIR**, which prints out the total number of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` for the Xeon processor and for the Xeon coprocessor, using the appropriate flag `-qopenmp` to enable OpenMP. Before running it, set the environment variable `OMP_NUM_THREADS` to a number N between 1 and the maximum number of threads available on the host, using the command:
+**1.3.1** To help you recall how to compile and execute an OpenMP code, have a look at the source code `openmp.c`, located at **SOURCE-DIR**, which prints out the total number of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` and do not forget the appropriate flag `-qopenmp` to enable OpenMP. Before running it, set the environment variable `OMP_NUM_THREADS` to a number N between 1 and the maximum number of threads available on the host, using the command:
 
 ```bash
 [SERVER]$ export OMP_NUM_THREADS=N 
@@ -298,9 +298,7 @@ spawns a group of threads, while `#pragma omp for` divides
 loop iterations between the spawned threads; you can do both things at
 once with the fused `#pragma omp parallel for` directive). Save the
 modified source as `openmp_v1.c`, compile and execute the binary on the
-host system, checking the result. Recompile the source using the `-mmic`
-flag, upload the corresponding binary to one of the coprocessors,
-connect to it using ssh and execute it there. 
+host system, checking the result.
 
 **1.4.3** Have a look at source file `openmp_v2.c`. In this slightly
 modified version, constant variable `nthreads` is initialized with the
@@ -310,18 +308,14 @@ independent for each parallel region. Any variable declared inside the
 parallel region is private to each thread, and any variable declared
 before the parallel region is available (`shared`) for every thread.
 Compile and execute the code on the host system, and check the result.
-Recompile the source using the `-mmic` flag, upload the binary to one of
-the coprocessors, connect to it using ssh and execute there.
 
 **1.4.4** Control over the variables scope can also be done with OpenMP
 parallel clauses `private`, `shared`, and `firstprivate`. Have a look at the
 source file `openmp_v3.c`, which uses these three variables. Check what
 values will be assigned to them within the parallel region and how they
 will react to the modifications of their values. Then compile the source
-and execute on the host system, and check if your assumptions were
-correct. Recompile using the `-mmic` flag, upload the object to one of the
-coprocessors, connect to it using ssh and execute there a few times.
-Notice that the value of `varShared` is different at each execution; in
+and execute it several times on the host system, and check if your assumptions were
+correct. Notice that the value of `varShared` is different at each execution; in
 fact, its value is unpredictable. Why does this happen?
 
 **1.4.5** A common mistake when implementing parallel algorithms is
@@ -337,10 +331,10 @@ each execution?
 
 **1.4.6** There are several ways to fix racing conditions in OpenMP
 parallel codes. One of them is applying `#pragma omp critical` to the
-region where the racing conditions occur. Take a look at file
+region where the racing conditions occur. Have a look at file
 `openmp_v5.c`, which is an example that uses this solution to fix the
 summation problem. It should be noted, however, that only one thread
-will execute the critical region marked with the critical pragma at a
+will execute the critical region marked with the critical 'pragma' at a
 time. Therefore, the parallel code technically becomes serial, since
 only one thread will be executing it at a time. As always, compile the
 source code, execute it several times, and check the results.
@@ -351,13 +345,6 @@ automatically take care of avoiding racing conditions and receiving
 correct result. Have a look at example `openmp_v6.c`, which implements
 the proposed solution. Compile the source code, execute it several times,
 and check the results.
-
-[SERVER]$ cd SOURCE-DR/matrix/linux
-[SERVER]$ make clean 
-[SERVER]$ make icc
-```
-
-**1.5.2** Execute Intel Advisor on terminal: 
 
 ```bash
 [SERVER]$ advixe-gui
