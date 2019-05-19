@@ -436,12 +436,11 @@ test application on distinct hosts. To do this we need to copy the executable fi
 ```
 
 ```bash
-[KNL-SERVER]$ mpirun -host knl01 -n 4 ./test : -host knl02 -n 4 ./test : -host knl03 -n 4 ./test
-: -host knl04 -n 4 ./test : -host knl05 -n 4 ./test : -host knl06 -n 4 ./test
+[KNL-SERVER]$ mpirun -host knl01 -n 4 ./test : -host knl02 -n 4 ./test : -host knl03 -n 4 ./test : -host knl04 -n 4 ./test : -host knl05 -n 4 ./test : -host knl06 -n 4 ./test
 ```
 
 There is an easier way of doing this, by using the parameter `-machinefile`, but we need to create a new file that
-will inform the available hosts. Let us name it `hosts`:
+will inform the available hosts. Create this file and name it `hosts`, using the sequence of commands below:
 
 ```bash
 [KNL-SERVER]$ cat > hosts
@@ -451,13 +450,13 @@ knl03
 knl04
 knl05
 knl06
-[hit Ctrl+D]
+[hit Ctrl+D to save and exit]
 ```
 
 Now run again the test application using the following syntax:
 
 ```bash
-[KNL-SERVER]$ mpirun -machinefile hosts ./test
+[KNL-SERVER]$ mpirun -n 12 -machinefile hosts ./test
 ```
 
 **Note:**  
