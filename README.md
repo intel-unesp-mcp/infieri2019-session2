@@ -463,7 +463,7 @@ Do you see any difference in the output, compared to the previous mpirun executi
 
 **Note:**  
 
-* The following eight exercises, from 2.3.3 to 2.3.10, have been extracted from a collection of tutorial
+* The following four exercises, from 2.3.3 to 2.3.6, have been extracted from a collection of tutorial
 presentations developed by William Gropp and Ewing Lusk from the Mathematics and Computer Science Division
 of the Argonne National Laboratory. William Gropp, Ewing Lusk and two collaborators were the authors of
 an important paper entitled “A high-performance, portable implementation of the MPI message passing
@@ -476,7 +476,7 @@ The complete set of exercises are available here:
 
 **2.3.3** In this exercise we are going to address a common need in most MPI programs, which is for one
 process to get data from the user, either by reading from the terminal or command line arguments, and then
-to distribute this information to all other processes. Have a look at source code <> , which reads an integer
+to distribute this information to all other processes. Have a look at source code `mpi_ex01.c`, which reads an integer
 value from the terminal and distributes the value to all of the MPI processes. Each process then prints out its
 rank and the value it received. Values are received until a negative integer is given as input. Compile the source
 file with the Intel compiler using the usual Intel MPI wrapper (mpiicc), execute it (mpirun) on a few nodes and
@@ -490,117 +490,22 @@ output may not appear when we expect it.
 **2.3.4** Now we will analyse a program that takes data from process zero and sends it to all of the
 other processes by sending it as in a ring. That is, process with rank i should receive the data and send it
 to process with rank i+1, until the last process is reached. Process zero reads the data from the user. Have
-a look at source code <>, compile it using mpiicc, execute it (mpirun) on a few nodes and check the results.
+a look at source code `mpi_ex02.c`, compile it using mpiicc, execute it (mpirun) on a few nodes and check the results.
 
 **2.3.5** This exercise presents a simple program to determine the value of pi. The method used evaluates the
 integral of 4/(1+x*x) between 0 and 1. The method is simple: the integral is approximated by a sum of
 n intervals; the approximation to the integral in each interval is (1/n)*4/(1+x*x). The master process
 (rank 0) asks the user for the number of intervals; the master should then broadcast this number to all of
 the other processes. Each process then adds up every n'th interval (x = rank/n, rank/n+size/n,...). Finally,
-the sums computed by each process are added together using a reduction. Have a look at source code <> , compile
-it using mpicc, execute it (mpirun) on a few nodes and check the results.
+the sums computed by each process are added together using a reduction. Have a look at source code `mpi_ex03.c`,
+compile it using mpicc, execute it (mpirun) on a few nodes and check the results.
 
 **2.3.6** In this exercise we are going to have all processes, from 1 to N, send 100 messages to process 0.
 Process 0 will then print out the messages as it receives them, using MPI_ANY_SOURCE and MPI_ANY_TAG in MPI_Recv.
-As usual, Have a look at source code <> , compile it using mpicc, execute it (mpirun) on a few nodes and
+As usual, Have a look at source code `mpi_ex_04.c`, compile it using mpicc, execute it (mpirun) on a few nodes and
 check the results.
 
-**2.3.7** This assignment implements a simple parallel data structure. This structure is a two dimension
-regular mesh of points, divided into slabs, with each slab allocated to a different processor. In the
-simplest C form, the full data structure is
-
-	double x[maxn][maxn];
-
-and we want to arrange it so that each processor has a local piece:
-
-double xlocal[maxn][maxn/size];
-
-where size is the size of the communicator (e.g., the number of processors).
-If that was all that there was to it, there wouldn't be anything to do. However, for the computation that
-we're going to perform on this data structure, we'll need the adjacent values. That is, to compute
-a new x[i][j], we will need
-
-x[i][j+1]
-x[i][j-1]
-x[i+1][j]
-x[i-1][j]
-
-The last two of these could be a problem if they are not in xlocal but are instead on the adjacent processors.
-To handle this difficulty, we define ghost points that we will contain the values of these adjacent points.
-Write code to copy divide the array x into equal-sized strips and to copy the adjacent edges to the neighboring
-processors. Assume that x is maxn by maxn, and that maxn is evenly divided by the number of processors. For
-simplicity, You may assume a fixed size array and a fixed (or minimum) number of processors.
-
-To test the routine, have each processor fill its section with the rank of the process, and the ghostpoints
-with -1. After the exchange takes place, test to make sure that the ghostpoints have the proper value.
-Assume that the domain is not periodic; that is, the top process (rank = size - 1) only sends and receives
-data from the one under it (rank = size - 2) and the bottom process (rank = 0) only sends and receives data
-from the one above it (rank = 1). Consider a maxn of 12 and use 4 processors to start with.
-
-
-
-**2.3.8** In this example, you will put together some of the previous examples to implement a simple Jacobi
-iteration for approximating the solution to a linear system of equations.
-In this example, we solve the Laplace equation in two dimensions with finite differences. This may sound involved,
-but really amount only to a simple computation, combined with the previous example of a parallel mesh data structure.
-
-Any numerical analysis text will show that iterating
-
-while (not converged) {
-  for (i,j)
-    xnew[i][j] = (x[i+1][j] + x[i-1][j] + x[i][j+1] + x[i][j-1])/4;
-  for (i,j)
-    x[i][j] = xnew[i][j];
-}
-
-will compute an approximation for the solution of Laplace's equation. There is one last detail; this
-replacement of xnew with the average of the values around it is applied only in the interior; the boundary
-values are left fixed. In practice, this means that if the mesh is n by n, then the values
-
-x[0][j]
-x[n-1][j]
-x[i][0]
-x[i][n-1]
-
-are left unchanged. Of course, these refer to the complete mesh; you'll have to figure out what to do with
-for the decomposed data structures (xlocal). Because the values are replaced by averaging around them, these
-techniques are called relaxation methods.
-
-We wish to compute this approximation in parallel. Have a look at <>, which is a program that computes an
-approximation for the solution of Laplace's equation. For the convergence testing, the program calculates:
-
-diffnorm = 0;
-for (i,j)
-    diffnorm += (xnew[i][j] - x[i][j]) * (xnew[i][j] - x[i][j]);
-diffnorm = sqrt(diffnorm);
-
-
-
-**2.3.9** Once a parallel program computes a solution, it it often necessary to write the solution out to disk
-or display it on the user's terminal. This often means collecting the resultant data onto a single processor that
-handles performing the output. In this exercise we learn one possible way in which this may be performed. We take
-the previous Jacobi iteration example and modify it so that the computed solution is collected onto process 0,
-which then writes the solution to standard output (display).
-
-
-**2.3.10** In this exercise, we put together parts from the previous exercise to provide a simple linear
-equation solver. To make this a complete parallel program, we must handle the issue of input and output. Rather
-than specify the values of the boundary conditions of the distributed array, these values should be read in from
-a file. Assume that the file is in the same format as the output data from the Collecting data exercise.
-
-Have process zero read this data and send it to the other processes. A Sample data file is available.
-
-Use the Jacobi linear solver from the previous examples, as well as the data output from the "Collecting data"
-example.
-
-Once your solution is working, consider enhancing it by
-
-Using topologies to find the neighbors
-Using some of the alternative strategies from A Parallel Data Structure
-Allowing each processor to have a different number of rows of the mesh
-
-
-**2.3.11** As a preparation for the next exercises on hybrid programming,
+**2.3.7** As a preparation for the next exercises on hybrid programming,
 the mapping/pinning of Intel MPI processes will be investigated step by
 step. Set the environment variable `I_MPI_DEBUG` equal or larger than 4
 to see the mapping information:
@@ -621,8 +526,7 @@ rank number in front of each output line:
 
 ```bash
 [SERVER]$ mpirun -prepend-rank -n 4 ./test
-[SERVER]$ mpirun -prepend-rank -host mic0 -n 4 ./test.mic
-[SERVER]$ mpirun -prepend-rank -host localhost -n 4 ./test : -host mic0 -n 8 ./test.mic
+[SERVER]$ mpirun -prepend-rank -host localhost -n 4 ./test : -host knl02 -n 8 ./test.mic
 ```
 
 Sorting of the output can be beneficial for the mapping analysis,
@@ -646,7 +550,7 @@ Experiment with pure Intel MPI mapping by setting
 `I_MPI_PIN_PROCESSOR_LIST` if you like. (See the Intel MPI reference
 manual for details).
 
-**2.3.12** Now we are going to run a hybrid MPI/OpenMP program on the
+**2.3.8** Now we are going to run a hybrid MPI/OpenMP program on the
 Intel Xeon Phi processor. Have a look at the source code
 `test_openmp.c`, in which a simple printout from the OpenMP threads was
 added to the previous Intel MPI test code. You can compare the
