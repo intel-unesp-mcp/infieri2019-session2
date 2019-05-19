@@ -73,7 +73,7 @@ This course is divided into four parts:
 * [Practical Exercises - **Part 1**: Task parallelism using OpenMP](#part1)
 * [Practical Exercices - **Part 2**: Intel MPI programming models](#part2)
 * [Practical Exercices - **Part 3**: Optimizing a real-world code example](#part3)
-* [Practical Exercices - **Part 4**: Optimizing a real-world code example](#part4)
+* [Practical Exercices - **Part 4**: Running a basic N-body simulation](#part4)
 
 ______
 
@@ -188,7 +188,7 @@ ______
 
 ### Quick Navigation ###
 
-[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Optimizing a real-world code example") | [Part 4](#part4 "Running a basic N-body simulation") | [Bottom](#bottom "Bottom of the page")
 
 ______
 
@@ -331,7 +331,7 @@ ______
 
 ### Quick Navigation ###
 
-[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Optimizing a real-world code example") | [Part 4](#part4 "Running a basic N-body simulation") | [Bottom](#bottom "Bottom of the page")
 
 ______
 
@@ -619,7 +619,7 @@ ______
 
 ### Quick Navigation ###
 
-[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Optimizing a real-world code example") | [Part 4](#part4 "Running a basic N-body simulation") | [Bottom](#bottom "Bottom of the page")
 
 ______
 
@@ -800,7 +800,8 @@ code across the many cores of the coprocessor.
 **3.3.2** To start off, we will look at scaling the code using OpenMP.
 Source file `diffusion_omp.c` is an updated version of the code that
 adds OpenMP directives to distribute and scale the work across the
-available cores and threads. The key OpenMP clause is the `#pragma omp for collapse(2)` before the z loop, which tells the compiler to collapse
+available cores and threads. The key OpenMP clause is the `#pragma omp for collapse(2)` before
+the z loop, which tells the compiler to collapse
 the next two loops (z and y) into one loop and then apply the OpenMP
 `omp for` work division mechanism to split the loop calculations among
 the current available threads. Conceptually, the for loop changes to a
@@ -993,27 +994,41 @@ single-threaded baseline. How many times faster does this tuned code run
 compared to the baseline code?
 
 
-
 ______
 
 ### Quick Navigation ###
 
-[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Optimizing a real-world code example") | [Part 4](#part4 "Running a basic N-body simulation") | [Bottom](#bottom "Bottom of the page")
 
 ______
 
 <a name="part4"></a>
 
 
+# Practical Exercises - Part 4 #
 
+## Running a basic N-body simulation ##
 
+### 4.1 Goals ###
+
+This is an optional, more challenging activity. You are invited to follow Part 1 of the N-body simulation
+example developed by Intel® Software Innovator 'Johnny Chan', which describes a step by step code optimization
+journey to boost performance of a toy N-body simulation algorithm on a single KNL server.
+
+### 4.2 Hands-on Activities ###
+
+Please access the link below ,read carefully and try to reproduce the optimization steps described by the author
+of the article. There are some specific topics that we need to adapt to our environment, so pleasse
+refer to the teaching assistant before you start.
+
+<https://mathalope.co.uk/2017/09/07/high-performance-computing-hpc-on-intel-xeon-phi-n-body-simulation-example/>
 
 
 ______
 
 ### Quick Navigation ###
 
-[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Using Intel Math Kernel Library (MKL)") | [Part 4](#part4 "Optimizing a real-world code example") | [Bottom](#bottom "Bottom of the page")
+[Top](#top "Top of the page") | [Part 1](#part1 "Task parallelism using OpenMP and Cilk Plus") | [Part 2](#part2 "Intel MPI programming models") | [Part 3](#part3 "Optimizing a real-world code example") | [Part 4](#part4 "Running a basic N-body simulation") | [Bottom](#bottom "Bottom of the page")
 
 ______
 
