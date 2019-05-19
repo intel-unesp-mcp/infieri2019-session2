@@ -403,7 +403,7 @@ and performing offload to coprocessors.
 
 ### 2.3 Hands-on Activities
 
-**2.3.1** Please review exercises [2.2.9 to 2.2.11 from Session 1](https://intel-unesp-mcp.github.io/infieri-2017-basic/#2-2-9){:target="_blank"}. As we have seen, MPI applications must be compiled with special wrapper
+**2.3.1** Please review exercises [2.2.5 and 2.2.6 from Session 1] (https://intel-unesp-mcp.github.io/infieri2019-session1/#2-2-9){:target="_blank"}. As we have seen, MPI applications must be compiled with special wrapper
 applications – `mpiicc` for C and `mpiicpc` for C++, and the resulting
 executable is launched using the `mpirun` script.
 
