@@ -1025,11 +1025,25 @@ device and quantum computing.
 
 ### 4.2 Hands-on Activities ###
 
-Please access the link below ,read carefully and try to reproduce the optimization steps described by the author
-of the article. There are some specific topics that we need to adapt to our environment, so pleasse
-refer to the instructor or a teaching assistant before you start.
+Please access the link below, read it carefully and try to reproduce the optimization steps described by the author
+of the article, which describes an example code based on a simple N-body simulation written in C++. There are
+varios specific topics that we need to adapt to our environment, so pleasse refer to the instructor or a teaching
+assistant before you start or anytime you find a difficulty.
 
-<https://mathalope.co.uk/2017/09/07/high-performance-computing-hpc-on-intel-xeon-phi-n-body-simulation-example/>
+<https://github.com/fbaru-dev/nbody-demo>
+
+To obtain the source files, you have to perform a copy (clone) of the remote repository to
+your user directory, by running the following command in the host system console:
+
+```bash
+[KNL-SERVER]$ git clone https://github.com/fbaru-dev/nbody-demo.git
+```
+
+The source files will be available at the `nbody-demo` directory:
+
+```bash
+[KNL-SERVER]$ cd infieri-2017-advanced/src
+```
 
 
 ______
