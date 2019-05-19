@@ -95,10 +95,10 @@ ______
     <https://software.intel.com/en-us/videos/knights-landing-an-overview-for-developers/>
     
 -   _Best Practice Guide - Knights Landing (2017)_  
-    http://www.prace-ri.eu/IMG/pdf/Best-Practice-Guide-Knights-Landing.pdf/>    
+    <http://www.prace-ri.eu/IMG/pdf/Best-Practice-Guide-Knights-Landing.pdf/>    
     
 -   _Get Ready for Intel’s Knights Landing (KNL) – 3 papers: AVX-512, Clustering Modes, MCDRAM_  
-    https://colfaxresearch.com/get-ready-for-intel-knights-landing-3-papers/>        
+    <https://colfaxresearch.com/get-ready-for-intel-knights-landing-3-papers/>        
     
 -   _Parallel Programming and Optimization with Intel® Xeon Phi™ Coprocessors, 2nd Edition (Colfax, 2015)_  
     <https://colfaxresearch.com/second-edition-of-parallel-programming-and-optimization-with-intel-xeon-phi-coprocessors/>
@@ -109,33 +109,11 @@ ______
 -   _Intel® Xeon Phi™ x200 Product Family_  
     <https://ark.intel.com/content/www/us/en/ark/products/series/92650/intel-xeon-phi-x200-product-family.html>
 
-- _Intel Xeon Phi Coprocessor High-Performance Programming, by Jim Jeffers and James Reinders (Elsevier, 2013)_  
-<http://www.lotsofcores.com/>
+-   _Tutorial on OpenMP - Lawrence Livermore National Laboratory_  
+    <https://computing.llnl.gov/tutorials/openMP/>
 
-- _Intel Xeon Phi Coprocessor Architecture and Tools, by Rezaur Rahman (Apress, 2013)_  
-<http://www.apress.com/9781430259268>
-
-- _Parallel Programming and Optimization with Intel Xeon Phi
-    Coprocessors, 2nd Edition (Colfax, 2015)_
-<http://www.colfax-intl.com/nd/xeonphi/book.aspx>
-
-- _An Overview of Programming for Intel Xeon processors and Intel Xeon Phi coprocessors_  
-<http://software.intel.com/sites/default/files/article/330164/an-overview-of-programming-for-intel-xeon-processors-and-intel-xeon-phi-coprocessors.pdf>
-
-- _Intel Xeon Phi Coprocessor Developer´s Quick Start Guide_  
-<http://software.intel.com/sites/default/files/article/335818/intel-xeon-phi-coprocessor-quick-start-developers-guide.pdf>
-
-- _Intel Xeon Phi Coprocessor: System Software Developers Guide_  
-<http://www.intel.com/content/www/us/en/processors/xeon/xeon-phi-coprocessor-system-software-developers-guide.html>
-
-- _Intel C++ Compiler XE 13.1 User and Reference Guide (Linux OS)_  
-<http://software.intel.com/sites/products/documentation/doclib/stdxe/2013/composerxe/compiler/cpp-lin/>
-
-- _Tutorial on OpenMP - Lawrence Livermore National Laboratory_  
-<https://computing.llnl.gov/tutorials/openMP/>
-
-- _Tutorial on MPI - Lawrence Livermore National Laboratory_  
-<https://computing.llnl.gov/tutorials/mpi/>
+-   _Tutorial on MPI - Lawrence Livermore National Laboratory_  
+    <https://computing.llnl.gov/tutorials/mpi/>
 
 ## Remote access to the testing platform
 
@@ -143,8 +121,7 @@ This document assumes that the testing platforms have been setup and are
 ready to use. We will use a total of six servers, each with one second-generation
 Intel Xeon Phi processor (68 cores, 4 threads/core), as well
 as several Intel software development tools. To simplify nomenclature,
-we will refer to each server as “the host” (or “the host
-system”).
+we will refer to each server as “the host” (or “the host system”).
 
 Participants should work alone on a workstation (desktop PC or laptop) - preferably
 running Linux or Mac - with Internet access. All the exercises are
@@ -448,11 +425,8 @@ As a starter run the binary file with 4 MPI processes alone:
 
 
 ```bash
-[SERVER]$ mpirun -host localhost -n 4 ./test : -host mic0 -n 8 ./test.mic
+[SERVER]$ mpirun -host knl01 -n 4 ./test : -host knl02 -n 4 ./test.mic
 ```
-
-Notice that in the symmetric mode you must provide the `-host` flag for
-the MPI processes running on the Xeon host!
 
 **2.3.3** As a preparation for the next exercises on hybrid programming,
 the mapping/pinning of Intel MPI processes will be investigated step by
