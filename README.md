@@ -501,7 +501,7 @@ compile it using mpicc, execute it (mpirun) on a few nodes and check the results
 
 **2.3.6** In this exercise we are going to have all processes, from 1 to N, send 100 messages to process 0.
 Process 0 will then print out the messages as it receives them, using MPI_ANY_SOURCE and MPI_ANY_TAG in MPI_Recv.
-As usual, Have a look at source code `mpi_ex_04.c`, compile it using mpicc, execute it (mpirun) on a few nodes and
+As usual, Have a look at source code `mpi_ex04.c`, compile it using mpicc, execute it (mpirun) on a few nodes and
 check the results.
 
 **2.3.7** Now we are going to run a hybrid MPI/OpenMP program on the Intel Xeon Phi processor. Have a look at
