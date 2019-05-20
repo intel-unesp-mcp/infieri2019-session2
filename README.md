@@ -259,7 +259,7 @@ _"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colf
 **1.3.1** To help you recall how to compile and execute an OpenMP code, have a look at the source code `openmp.c`, located at **SOURCE-DIR**, which prints out the total number of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` and do not forget the appropriate flag `-qopenmp` to enable OpenMP. Before running it, set the environment variable `OMP_NUM_THREADS` to a number N between 1 and the maximum number of threads available on the host (272 for the servers we are using), by issuing the command:
 
 ```bash
-[SERVER]$ export OMP_NUM_THREADS=N 
+[KNL-SERVER]$ export OMP_NUM_THREADS=N 
 ```
 
 Execute the binary code and make sure that you understand how it works. 
@@ -724,7 +724,7 @@ show the result. Use the following command to compile the code to run
 natively on the Intel Xeon Phi coprocessor:
 
 ```bash
-[SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
+[KNL-SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
 ```
 
 Upload the executable program `diffusion_base` to the coprocessor as
@@ -733,22 +733,21 @@ just typing (you do not need to do that because execution will take an
 excessively long time):
 
 ```bash
-[SERVER]$ ./diffusion_base
+[KNL-SERVER]$ ./diffusion_base
 ```
 
-On the Xeon Phi card we are using the output is:
+On the Xeon Phi processor we are using the output is:
 
-> Running diffusion kernel 6553 times  
-Elapsed time : 5653.587 (s)  
-FLOPS : 252.801 (MFlops)  
-Throughput : 0.233 (GB/s)  
-Accuracy : 1.592295e-05  
+> Running diffusion kernel 6553 times
+Elapsed time : 954.491 (s)
+FLOPS        : 1497.378 (MFlops)
+Throughput   : 1.382 (GB/s)
+Accuracy     : 1.582022e-05
 
-
-As you can see, this is a substantial set of calculations and took close
-to 95 minutes using just one core and one thread of the coprocessor. Our
+As you can see, this is a substantial set of calculations and execution time was beyond
+15 minutes using just one core (and one thread) of the processor. Our
 next step is to exploit the available parallelism through scaling the
-code across the many cores of the coprocessor.
+code across the many cores of the Xeon Phi KNL processor.
 
 <a name="4-3-2"></a>
 
@@ -771,11 +770,11 @@ the body of the loop. This will enable each thread to be assigned larger
 chunks of data to process more calculations, and therefore, allow more
 efficiency on each pass through the loop.
 
-Now, compile and run the code to see what performance you get; use the
+Now compile and run the binary code to see what performance you get; use the
 following command:
 
 ```bash
-[SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_omp.c -o diffusion_omp
+[KNL-SERVER]$ icc -qopenmp -std=c99 -O3 -qopt-report5 diffusion_omp.c -o diffusion_omp
 ```
 
 Upload the file to one of the coprocessors, issue and ssh to it and
@@ -800,12 +799,12 @@ change of the parameter `OMP_NUM_THREADS`, and take note of the result
 of each execution:
 
 ```bash
-[SERVER-MIC]$ export OMP_NUM_THREADS=204
-[SERVER-MIC]$ ./diffusion_omp
-[SERVER-MIC]$ export OMP_NUM_THREADS=136
-[SERVER-MIC]$ ./diffusion_omp
-[SERVER-MIC]$ export OMP_NUM_THREADS=68
-[SERVER-MIC]$ ./diffusion_omp
+[KNL-SERVER]$ export OMP_NUM_THREADS=204
+[KNL-SERVER]$ ./diffusion_omp
+[KNL-SERVER]$ export OMP_NUM_THREADS=136
+[KNL-SERVER]$ ./diffusion_omp
+[KNL-SERVER]$ export OMP_NUM_THREADS=68
+[KNL-SERVER]$ ./diffusion_omp
 ```
 
 Compare the outputs and assess which gives the best result. How many
@@ -820,7 +819,7 @@ pretty simple one line change but should provide an extra improvement.
 Compile it using the following command:
 
 ```bash
-[SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_ompvect.c -o diffusion_ompvec
+[KNL-SERVER]$ icc -qopenmp -std=c99 -O3 -qopt-report5 diffusion_ompvect.c -o diffusion_ompvec
 ```
 
 Note that now you should see that the vector report indicates the inner
@@ -839,12 +838,12 @@ As in the previous exercise, set for three, two, and one thread(s) per
 core and run again, and take note of the results:
 
 ```bash
-[SERVER-MIC]$ export OMP_NUM_THREADS=204
-[SERVER-MIC]$ ./diffusion_ompvect
-[SERVER-MIC]$ export OMP_NUM_THREADS=136
-[SERVER-MIC]$ ./diffusion_ompvect
-[SERVER-MIC]$ export OMP_NUM_THREADS=68
-[SERVER-MIC]$ ./diffusion_ompvect
+[KNL-SERVER]$ export OMP_NUM_THREADS=204
+[KNL-SERVER]$ ./diffusion_ompvect
+[KNL-SERVER]$ export OMP_NUM_THREADS=136
+[KNL-SERVER]$ ./diffusion_ompvect
+[KNL-SERVER]$ export OMP_NUM_THREADS=68
+[KNL-SERVER]$ ./diffusion_ompvect
 ```
 
 Take note of each result and compare with previous results. How many times the scaled code runs
@@ -876,7 +875,7 @@ contains the code with the modifications. Compile and run it to see if
 we achieved any improvement:
 
 ```bash
-[SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_peel.c -o diffusion_peel
+[SERVER]$ icc -qopenmp -std=c99 -O3 -qopt-report5 diffusion_peel.c -o diffusion_peel
 ```
 
 Upload the file to one of the coprocessors, set the affinity and number
@@ -936,7 +935,7 @@ let us compile, upload and run the code on one of the coprocessors. Use
 the following command:
 
 ```bash
-[KNL-SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_tiled.c -o diffusion_tiled
+[KNL-SERVER]$ icc -qopenmp -std=c99 -O3 -qopt-report5 diffusion_tiled.c -o diffusion_tiled
 ```
 
 Upload the code and go to the processor command prompt, set the affinity
@@ -999,7 +998,6 @@ The source files will be available at the `nbody-demo` directory:
 ```bash
 [KNL-SERVER]$ cd infieri-2017-advanced/src
 ```
-
 
 ______
 
