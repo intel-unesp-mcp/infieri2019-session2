@@ -724,7 +724,7 @@ show the result. Use the following command to compile the code to run
 natively on the Intel Xeon Phi coprocessor:
 
 ```bash
-[KNL-SERVER]$ icc -qopenmp -std=c99 -O3 -vec-report=3 diffusion_base.c -o diffusion_base
+[KNL-SERVER]$ icc -qopenmp -std=c99 -O3 -qopt-report5 diffusion_base.c -o diffusion_base
 ```
 
 Upload the executable program `diffusion_base` to the coprocessor as
