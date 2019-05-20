@@ -503,13 +503,18 @@ Process 0 will then print out the messages as it receives them, using MPI_ANY_SO
 As usual, Have a look at source code `mpi_ex_04.c`, compile it using mpicc, execute it (mpirun) on a few nodes and
 check the results.
 
-**2.3.7** As a preparation for the next exercises on hybrid programming,
-the mapping/pinning of Intel MPI processes will be investigated step by
-step. Set the environment variable `I_MPI_DEBUG` equal or larger than 4
-to see the mapping information:
+**2.3.7** As a preparation for the next exercise on hybrid programming,
+the mapping/pinning of Intel MPI processes will be investigated step by step.
+Set the environment variable `I_MPI_DEBUG` equal to 4 to see the mapping information:
 
 ```bash
 [KNL-SERVER]$ export I_MPI_DEBUG=4
+```
+
+To unset the value of any environment variable, we can use the command unset:
+
+```bash
+[KNL-SERVER]$ unset I_MPI_DEBUG
 ```
 
 For pure (non-hybrid) MPI programs the environment variable
@@ -524,7 +529,7 @@ rank number in front of each output line:
 
 ```bash
 [KNL-SERVER]$ mpirun -prepend-rank -n 4 ./test
-[KNL-SERVER]$ mpirun -prepend-rank -host localhost -n 4 ~/test : -host knl02 -n 4 ~/test
+[KNL-SERVER]$ mpirun -prepend-rank -machinefile hosts -n 24 ~/test
 ```
 
 Now set the variable `I_MPI_PIN_DOMAIN` with the `-env` flag. Possible
@@ -576,10 +581,10 @@ Run the Intel MPI tests from before:
 [KNL-SERVER]$ mpirun -prepend-rank -host localhost -n 4 ~/test_openmp : -host knl02 -n 4 ~/test_openmp
 ```
   
-The execution generates a lot of output. The default for the OpenMP
+Because of the large amount of output we use the flag "-prepend-rank", which adds the MPI
+rank number in front of each output line. The default for the OpenMP
 library is to assume as many OpenMP threads as there are logical
-processors. For the next steps, explicit `OMP_NUM_THREADS` values
-(different on host and Intel Xeon Phi coprocessor) will be set.
+processors. For the next steps, explicit `OMP_NUM_THREADS` values will be set.
 
 In the following test the default OpenMP affinity is checked. Please
 notice that the range of logical processors is always defined by the
