@@ -256,13 +256,11 @@ _"Parallel Programming and Optimization with Intel Xeon Phi Coprocessors"_ (Colf
 
 * All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
 
-**1.3.1** To help you recall how to compile and execute an OpenMP code, have a look at the source code `openmp.c`, located at **SOURCE-DIR**, which prints out the total number of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` and do not forget the appropriate flag `-qopenmp` to enable OpenMP. Before running it, set the environment variable `OMP_NUM_THREADS` to a number N between 1 and the maximum number of threads available on the host, using the command:
+**1.3.1** To help you recall how to compile and execute an OpenMP code, have a look at the source code `openmp.c`, located at **SOURCE-DIR**, which prints out the total number of OpenMP threads and for each fork-join branch prints out **“Hello world from thread %d"**. Compile the code using `icc` and do not forget the appropriate flag `-qopenmp` to enable OpenMP. Before running it, set the environment variable `OMP_NUM_THREADS` to a number N between 1 and the maximum number of threads available on the host (272 for the servers we are using), by issuing the command:
 
 ```bash
 [SERVER]$ export OMP_NUM_THREADS=N 
 ```
-
-**(you need to assign a value to N!)**
 
 Execute the binary code and make sure that you understand how it works. 
 
@@ -526,11 +524,11 @@ rank number in front of each output line:
 
 ```bash
 [SERVER]$ mpirun -prepend-rank -n 4 ./test
-[SERVER]$ mpirun -prepend-rank -host localhost -n 4 ./test : -host knl02 -n 8 ./test.mic
+[SERVER]$ mpirun -prepend-rank -host localhost -n 4 ~/test : -host knl02 -n 4 ~/test
 ```
 
-Sorting of the output can be beneficial for the mapping analysis,
-although this changes the order of the output. Try adding `2>&1 | sort` to sort the output if you like.
+Sorting of the output can be beneficial for the mapping analysis, although this changes
+the order of the output. Try adding `2>&1 | sort` to sort the output if you like.
 
 Now set the variable `I_MPI_PIN_DOMAIN` with the `-env` flag. Possible
 values are `auto`, `omp` (which relies on the `OMP_NUM_THREADS`
