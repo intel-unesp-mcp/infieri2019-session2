@@ -201,14 +201,14 @@ ______
 ### 1.1 Goals
 
 In the first part of Session 2 we set focus on multi-threaded
-programming, or task parallelism, using the Intel Open Multi-Processing
-(OpenMP). While POSIX threads[^1] - also known as Pthreads - can be used to implement parallelism in
+programming, or task parallelism, using the Intel Open Multi-Processing (OpenMP).
+While POSIX threads[^1] - also known as Pthreads - can be used to implement parallelism in
 shared memory multiprocessor architectures, this programming interface does not contain HPC-specific
 features such as workload balancing, processor affinity, reducers, etc. Computationally intensive algorithms
 in general perform better when implemented using one of the specialized standards for building thread-parallel
-applications such as OpenMP. Moreover, OpenMP provides a simple way of introducing parallelism in existing sequential
-programs, providing the programmer with a mostly declarative style of programming where all the parallelization
-is handled at the compiler level.
+applications such as OpenMP. Moreover, OpenMP provides a simple way of introducing parallelism in existing
+sequential programs, providing the programmer with a mostly declarative style of programming where all
+the parallelization is handled at the compiler level.
 
 ### 1.2 Overview of OpenMP
 
@@ -270,7 +270,7 @@ Test yourself by answering these simple questions:
 
 -   What OpenMP function returns the current thread number?
 
-**1.4.2** Modify the source code `openmp.c` by inserting a parallel for
+**1.3.2** Modify the source code `openmp.c` by inserting a parallel for
 loop that prints out the current thread number and the number of
 iteration. Use the directive `#pragma omp for` (**hint:** `#pragma omp parallel`
 spawns a group of threads, while `#pragma omp for` divides
@@ -279,7 +279,7 @@ once with the fused `#pragma omp parallel for` directive). Save the
 modified source as `openmp_v1.c`, compile and execute the binary on the
 host system, checking the result.
 
-**1.4.3** Have a look at source file `openmp_v2.c`. In this slightly
+**1.3.3** Have a look at source file `openmp_v2.c`. In this slightly
 modified version, constant variable `nthreads` is initialized with the
 maximum value of OpenMP threads and is made available for all threads.
 Notice that a private integer has been defined, which should be
@@ -288,7 +288,7 @@ parallel region is private to each thread, and any variable declared
 before the parallel region is available (`shared`) for every thread.
 Compile and execute the code on the host system, and check the result.
 
-**1.4.4** Control over the variables scope can also be done with OpenMP
+**1.3.4** Control over the variables scope can also be done with OpenMP
 parallel clauses `private`, `shared`, and `firstprivate`. Have a look at the
 source file `openmp_v3.c`, which uses these three variables. Check what
 values will be assigned to them within the parallel region and how they
@@ -297,7 +297,7 @@ and execute it several times on the host system, and check if your assumptions w
 correct. Notice that the value of `varShared` is different at each execution; in
 fact, its value is unpredictable. Why does this happen?
 
-**1.4.5** A common mistake when implementing parallel algorithms is
+**1.3.5** A common mistake when implementing parallel algorithms is
 creating racing conditions, which occur when shared variables are
 accessed for reading and writing by different threads at the same time.
 Have a look at the source file `openmp_v4.c`, which uses a parallel for
@@ -308,7 +308,7 @@ the source code using the `-qopenmp` flag and execute the binary
 several times, comparing the results. Why the result is different at
 each execution?
 
-**1.4.6** There are several ways to fix racing conditions in OpenMP
+**1.3.6** There are several ways to fix racing conditions in OpenMP
 parallel codes. One of them is applying `#pragma omp critical` to the
 region where the racing conditions occur. Have a look at file
 `openmp_v5.c`, which is an example that uses this solution to fix the
@@ -318,7 +318,7 @@ time. Therefore, the parallel code technically becomes serial, since
 only one thread will be executing it at a time. As always, compile the
 source code, execute it several times, and check the results.
 
-**1.4.7** `Reduction` is a clause of OpenMP for loop, which indicates
+**1.3.7** `Reduction` is a clause of OpenMP for loop, which indicates
 what operation will be used on what reduction variable. OpenMP will
 automatically take care of avoiding racing conditions and receiving
 correct result. Have a look at example `openmp_v6.c`, which implements
@@ -410,7 +410,8 @@ the Intel MPI distribution. You can also retrieve this file from its original fo
 [KNL-SERVER]$ cp /opt/tools/intel/parallel_studio_xe_2018/compilers_and_libraries_2018/linux/mpi/test/test.c .
 ```
 
-**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information, check the [**"getting the source files"**](#get_repo) section.
+**Note:** All the source codes we will be using in this section are located in **SOURCE-DIR**. For more information,
+check the [**"getting the source files"**](#get_repo) section.
 
 Let us start working on this code as a quick remind on how to run an MPI program on
 the Intel Xeon Phi coprocessor. Compile the source file with the Intel
@@ -503,56 +504,9 @@ Process 0 will then print out the messages as it receives them, using MPI_ANY_SO
 As usual, Have a look at source code `mpi_ex_04.c`, compile it using mpicc, execute it (mpirun) on a few nodes and
 check the results.
 
-**2.3.7** As a preparation for the next exercise on hybrid programming,
-the mapping/pinning of Intel MPI processes will be investigated step by step.
-Set the environment variable `I_MPI_DEBUG` equal to 4 to see the mapping information:
-
-```bash
-[KNL-SERVER]$ export I_MPI_DEBUG=4
-```
-
-To unset the value of any environment variable, we can use the command unset:
-
-```bash
-[KNL-SERVER]$ unset I_MPI_DEBUG
-```
-
-For pure (non-hybrid) MPI programs the environment variable
-`I_MPI_PIN_PROCESSOR_LIST` controls the mapping/pinning. For hybrid
-codes the variable `I_MPI_PIN_DOMAIN` takes precedence. It splits the
-(logical) processors into non-overlapping domains for which this rule
-applies: "one MPI process for one domain".
-
-Repeat the Intel MPI test from before with `I_MPI_DEBUG` set. Because of
-the amount of output use the flag "-prepend-rank", which puts the MPI
-rank number in front of each output line:
-
-```bash
-[KNL-SERVER]$ mpirun -prepend-rank -n 4 ./test
-[KNL-SERVER]$ mpirun -prepend-rank -machinefile hosts -n 24 ~/test
-```
-
-Now set the variable `I_MPI_PIN_DOMAIN` with the `-env` flag. Possible
-values are `auto`, `omp` (which relies on the `OMP_NUM_THREADS`
-variable), or a fixed number of logical cores. We have learned before
-(session 1, exercise 2.2.4) that by exporting `I_MPI_PIN_DOMAIN` in the
-host’s command shell, the variable is identically exported to the host
-and to the Xeon Phi coprocessors. Typically this is not beneficial and
-an architecture adapted setting using `-env` is recommended:
-
-```bash
-[KNL-SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -n 4 ./test
-[KNL-SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 4 ~/test : -env I_MPI_PIN_DOMAIN 12 -host knl02 -env I_MPI_PIN_DOMAIN 12 -n 4 ~/test
-```
-
-Experiment with pure Intel MPI mapping by setting
-`I_MPI_PIN_PROCESSOR_LIST` if you like. (See the Intel MPI reference
-manual for details).
-
-**2.3.8** Now we are going to run a hybrid MPI/OpenMP program on the
-Intel Xeon Phi processor. Have a look at the source code
-`test_openmp.c`, in which a simple printout from the OpenMP threads was
-added to the previous Intel MPI test code. You can compare the
+**2.3.7** Now we are going to run a hybrid MPI/OpenMP program on the Intel Xeon Phi processor. Have a look at
+the source code `test_openmp.c`, in which a simple printout from the OpenMP threads was
+added to the previous Intel MPI test code we used on exercise 2.3.2. You can compare the
 difference between the two files by means of the diff utility:
 
 ```bash
@@ -565,7 +519,7 @@ Compile the source code with the `-qopenmp` compiler flag:
 [KNL-SERVER]$ mpiicc -qopenmp test_openmp.c -o test_openmp
 ```
 
-Copy the binary file to all servers:
+Now copy the binary file to all servers:
 
 ```bash
 [KNL-SERVER]$ for i in {01..06}; do scp test_openmp knl$i:~; done
@@ -573,48 +527,48 @@ Copy the binary file to all servers:
 
 Because of the `-qopenmp` flag, Intel MPI will link the code with the
 thread-safe version of the Intel MPI library `libmpi_mt.so` by default.
-Run the Intel MPI tests from before:
+
+Set the environment variable `I_MPI_DEBUG` equal to 4 to see the mapping information:
+
+```bash
+[KNL-SERVER]$ export I_MPI_DEBUG=4
+```
+
+Debug information is in fact a verbose output of several important settings that Intel MPI sets for the next MPI run.
+Setting the variable to 4 will give some useful information, such as:
+
+- the MPI environment variables set by the user
+- the pin domains for each MPI rank
+
+**Note:** To unset the value of any environment variable, we can use the command unset:
 
 ```bash
 [KNL-SERVER]$ unset I_MPI_DEBUG
+```
+
+Let us run the binary file as usual:
+
+```bash
 [KNL-SERVER]$ mpirun -prepend-rank -n 4 ./test_openmp
-[KNL-SERVER]$ mpirun -prepend-rank -host localhost -n 4 ~/test_openmp : -host knl02 -n 4 ~/test_openmp
+[KNL-SERVER]$ mpirun -prepend-rank -machinefile hosts -n 4 ~/test_openmp
 ```
   
 Because of the large amount of output we use the flag "-prepend-rank", which adds the MPI
 rank number in front of each output line. The default for the OpenMP
-library is to assume as many OpenMP threads as there are logical
-processors. For the next steps, explicit `OMP_NUM_THREADS` values will be set.
-
-In the following test the default OpenMP affinity is checked. Please
-notice that the range of logical processors is always defined by the
-splitting the threads based on the `I_MPI_PIN_DOMAIN` variable. This
-time we also use `I_MPI_PIN_DOMAIN=omp`, see how it depends on the
-`OMP_NUM_THREADS` setting:
+library is to assume as many OpenMP threads as there are logical processors.
+We can set an explicit value for `OMP_NUM_THREADS` using the following syntax:
 
 ```bash
-[KNL-SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 4 ./test_openmp 2>&1 | sort
-[KNL-SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host knl02 -env ./test_openmp 2>&1 | sort
-[KNL-SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host knl02 -n 4 ./test_openmp 2>&1 | sort
+[KNL-SERVER]$ mpirun -prepend-rank -machinefile hosts -env OMP_NUM_THREADS 4 -n 4 ~/test_openmp
 ```
 
-Remember that it is usually beneficial to avoid splitting of logical
-cores on Intel Xeon Phi coprocessor between MPI processes; either the
-number of MPI processes should be chosen so that
-`I_MPI_PIN_DOMAIN=auto` creates domains which cover complete cores or
-the environment variable should be a multiply of 4.
+Change the number of OMP_NUM_THREADS and the number of MPI processes (parameter n) and compare the results.
 
-Use `scatter`, `compact`, or `balanced` (Intel Xeon Phi processor/coprocessor
-specific) to modify the default OpenMP affinity.
+Interoperability between MPI and OpenMP is a complex subject and exploring its inner workings would be very time
+consuming and would prevent us to explore other relevant topics. For more information, please check the reference below:
 
-```bash
-[KNL-SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 4 ~/test_openmp
-[KNL-SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ~/test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host knl02 -n 4 ~/test_openmp 2>&1 | sort
-```
-
-Notice that, as well as other options, the OpenMP affinity can be set
-differently per Intel MPI argument set, i.e. different on the host and
-on the Intel Xeon Phi coprocessor.
+-   _Intel MPI Library Developer Reference for Linux OS - Interoperability with OpenMP_  
+    <https://software.intel.com/en-us/mpi-developer-reference-linux-interoperability-with-openmp>
 
 ______
 
