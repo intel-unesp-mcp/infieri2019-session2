@@ -527,9 +527,6 @@ rank number in front of each output line:
 [SERVER]$ mpirun -prepend-rank -host localhost -n 4 ~/test : -host knl02 -n 4 ~/test
 ```
 
-Sorting of the output can be beneficial for the mapping analysis, although this changes
-the order of the output. Try adding `2>&1 | sort` to sort the output if you like.
-
 Now set the variable `I_MPI_PIN_DOMAIN` with the `-env` flag. Possible
 values are `auto`, `omp` (which relies on the `OMP_NUM_THREADS`
 variable), or a fixed number of logical cores. We have learned before
@@ -540,8 +537,7 @@ an architecture adapted setting using `-env` is recommended:
 
 ```bash
 [SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -n 4 ./test
-[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN auto -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test.mic
-[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test : -env I_MPI_PIN_DOMAIN 12 -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test.mic
+[SERVER]$ mpirun -prepend-rank -env I_MPI_PIN_DOMAIN 4 -host localhost -n 4 ./test : -env I_MPI_PIN_DOMAIN 12 -host knl02 -env I_MPI_PIN_DOMAIN 12 -n 4 ./test
 ```
 
 Experiment with pure Intel MPI mapping by setting
@@ -573,8 +569,7 @@ Run the Intel MPI tests from before:
 ```bash
 [SERVER]$ unset I_MPI_DEBUG
 [SERVER]$ mpirun -prepend-rank -n 2 ./test_openmp
-[SERVER]$ mpirun -prepend-rank -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 2 ./test_openmp.mic
-[SERVER]$ mpirun -prepend-rank -host localhost -n 2 ./test_openmp : -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp.mic
+[SERVER]$ mpirun -prepend-rank -host localhost -n 2 ./test_openmp : -host knl02 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp
 ```
   
 The execution generates a lot of output! The default for the OpenMP
@@ -590,8 +585,8 @@ time we also use `I_MPI_PIN_DOMAIN=omp`, see how it depends on the
 
 ```bash
 [SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp 2>&1 | sort
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 2 ./test_openmp.mic 2>&1 | sort
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host knl02 -env ./test_openmp 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host knl02 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp.mic 2>&1 | sort
 ```
 
 Remember that it is usually beneficial to avoid splitting of logical
@@ -600,13 +595,12 @@ number of MPI processes should be chosen so that
 `I_MPI_PIN_DOMAIN=auto` creates domains which cover complete cores or
 the environment variable should be a multiply of 4.
 
-Use `scatter`, `compact`, or `balanced` (Intel Xeon Phi coprocessor
+Use `scatter`, `compact`, or `balanced` (Intel Xeon Phi processor/coprocessor
 specific) to modify the default OpenMP affinity.
 
 ```bash
 [SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,scatter -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN auto -n 2 ./test_openmp
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN omp -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 2 ./test_openmp.mic 2>&1 | sort
-[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host mic0 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp.mic 2>&1 | sort
+[SERVER]$ mpirun -prepend-rank -env KMP_AFFINITY verbose,granularity=thread,compact -env OMP_NUM_THREADS 4 -env I_MPI_PIN_DOMAIN 4 -host localhost -n 2 ./test_openmp : -env KMP_AFFINITY verbose,granularity=thread,balanced -env OMP_NUM_THREADS 6 -env I_MPI_PIN_DOMAIN 12 -host knl02 -env LD_LIBRARY_PATH /opt/intel/lib/mic/ -n 4 ./test_openmp 2>&1 | sort
 ```
 
 Notice that, as well as other options, the OpenMP affinity can be set
