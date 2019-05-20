@@ -979,8 +979,8 @@ device and quantum computing.
 
 ### 4.2 Hands-on Activities ###
 
-Please access the link below, read it carefully and try to reproduce the optimization steps described by the author
-of the article, which describes an example code based on a simple N-body simulation written in C++. There are
+Please access the link below, read it carefully and try to reproduce the optimization steps developed by the author
+of the article on an example code based on a simple N-body simulation written in C++. There are
 varios specific topics that we need to adapt to our environment, so pleasse refer to the instructor or a teaching
 assistant before you start or anytime you find a difficulty.
 
