@@ -1023,7 +1023,7 @@ for the platform that we are using (Xeon Phi KNL). A simple way of doing this is
 [KNL-SERVER]$ make
 ```
 
-Repeat this sequence of commands (varying the value of X from 1 to 8). Pleasse refer to the instructor or a
+Repeat this sequence of commands varying the value of X from 1 to 8. Pleasse refer to the instructor or a
 teaching assistant you find any difficulty.
 
 ______
