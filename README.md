@@ -979,10 +979,8 @@ device and quantum computing.
 
 ### 4.2 Hands-on Activities ###
 
-Please access the link below, read it carefully and try to reproduce the optimization steps developed by the author
-of the article on an example code based on a simple N-body simulation written in C++. There are
-varios specific topics that we need to adapt to our environment, so pleasse refer to the instructor or a teaching
-assistant before you start or anytime you find a difficulty.
+Please access the link below and read it carefully. We are going to reproduce the optimization steps developed by
+the author of the article on an example code based on a simple N-body simulation written in C++.
 
 <https://github.com/fbaru-dev/nbody-demo>
 
@@ -1025,7 +1023,8 @@ for the platform that we are using (Xeon Phi KNL). A simple way of doing this is
 [KNL-SERVER]$ make
 ```
 
-Repeat this sequence of commands (varying the value of X from 1 to 8).
+Repeat this sequence of commands (varying the value of X from 1 to 8). Pleasse refer to the instructor or a
+teaching assistant you find any difficulty.
 
 ______
 
