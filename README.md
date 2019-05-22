@@ -1016,14 +1016,16 @@ each test case you just need to ‘cd’ to the corresponding directory and type
 **Note:**  
 
 For versions ver1 to ver8, we need to adapt the flag -xCORE-AVX512 in OPTFLAGS to -xMIC-AVX512, which is the correct flag
-for the platform that we are using - Xeon Phi KNL. A simple way of doing this is using the `sed` command: 
+for the platform that we are using (Xeon Phi KNL). A simple way of doing this is using the `sed` command: 
 
 ```bash
+[KNL-SERVER]$ cd ..
 [KNL-SERVER]$ cd verX
-[KNL-SERVER]$ sed -i 's/xCORE-AVX512/-xMIC-AVX512/g' Makefile
+[KNL-SERVER]$ sed -i 's/-xCORE-AVX512/-xMIC-AVX512/g' Makefile
+[KNL-SERVER]$ make
 ```
 
-where X varies from 1 to 8.
+Repeat this sequence of commands (varying the value of X from 1 to 8).
 
 ______
 
