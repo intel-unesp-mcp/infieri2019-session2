@@ -986,8 +986,9 @@ assistant before you start or anytime you find a difficulty.
 
 <https://github.com/fbaru-dev/nbody-demo>
 
-To obtain the source files, you have to perform a copy (clone) of the remote repository to
-your user directory, by running the following command in the host system console:
+To obtain the set of source files, you need to clone the author’s repository to create a local copy of the source
+files on the server you are using. Change the current working directory to the location where you want the
+cloned directory to be made, and type the following command in the host system console:
 
 ```bash
 [KNL-SERVER]$ git clone https://github.com/fbaru-dev/nbody-demo.git
@@ -996,8 +997,23 @@ your user directory, by running the following command in the host system console
 The source files will be available at the `nbody-demo` directory:
 
 ```bash
-[KNL-SERVER]$ cd infieri-2017-advanced/src
+[KNL-SERVER]$ cd nbody-demo/
 ```
+
+Check that nine sub-directories will be available: ver0 to ver8. You need to go to each one
+
+The demo consists of several directories, which correspond to the different optimization steps necessary
+to insert vectorization and OpenMP multi-threding directives to the original version of the code (ver0).
+Each sub-directory has its own Makefile that contains all the instructions and directives necessary to
+build the binary file from a set of source codes and necessary includes and libraries. To compile each
+test case you just need to ‘cd’ to the corresponding directory and type `make`:
+
+```bash
+[KNL-SERVER]$ cd verX
+[KNL-SERVER]$ make
+```
+
+
 
 ______
 
