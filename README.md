@@ -1019,7 +1019,7 @@ For versions ver1 to ver8, we need to adapt the flag -xCORE-AVX512 in OPTFLAGS t
 for the platform that we are using - Xeon Phi KNL. A simple way of doing this is using the `sed` command: 
 
 ```bash
-[KNL-SERVER]$ cd verX    =>>{X=1 to 8}<<=
+[KNL-SERVER]$ cd verX    >>>{X=1 to 8}<<<
 [KNL-SERVER]$ sed -i 's/xCORE-AVX512/-xMIC-AVX512/g' Makefile
 ```
 
