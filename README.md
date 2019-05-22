@@ -998,13 +998,11 @@ The source files will be available at the `nbody-demo` directory:
 [KNL-SERVER]$ cd nbody-demo/
 ```
 
-Check that nine sub-directories will be available: ver0 to ver8. You need to go to each one
-
-The demo consists of several directories, which correspond to the different optimization steps necessary
-to include vectorization and OpenMP multi-threding instructions and directives to the original version of
-the code (ver0). Each sub-directory has its own Makefile that contains all the instructions and directives
-necessary to build the binary file from a set of source codes and necessary includes and libraries. To compile
-each test case you just need to ‘cd’ to the corresponding directory and type `make`:
+Check that nine sub-directories will be available: ver0 to ver8, each one corresponding to the different optimization
+steps necessary to include vectorization and OpenMP multi-threding instructions and directives to the original
+version of the code, available on ver0. Each sub-directory has its own Makefile that contains all the instructions
+and directives necessary to build the binary file from a set of source codes and necessary includes and libraries.
+To compile each test case you just need to ‘cd’ to the corresponding directory and type `make`:
 
 ```bash
 [KNL-SERVER]$ cd ver0
@@ -1013,8 +1011,8 @@ each test case you just need to ‘cd’ to the corresponding directory and type
 
 **Note:**  
 
-For versions ver1 to ver8, we need to adapt the flag -xCORE-AVX512 in OPTFLAGS to -xMIC-AVX512, which is the correct flag
-for the platform that we are using (Xeon Phi KNL). A simple way of doing this is using the `sed` command: 
+For versions ver1 to ver8, we need to adapt the flag -xCORE-AVX512 in OPTFLAGS to -xMIC-AVX512, which is the correct
+flag for the platform that we are using (Xeon Phi KNL). A simple way of doing this is using the `sed` command: 
 
 ```bash
 [KNL-SERVER]$ cd ..
